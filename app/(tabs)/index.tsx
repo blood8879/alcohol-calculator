@@ -6,9 +6,9 @@ import { CalculationCard } from "../../components/CalculationCard";
 // 메인 화면
 export default function HomeScreen() {
   const dilutionFields = [
-    { label: "현재 용량", unit: "ml", placeholder: "0" },
-    { label: "현재 도수", unit: "%", placeholder: "0" },
-    { label: "목표 도수", unit: "%", placeholder: "0" },
+    { label: "현재 용량1", unit: "ml", placeholder: "0" },
+    { label: "현재 도수1", unit: "%", placeholder: "0" },
+    { label: "목표 도수1", unit: "%", placeholder: "0" },
   ];
 
   const alcoholContentFields = [
