@@ -1,3 +1,4 @@
+import { Stack } from "expo-router";
 import React from "react";
 import { ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -77,6 +78,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background">
+      <Stack.Screen options={{ headerShown: false }} />
       <StatusBar barStyle="light-content" backgroundColor="#4CAF50" />
 
       <View className="bg-primary px-4 py-4">
