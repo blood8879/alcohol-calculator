@@ -1,20 +1,13 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  StatusBar,
-} from "react-native";
+import React from "react";
+import { ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CalculationCard } from "../../components/CalculationCard";
 
 // 메인 화면
 export default function HomeScreen() {
   const dilutionFields = [
-    { label: "현재 용량", unit: "ml", placeholder: "0" },
-    { label: "현재 도수", unit: "%", placeholder: "0" },
+    { label: "현재 용량123", unit: "ml", placeholder: "0" },
+    { label: "현재 도수123", unit: "%", placeholder: "0" },
     { label: "목표 도수", unit: "%", placeholder: "0" },
   ];
 
