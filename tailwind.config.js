@@ -9,11 +9,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#4CAF50", // 주 색상 (PRD에서 정의)
-        background: "#f5f5f5", // 배경색
-        card: "#fff", // 카드 배경
-        text: "#333", // 텍스트
-        result: "#f0f0f0", // 결과 배경
+        primary: "#95D052", // 어두운 Inchworm
+        secondary: "#243B37", // Gunmetal
+        accent: "#E06427", // 어두운 Orange
+        highlight: "#9A8BE6", // 어두운 Pale Violet
+        background: "#F5F5F5", // 밝은 회색 배경
+        metallic: "#C0C0C0", // 어두운 American Silver
+        text: "#243B37", // 텍스트 - Gunmetal
+        card: "#FAFAFA", // 카드 배경 - 약간 어두운 흰색
+        result: "#EFEFEF", // 결과 배경 - 더 어두운 회색
       },
       borderRadius: {
         card: "16px",
