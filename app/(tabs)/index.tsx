@@ -1,75 +1,120 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  StatusBar,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CalculationCard } from "../../components/CalculationCard";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
+// 메인 화면
 export default function HomeScreen() {
+  const dilutionFields = [
+    { label: "현재 용량", unit: "ml", placeholder: "0" },
+    { label: "현재 도수", unit: "%", placeholder: "0" },
+    { label: "목표 도수", unit: "%", placeholder: "0" },
+  ];
+
+  const alcoholContentFields = [
+    { label: "용량", unit: "ml", placeholder: "0" },
+    { label: "도수", unit: "%", placeholder: "0" },
+  ];
+
+  const temperatureFields = [
+    { label: "측정 온도", unit: "°C", placeholder: "0" },
+    { label: "측정 도수", unit: "%", placeholder: "0" },
+  ];
+
+  // 도수 조정 계산
+  const calculateDilution = (values: number[]) => {
+    const [currentVolume, currentABV, targetABV] = values;
+
+    if (
+      currentABV <= targetABV ||
+      currentVolume <= 0 ||
+      currentABV <= 0 ||
+      targetABV <= 0
+    ) {
+      return [
+        { label: "오류", value: "현재 도수는 목표 도수보다 높아야 합니다" },
+      ];
+    }
+
+    const finalVolume = (currentVolume * currentABV) / targetABV;
+    const waterToAdd = finalVolume - currentVolume;
+
+    return [
+      { label: "추가할 물의 양", value: `${waterToAdd.toFixed(2)} ml` },
+      { label: "최종 용량", value: `${finalVolume.toFixed(2)} ml` },
+    ];
+  };
+
+  // 순알코올량 계산
+  const calculateAlcoholContent = (values: number[]) => {
+    const [volume, abv] = values;
+
+    if (volume <= 0 || abv <= 0) {
+      return [{ label: "오류", value: "모든 값은 0보다 커야 합니다" }];
+    }
+
+    const pureAlcohol = volume * (abv / 100);
+
+    return [{ label: "순알코올량", value: `${pureAlcohol.toFixed(2)} ml` }];
+  };
+
+  // 온도별 도수 보정
+  const calculateTemperatureCorrection = (values: number[]) => {
+    const [temperature, measuredABV] = values;
+
+    if (measuredABV <= 0) {
+      return [{ label: "오류", value: "도수는 0보다 커야 합니다" }];
+    }
+
+    const tempDifference = temperature - 20;
+    const correctionFactor = tempDifference * 0.35;
+    const correctedABV = measuredABV + correctionFactor;
+
+    return [
+      { label: "20°C 기준 보정 도수", value: `${correctedABV.toFixed(2)} %` },
+    ];
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <SafeAreaView className="flex-1 bg-background">
+      <StatusBar barStyle="light-content" backgroundColor="#4CAF50" />
+
+      <View className="bg-primary px-4 py-4">
+        <Text className="text-white text-2xl font-bold">주류 계산기</Text>
+        <Text className="text-white text-sm opacity-80 mt-1">
+          간단하고 정확한 주류 계산
+        </Text>
+      </View>
+
+      <ScrollView className="flex-1 px-4 py-2">
+        <CalculationCard
+          title="도수 조정 계산"
+          description="현재 도수와 용량에서 원하는 도수로 만들기 위해 필요한 물의 양 계산"
+          fields={dilutionFields}
+          calculateResult={calculateDilution}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+
+        <CalculationCard
+          title="알코올 순함량 계산"
+          description="주어진 용량과 도수에 따른 순알코올량 계산"
+          fields={alcoholContentFields}
+          calculateResult={calculateAlcoholContent}
+        />
+
+        <CalculationCard
+          title="온도별 도수 보정"
+          description="측정 온도에서 20°C 기준 도수로 보정"
+          fields={temperatureFields}
+          calculateResult={calculateTemperatureCorrection}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
