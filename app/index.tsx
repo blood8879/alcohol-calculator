@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, StatusBar, Text, View } from "react-native";
+import Modal from "react-native-modal";
 import CalculationCard from "../components/CalculationCard";
 import CalculatorIcon from "../components/CalculatorIcon";
 
@@ -104,29 +105,21 @@ type CalculatorKey = keyof typeof calculatorConfigs;
 export default function HomeScreen() {
   const [selectedCalculatorKey, setSelectedCalculatorKey] =
     useState<CalculatorKey | null>(null);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const selectedCalculator = selectedCalculatorKey
     ? calculatorConfigs[selectedCalculatorKey]
     : null;
 
   const handleBack = () => {
-    setSelectedCalculatorKey(null);
+    setModalVisible(false);
+    setTimeout(() => setSelectedCalculatorKey(null), 300); // 모달이 닫힌 후 선택 초기화
   };
 
-  if (selectedCalculator) {
-    return (
-      <SafeAreaView className="flex-1 bg-gray-100">
-        <StatusBar barStyle="light-content" backgroundColor="#4CAF50" />
-        <CalculationCard
-          title={selectedCalculator.title}
-          description={selectedCalculator.description}
-          fields={selectedCalculator.fields}
-          calculateResult={selectedCalculator.calculateResult}
-          onBack={handleBack}
-        />
-      </SafeAreaView>
-    );
-  }
+  const openCalculator = (key: CalculatorKey) => {
+    setSelectedCalculatorKey(key);
+    setModalVisible(true);
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-gray-900">
@@ -148,12 +141,35 @@ export default function HomeScreen() {
                 label={config.navLabel}
                 description={config.navDescription}
                 iconColor={config.iconColor}
-                onPress={() => setSelectedCalculatorKey(key as CalculatorKey)}
+                onPress={() => openCalculator(key as CalculatorKey)}
               />
             );
           })}
         </View>
       </View>
+
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={handleBack}
+        onSwipeComplete={handleBack}
+        swipeDirection={["down"]}
+        style={{ justifyContent: "flex-end", margin: 0 }}
+        propagateSwipe={true}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+      >
+        {selectedCalculator && (
+          <View className="bg-white rounded-t-3xl overflow-hidden max-h-[90%]">
+            <CalculationCard
+              title={selectedCalculator.title}
+              description={selectedCalculator.description}
+              fields={selectedCalculator.fields}
+              calculateResult={selectedCalculator.calculateResult}
+              onBack={handleBack}
+            />
+          </View>
+        )}
+      </Modal>
     </SafeAreaView>
   );
 }

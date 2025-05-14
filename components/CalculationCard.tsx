@@ -33,17 +33,20 @@ const CalculationCard = ({
   };
 
   return (
-    <View className="flex-1">
-      <View className="bg-green-500 py-4 px-4 flex-row items-center">
-        <TouchableOpacity onPress={onBack} className="mr-4">
-          <Text className="text-white text-xl">←</Text>
-        </TouchableOpacity>
-        <Text className="text-2xl font-bold text-white">{title}</Text>
+    <View className="bg-white">
+      {/* 바텀시트 드래그 핸들 */}
+      <View className="items-center pt-2 pb-4">
+        <View className="w-10 h-1 bg-gray-300 rounded-full" />
       </View>
 
-      <View className="p-4 bg-white rounded-lg mx-4 mt-4 shadow-sm">
-        <Text className="text-sm text-gray-600 mb-4">{description}</Text>
+      {/* 헤더 */}
+      <View className="px-4 pb-4">
+        <Text className="text-2xl font-bold text-gray-800">{title}</Text>
+        <Text className="text-sm text-gray-600 mt-1">{description}</Text>
+      </View>
 
+      {/* 계산 영역 */}
+      <View className="p-4">
         {fields.map((field, index) => (
           <View
             key={index}
@@ -85,6 +88,14 @@ const CalculationCard = ({
             ))}
           </View>
         )}
+
+        {/* 닫기 버튼 */}
+        <TouchableOpacity
+          className="border border-gray-300 p-3 rounded-lg mt-4"
+          onPress={onBack}
+        >
+          <Text className="text-gray-800 text-center">닫기</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
