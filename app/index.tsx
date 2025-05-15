@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, StatusBar, Text, View } from "react-native";
 import Modal from "react-native-modal";
+import alcoholConversionData from "../alcohol_conversion_data.json";
 import CalculationCard from "../components/CalculationCard";
 import CalculatorIcon from "../components/CalculatorIcon";
 
@@ -18,7 +19,7 @@ const alcoholContentFields = [
 
 const temperatureFields = [
   { label: "측정 온도", unit: "°C", placeholder: "0" },
-  { label: "측정 도수", unit: "%", placeholder: "0" },
+  { label: "주정분", unit: "%", placeholder: "0" },
 ];
 
 const calculateDilution = (values: number[]) => {
@@ -52,14 +53,51 @@ const calculateAlcoholContent = (values: number[]) => {
 
 const calculateTemperatureCorrection = (values: number[]) => {
   const [temperature, measuredABV] = values;
+
   if (measuredABV <= 0) {
     return [{ label: "오류", value: "도수는 0보다 커야 합니다" }];
   }
-  const tempDifference = temperature - 20;
-  const correctionFactor = tempDifference * 0.35;
-  const correctedABV = measuredABV + correctionFactor;
+
+  // 입력된 온도와 가장 가까운 온도를 찾습니다.
+  const availableTemperatures = Object.keys(alcoholConversionData).map(
+    parseFloat
+  );
+  const closestTemperature = availableTemperatures.reduce((prev, curr) =>
+    Math.abs(curr - temperature) < Math.abs(prev - temperature) ? curr : prev
+  );
+
+  const temperatureKey = closestTemperature.toFixed(1);
+  const temperatureData =
+    alcoholConversionData[temperatureKey as keyof typeof alcoholConversionData];
+
+  if (!temperatureData) {
+    return [{ label: "오류", value: "해당 온도 데이터를 찾을 수 없습니다." }];
+  }
+
+  // 입력된 측정 ABV와 가장 가까운 측정 ABV를 찾습니다.
+  const availableMeasuredABVs = Object.keys(temperatureData).map(parseFloat);
+  const closestMeasuredABV = availableMeasuredABVs.reduce((prev, curr) =>
+    Math.abs(curr - measuredABV) < Math.abs(prev - measuredABV) ? curr : prev
+  );
+
+  const measuredABVKey = closestMeasuredABV.toFixed(1);
+  const actualABV =
+    temperatureData[measuredABVKey as keyof typeof temperatureData];
+
+  if (actualABV === undefined || actualABV === null) {
+    return [
+      {
+        label: "오류",
+        value: "해당 측정 도수에 대한 데이터를 찾을 수 없습니다.",
+      },
+    ];
+  }
+
   return [
-    { label: "20°C 기준 보정 도수", value: `${correctedABV.toFixed(2)} %` },
+    {
+      label: `실제 알코올 도수 (${temperatureKey}°C, ${measuredABVKey}% 기준)`,
+      value: `${Number(actualABV).toFixed(2)} %`,
+    },
   ];
 };
 
@@ -88,10 +126,10 @@ const calculatorConfigs = {
     icon: "🥃",
   },
   temperature: {
-    navLabel: "온도 보정",
-    navDescription: "측정 온도에서 20°C 기준 도수로 보정",
-    title: "온도별 도수 보정",
-    description: "측정 온도에서 20°C 기준 도수로 보정",
+    navLabel: "도수 확인",
+    navDescription: "측정 온도와 주정분%에 따른 실제 알코올 도수 환산",
+    title: "실제 도수 확인",
+    description: "측정 온도와 주정분%에 따른 실제 알코올 도수 환산",
     fields: temperatureFields,
     calculateResult: calculateTemperatureCorrection,
     iconColor: "bg-blue-500",
