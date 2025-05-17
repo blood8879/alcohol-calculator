@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { SafeAreaView, StatusBar, Text, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import Modal from "react-native-modal";
 import alcoholConversionData from "../alcohol_conversion_data.json";
 import CalculationCard from "../components/CalculationCard";
