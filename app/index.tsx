@@ -24,6 +24,15 @@ const temperatureFields = [
   { label: "주정분", unit: "%", placeholder: "0" },
 ];
 
+const freezingPointFields = [
+  { label: "알코올 도수", unit: "%", placeholder: "0" },
+];
+
+const proofFields = [
+  { label: "ABV", unit: "%", placeholder: "0" },
+  { label: "Proof", unit: "Proof", placeholder: "0" },
+];
+
 const calculateDilution = (values: number[]) => {
   const [currentVolume, currentABV, targetABV] = values;
   if (
@@ -103,6 +112,67 @@ const calculateTemperatureCorrection = (values: number[]) => {
   ];
 };
 
+const calculateFreezingPoint = (values: number[]) => {
+  const [abv] = values;
+  if (abv <= 0) {
+    return [{ label: "오류", value: "알코올 도수는 0보다 커야 합니다" }];
+  }
+  if (abv >= 100) {
+    return [{ label: "오류", value: "알코올 도수는 100% 미만이어야 합니다" }];
+  }
+
+  const freezingPoint = -abv * 0.4;
+  return [
+    { label: "예상 빙점", value: `${freezingPoint.toFixed(1)} °C` },
+    { label: "참고", value: "실제 빙점은 다른 성분에 따라 달라질 수 있습니다" },
+  ];
+};
+
+const calculateProof = (values: number[]) => {
+  const [abv, proof] = values;
+
+  // 둘 다 입력된 경우
+  if (abv > 0 && proof > 0) {
+    return [{ label: "오류", value: "ABV 또는 Proof 중 하나만 입력해주세요" }];
+  }
+
+  // 둘 다 입력되지 않은 경우
+  if (abv <= 0 && proof <= 0) {
+    return [{ label: "오류", value: "ABV 또는 Proof 중 하나를 입력해주세요" }];
+  }
+
+  // ABV가 입력된 경우 -> Proof로 변환
+  if (abv > 0) {
+    if (abv > 100) {
+      return [{ label: "오류", value: "ABV는 100% 이하여야 합니다" }];
+    }
+    const usProof = abv * 2;
+    const ukProof = abv * 1.75;
+    return [
+      { label: "미국 기준 Proof", value: `${usProof.toFixed(1)} Proof` },
+      {
+        label: "영국 기준 Proof",
+        value: `${ukProof.toFixed(1)} Proof (참고용)`,
+      },
+    ];
+  }
+
+  // Proof가 입력된 경우 -> ABV로 변환
+  if (proof > 0) {
+    if (proof > 200) {
+      return [{ label: "오류", value: "Proof는 200 이하여야 합니다" }];
+    }
+    const calculatedABV = proof / 2; // 미국 기준
+    const ukABV = proof / 1.75; // 영국 기준
+    return [
+      { label: "ABV (미국 기준)", value: `${calculatedABV.toFixed(1)} %` },
+      { label: "ABV (영국 기준)", value: `${ukABV.toFixed(1)} % (참고용)` },
+    ];
+  }
+
+  return [{ label: "오류", value: "계산 중 오류가 발생했습니다" }];
+};
+
 // 계산기 설정
 const calculatorConfigs = {
   dilution: {
@@ -136,6 +206,26 @@ const calculatorConfigs = {
     calculateResult: calculateTemperatureCorrection,
     iconColor: "bg-blue-500",
     icon: "🌡️",
+  },
+  freezingPoint: {
+    navLabel: "빙점 계산",
+    navDescription: "알코올 도수에 따른 예상 빙점 계산",
+    title: "빙점 계산",
+    description: "알코올 도수에 따른 예상 빙점 계산",
+    fields: freezingPointFields,
+    calculateResult: calculateFreezingPoint,
+    iconColor: "bg-green-500",
+    icon: "🧊",
+  },
+  proof: {
+    navLabel: "Proof 변환",
+    navDescription: "ABV ↔ Proof 양방향 변환",
+    title: "Proof 변환",
+    description: "ABV ↔ Proof 양방향 변환 (둘 중 하나만 입력하세요)",
+    fields: proofFields,
+    calculateResult: calculateProof,
+    iconColor: "bg-purple-500",
+    icon: "🔄",
   },
 };
 
