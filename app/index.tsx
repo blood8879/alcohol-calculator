@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StatusBar, Text, View } from "react-native";
+import { ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Modal from "react-native-modal";
@@ -31,6 +31,19 @@ const freezingPointFields = [
 const proofFields = [
   { label: "ABV", unit: "%", placeholder: "0" },
   { label: "Proof", unit: "Proof", placeholder: "0" },
+];
+
+const blendingFields = [
+  { label: "첫 번째 술 도수", unit: "%", placeholder: "0" },
+  { label: "첫 번째 술 용량", unit: "ml", placeholder: "0" },
+  { label: "두 번째 술 도수", unit: "%", placeholder: "0" },
+  { label: "목표 도수", unit: "%", placeholder: "0" },
+  { label: "목표 용량", unit: "ml", placeholder: "0" },
+];
+
+const calorieFields = [
+  { label: "용량", unit: "ml", placeholder: "0" },
+  { label: "알코올 도수", unit: "%", placeholder: "0" },
 ];
 
 const calculateDilution = (values: number[]) => {
@@ -173,6 +186,83 @@ const calculateProof = (values: number[]) => {
   return [{ label: "오류", value: "계산 중 오류가 발생했습니다" }];
 };
 
+const calculateBlending = (values: number[]) => {
+  const [firstABV, firstVolume, secondABV, targetABV, targetVolume] = values;
+
+  if (
+    firstABV <= 0 ||
+    firstVolume <= 0 ||
+    secondABV <= 0 ||
+    targetABV <= 0 ||
+    targetVolume <= 0
+  ) {
+    return [{ label: "오류", value: "모든 값은 0보다 커야 합니다" }];
+  }
+
+  if (firstABV > 100 || secondABV > 100 || targetABV > 100) {
+    return [{ label: "오류", value: "도수는 100% 이하여야 합니다" }];
+  }
+
+  if (targetVolume <= firstVolume) {
+    return [
+      { label: "오류", value: "목표 용량은 첫 번째 술 용량보다 커야 합니다" },
+    ];
+  }
+
+  // V1 × ABV1 + V2 × ABV2 = (V1 + V2) × 목표ABV
+  // firstVolume × firstABV + secondVolume × secondABV = targetVolume × targetABV
+  // secondVolume = targetVolume - firstVolume 이므로
+  // firstVolume × firstABV + (targetVolume - firstVolume) × secondABV = targetVolume × targetABV
+  const secondVolume = targetVolume - firstVolume;
+  const calculatedTargetABV =
+    (firstVolume * firstABV + secondVolume * secondABV) / targetVolume;
+
+  // 목표 도수가 실제로 달성 가능한지 확인
+  const minPossibleABV = Math.min(firstABV, secondABV);
+  const maxPossibleABV = Math.max(firstABV, secondABV);
+
+  if (targetABV < minPossibleABV || targetABV > maxPossibleABV) {
+    return [
+      {
+        label: "오류",
+        value: `목표 도수는 ${minPossibleABV}%와 ${maxPossibleABV}% 사이여야 합니다`,
+      },
+    ];
+  }
+
+  return [
+    { label: "필요한 두 번째 술의 양", value: `${secondVolume.toFixed(2)} ml` },
+    {
+      label: "실제 달성되는 도수",
+      value: `${calculatedTargetABV.toFixed(2)} %`,
+    },
+    { label: "총 용량", value: `${targetVolume.toFixed(2)} ml` },
+  ];
+};
+
+const calculateCalorie = (values: number[]) => {
+  const [volume, abv] = values;
+
+  if (volume <= 0 || abv <= 0) {
+    return [{ label: "오류", value: "모든 값은 0보다 커야 합니다" }];
+  }
+
+  if (abv > 100) {
+    return [{ label: "오류", value: "알코올 도수는 100% 이하여야 합니다" }];
+  }
+
+  // 간단 공식: 용량(ml) × 도수(%) × 5.6
+  const alcoholCalories = volume * (abv / 100) * 5.6;
+
+  return [
+    { label: "알코올 칼로리", value: `${alcoholCalories.toFixed(1)} kcal` },
+    {
+      label: "참고사항",
+      value: "맥주, 와인 등은 당분 등으로 인한 추가 칼로리가 있습니다",
+    },
+  ];
+};
+
 // 계산기 설정
 const calculatorConfigs = {
   dilution: {
@@ -187,15 +277,25 @@ const calculatorConfigs = {
     iconColor: "bg-red-500",
     icon: "🧪",
   },
-  alcoholContent: {
-    navLabel: "알코올량",
-    navDescription: "주어진 용량과 도수에 따른 순알코올량 계산",
-    title: "알코올 순함량 계산",
-    description: "주어진 용량과 도수에 따른 순알코올량 계산",
-    fields: alcoholContentFields,
-    calculateResult: calculateAlcoholContent,
-    iconColor: "bg-orange-400",
-    icon: "🥃",
+  blending: {
+    navLabel: "블렌딩 계산",
+    navDescription: "서로 다른 도수의 술을 섞어서 원하는 도수 만들기",
+    title: "블렌딩 계산",
+    description: "서로 다른 도수의 술을 섞어서 원하는 도수 만들기",
+    fields: blendingFields,
+    calculateResult: calculateBlending,
+    iconColor: "bg-pink-500",
+    icon: "🍹",
+  },
+  calorie: {
+    navLabel: "칼로리 계산",
+    navDescription: "알코올 음료의 칼로리 계산",
+    title: "칼로리 계산",
+    description: "알코올 음료의 칼로리 계산",
+    fields: calorieFields,
+    calculateResult: calculateCalorie,
+    iconColor: "bg-yellow-500",
+    icon: "🔥",
   },
   temperature: {
     navLabel: "도수 확인",
@@ -207,6 +307,17 @@ const calculatorConfigs = {
     iconColor: "bg-blue-500",
     icon: "🌡️",
   },
+  alcoholContent: {
+    navLabel: "알코올량",
+    navDescription: "주어진 용량과 도수에 따른 순알코올량 계산",
+    title: "알코올 순함량 계산",
+    description: "주어진 용량과 도수에 따른 순알코올량 계산",
+    fields: alcoholContentFields,
+    calculateResult: calculateAlcoholContent,
+    iconColor: "bg-orange-400",
+    icon: "🥃",
+  },
+
   freezingPoint: {
     navLabel: "빙점 계산",
     navDescription: "알코올 도수에 따른 예상 빙점 계산",
@@ -255,7 +366,11 @@ export default function HomeScreen() {
     <SafeAreaView className="flex-1 bg-gray-900">
       <StatusBar barStyle="light-content" backgroundColor="#1e1e1e" />
 
-      <View className="p-4">
+      <ScrollView
+        className="p-4"
+        contentContainerStyle={{ paddingBottom: 100 }}
+        showsVerticalScrollIndicator={false}
+      >
         <Text className="text-2xl font-bold text-white mb-1">주류 계산기</Text>
         <Text className="text-sm text-gray-400 mb-6">
           계산하시려는 항목을 터치해주세요!
@@ -276,7 +391,7 @@ export default function HomeScreen() {
             );
           })}
         </View>
-      </View>
+      </ScrollView>
 
       <Modal
         isVisible={isModalVisible}

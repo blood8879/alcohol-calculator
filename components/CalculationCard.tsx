@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export type CalculationCardProps = {
   title: string;
@@ -46,13 +52,13 @@ const CalculationCard = ({
       </View>
 
       {/* 계산 영역 */}
-      <View className="p-4">
+      <ScrollView className="px-4" showsVerticalScrollIndicator={false}>
         {fields.map((field, index) => (
           <View
             key={index}
             className="flex-row items-center justify-between mb-4"
           >
-            <Text className="text-base text-gray-800 flex-1">
+            <Text className="text-base text-gray-800 flex-1 mr-2">
               {field.label}
             </Text>
             <View className="flex-row items-center w-[130px]">
@@ -79,9 +85,11 @@ const CalculationCard = ({
         {results.length > 0 && (
           <View className="mt-4 bg-gray-200 p-4 rounded-lg">
             {results.map((result, index) => (
-              <View key={index} className="flex-row justify-between mb-1">
-                <Text className="text-base text-gray-800">{result.label}</Text>
-                <Text className="text-base text-gray-800 font-bold">
+              <View key={index} className="mb-2 last:mb-0">
+                <Text className="text-base text-gray-800 font-semibold mb-1">
+                  {result.label}
+                </Text>
+                <Text className="text-base text-gray-800 font-bold flex-wrap">
                   {result.value}
                 </Text>
               </View>
@@ -91,12 +99,12 @@ const CalculationCard = ({
 
         {/* 닫기 버튼 */}
         <TouchableOpacity
-          className="border border-gray-300 p-3 rounded-lg mt-4"
+          className="border border-gray-300 p-3 rounded-lg mt-4 mb-4"
           onPress={onBack}
         >
           <Text className="text-gray-800 text-center">닫기</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };
