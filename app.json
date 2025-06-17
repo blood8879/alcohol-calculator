@@ -35,6 +35,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-7612314432840835~5764066171"
+        }
       ]
     ],
     "experiments": {
@@ -45,9 +51,10 @@
       "eas": {
         "projectId": "d6c23f8c-d27d-49c6-9c0b-98a680a3a08d"
       }
+    },
+    "react-native-google-mobile-ads": {
+      "android_app_id": "ca-app-pub-7612314432840835~5764066171",
+      "ios_app_id": "ca-app-pub-3940256099942544~1458002511"
     }
-  },
-  "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-7612314432840835~3082062514"
   }
 }

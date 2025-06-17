@@ -29,7 +29,7 @@ export default function RootLayout() {
 
   const adUnitId = __DEV__
     ? TestIds.BANNER
-    : "ca-app-pub-7612314432840835/3082062514";
+    : "ca-app-pub-7612314432840835/5764066171";
 
   const bannerRef = useRef<BannerAd>(null);
 
