@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export type CalculationCardProps = {
   title: string;
@@ -22,6 +23,7 @@ const CalculationCard = ({
   calculateResult,
   onBack,
 }: CalculationCardProps) => {
+  const { t } = useTranslation();
   const [values, setValues] = useState<number[]>(Array(fields.length).fill(0));
   const [results, setResults] = useState<{ label: string; value: string }[]>(
     []
@@ -78,7 +80,7 @@ const CalculationCard = ({
           onPress={handleCalculate}
         >
           <Text className="text-white text-center font-bold text-base">
-            계산하기
+            {t("common.calculate")}
           </Text>
         </TouchableOpacity>
 
@@ -102,7 +104,7 @@ const CalculationCard = ({
           className="border border-gray-300 p-3 rounded-lg mt-4 mb-4"
           onPress={onBack}
         >
-          <Text className="text-gray-800 text-center">닫기</Text>
+          <Text className="text-gray-800 text-center">{t("common.reset")}</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

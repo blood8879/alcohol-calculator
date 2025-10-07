@@ -18,7 +18,9 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.jiamyun.alcoholcalculator"
+      "package": "com.jiamyun.alcoholcalculator",
+      "targetSdkVersion": 35,
+      "enablePageSize16KB": true
     },
     "web": {
       "bundler": "metro",
@@ -41,7 +43,8 @@
         {
           "androidAppId": "ca-app-pub-7612314432840835~5764066171"
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

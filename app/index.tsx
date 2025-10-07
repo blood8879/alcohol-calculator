@@ -1,352 +1,138 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 import Modal from "react-native-modal";
-import alcoholConversionData from "../alcohol_conversion_data.json";
 import CalculationCard from "../components/CalculationCard";
 import CalculatorIcon from "../components/CalculatorIcon";
+import LanguageSelector from "../components/LanguageSelector";
+import {
+  calculateDilution,
+  calculateAlcoholContent,
+  calculateTemperatureCorrection,
+  calculateFreezingPoint,
+  calculateProof,
+  calculateBlending,
+  calculateCalorie,
+} from "../utils/calculatorUtils";
 
-// 계산 함수들
-const dilutionFields = [
-  { label: "현재 용량", unit: "ml", placeholder: "0" },
-  { label: "현재 도수", unit: "%", placeholder: "0" },
-  { label: "목표 도수", unit: "%", placeholder: "0" },
-];
-
-const alcoholContentFields = [
-  { label: "용량", unit: "ml", placeholder: "0" },
-  { label: "도수", unit: "%", placeholder: "0" },
-];
-
-const temperatureFields = [
-  { label: "측정 온도", unit: "°C", placeholder: "0" },
-  { label: "주정분", unit: "%", placeholder: "0" },
-];
-
-const freezingPointFields = [
-  { label: "알코올 도수", unit: "%", placeholder: "0" },
-];
-
-const proofFields = [
-  { label: "ABV", unit: "%", placeholder: "0" },
-  { label: "Proof", unit: "Proof", placeholder: "0" },
-];
-
-const blendingFields = [
-  { label: "첫 번째 술 도수", unit: "%", placeholder: "0" },
-  { label: "첫 번째 술 용량", unit: "ml", placeholder: "0" },
-  { label: "두 번째 술 도수", unit: "%", placeholder: "0" },
-  { label: "목표 도수", unit: "%", placeholder: "0" },
-  { label: "목표 용량", unit: "ml", placeholder: "0" },
-];
-
-const calorieFields = [
-  { label: "용량", unit: "ml", placeholder: "0" },
-  { label: "알코올 도수", unit: "%", placeholder: "0" },
-];
-
-const calculateDilution = (values: number[]) => {
-  const [currentVolume, currentABV, targetABV] = values;
-  if (
-    currentABV <= targetABV ||
-    currentVolume <= 0 ||
-    currentABV <= 0 ||
-    targetABV <= 0
-  ) {
-    return [
-      { label: "오류", value: "현재 도수는 목표 도수보다 높아야 합니다" },
-    ];
-  }
-  const finalVolume = (currentVolume * currentABV) / targetABV;
-  const waterToAdd = finalVolume - currentVolume;
-  return [
-    { label: "추가할 물의 양", value: `${waterToAdd.toFixed(2)} ml` },
-    { label: "최종 용량", value: `${finalVolume.toFixed(2)} ml` },
-  ];
-};
-
-const calculateAlcoholContent = (values: number[]) => {
-  const [volume, abv] = values;
-  if (volume <= 0 || abv <= 0) {
-    return [{ label: "오류", value: "모든 값은 0보다 커야 합니다" }];
-  }
-  const pureAlcohol = volume * (abv / 100);
-  return [{ label: "순알코올량", value: `${pureAlcohol.toFixed(2)} ml` }];
-};
-
-const calculateTemperatureCorrection = (values: number[]) => {
-  const [temperature, measuredABV] = values;
-
-  if (measuredABV <= 0) {
-    return [{ label: "오류", value: "도수는 0보다 커야 합니다" }];
-  }
-
-  // 입력된 온도와 가장 가까운 온도를 찾습니다.
-  const availableTemperatures = Object.keys(alcoholConversionData).map(
-    parseFloat
-  );
-  const closestTemperature = availableTemperatures.reduce((prev, curr) =>
-    Math.abs(curr - temperature) < Math.abs(prev - temperature) ? curr : prev
-  );
-
-  const temperatureKey = closestTemperature.toFixed(1);
-  const temperatureData =
-    alcoholConversionData[temperatureKey as keyof typeof alcoholConversionData];
-
-  if (!temperatureData) {
-    return [{ label: "오류", value: "해당 온도 데이터를 찾을 수 없습니다." }];
-  }
-
-  // 입력된 측정 ABV와 가장 가까운 측정 ABV를 찾습니다.
-  const availableMeasuredABVs = Object.keys(temperatureData).map(parseFloat);
-  const closestMeasuredABV = availableMeasuredABVs.reduce((prev, curr) =>
-    Math.abs(curr - measuredABV) < Math.abs(prev - measuredABV) ? curr : prev
-  );
-
-  const measuredABVKey = closestMeasuredABV.toFixed(1);
-  const actualABV =
-    temperatureData[measuredABVKey as keyof typeof temperatureData];
-
-  if (actualABV === undefined || actualABV === null) {
-    return [
-      {
-        label: "오류",
-        value: "해당 측정 도수에 대한 데이터를 찾을 수 없습니다.",
-      },
-    ];
-  }
-
-  return [
-    {
-      label: `실제 알코올 도수 (${temperatureKey}°C, ${measuredABVKey}% 기준)`,
-      value: `${Number(actualABV).toFixed(2)} %`,
-    },
-  ];
-};
-
-const calculateFreezingPoint = (values: number[]) => {
-  const [abv] = values;
-  if (abv <= 0) {
-    return [{ label: "오류", value: "알코올 도수는 0보다 커야 합니다" }];
-  }
-  if (abv >= 100) {
-    return [{ label: "오류", value: "알코올 도수는 100% 미만이어야 합니다" }];
-  }
-
-  const freezingPoint = -abv * 0.4;
-  return [
-    { label: "예상 빙점", value: `${freezingPoint.toFixed(1)} °C` },
-    { label: "참고", value: "실제 빙점은 다른 성분에 따라 달라질 수 있습니다" },
-  ];
-};
-
-const calculateProof = (values: number[]) => {
-  const [abv, proof] = values;
-
-  // 둘 다 입력된 경우
-  if (abv > 0 && proof > 0) {
-    return [{ label: "오류", value: "ABV 또는 Proof 중 하나만 입력해주세요" }];
-  }
-
-  // 둘 다 입력되지 않은 경우
-  if (abv <= 0 && proof <= 0) {
-    return [{ label: "오류", value: "ABV 또는 Proof 중 하나를 입력해주세요" }];
-  }
-
-  // ABV가 입력된 경우 -> Proof로 변환
-  if (abv > 0) {
-    if (abv > 100) {
-      return [{ label: "오류", value: "ABV는 100% 이하여야 합니다" }];
-    }
-    const usProof = abv * 2;
-    const ukProof = abv * 1.75;
-    return [
-      { label: "미국 기준 Proof", value: `${usProof.toFixed(1)} Proof` },
-      {
-        label: "영국 기준 Proof",
-        value: `${ukProof.toFixed(1)} Proof (참고용)`,
-      },
-    ];
-  }
-
-  // Proof가 입력된 경우 -> ABV로 변환
-  if (proof > 0) {
-    if (proof > 200) {
-      return [{ label: "오류", value: "Proof는 200 이하여야 합니다" }];
-    }
-    const calculatedABV = proof / 2; // 미국 기준
-    const ukABV = proof / 1.75; // 영국 기준
-    return [
-      { label: "ABV (미국 기준)", value: `${calculatedABV.toFixed(1)} %` },
-      { label: "ABV (영국 기준)", value: `${ukABV.toFixed(1)} % (참고용)` },
-    ];
-  }
-
-  return [{ label: "오류", value: "계산 중 오류가 발생했습니다" }];
-};
-
-const calculateBlending = (values: number[]) => {
-  const [firstABV, firstVolume, secondABV, targetABV, targetVolume] = values;
-
-  if (
-    firstABV <= 0 ||
-    firstVolume <= 0 ||
-    secondABV <= 0 ||
-    targetABV <= 0 ||
-    targetVolume <= 0
-  ) {
-    return [{ label: "오류", value: "모든 값은 0보다 커야 합니다" }];
-  }
-
-  if (firstABV > 100 || secondABV > 100 || targetABV > 100) {
-    return [{ label: "오류", value: "도수는 100% 이하여야 합니다" }];
-  }
-
-  if (targetVolume <= firstVolume) {
-    return [
-      { label: "오류", value: "목표 용량은 첫 번째 술 용량보다 커야 합니다" },
-    ];
-  }
-
-  // V1 × ABV1 + V2 × ABV2 = (V1 + V2) × 목표ABV
-  // firstVolume × firstABV + secondVolume × secondABV = targetVolume × targetABV
-  // secondVolume = targetVolume - firstVolume 이므로
-  // firstVolume × firstABV + (targetVolume - firstVolume) × secondABV = targetVolume × targetABV
-  const secondVolume = targetVolume - firstVolume;
-  const calculatedTargetABV =
-    (firstVolume * firstABV + secondVolume * secondABV) / targetVolume;
-
-  // 목표 도수가 실제로 달성 가능한지 확인
-  const minPossibleABV = Math.min(firstABV, secondABV);
-  const maxPossibleABV = Math.max(firstABV, secondABV);
-
-  if (targetABV < minPossibleABV || targetABV > maxPossibleABV) {
-    return [
-      {
-        label: "오류",
-        value: `목표 도수는 ${minPossibleABV}%와 ${maxPossibleABV}% 사이여야 합니다`,
-      },
-    ];
-  }
-
-  return [
-    { label: "필요한 두 번째 술의 양", value: `${secondVolume.toFixed(2)} ml` },
-    {
-      label: "실제 달성되는 도수",
-      value: `${calculatedTargetABV.toFixed(2)} %`,
-    },
-    { label: "총 용량", value: `${targetVolume.toFixed(2)} ml` },
-  ];
-};
-
-const calculateCalorie = (values: number[]) => {
-  const [volume, abv] = values;
-
-  if (volume <= 0 || abv <= 0) {
-    return [{ label: "오류", value: "모든 값은 0보다 커야 합니다" }];
-  }
-
-  if (abv > 100) {
-    return [{ label: "오류", value: "알코올 도수는 100% 이하여야 합니다" }];
-  }
-
-  // 간단 공식: 용량(ml) × 도수(%) × 5.6
-  const alcoholCalories = volume * (abv / 100) * 5.6;
-
-  return [
-    { label: "알코올 칼로리", value: `${alcoholCalories.toFixed(1)} kcal` },
-    {
-      label: "참고사항",
-      value: "맥주, 와인 등은 당분 등으로 인한 추가 칼로리가 있습니다",
-    },
-  ];
-};
-
-// 계산기 설정
-const calculatorConfigs = {
-  dilution: {
-    navLabel: "도수 조정",
-    navDescription:
-      "현재 도수와 용량에서 원하는 도수로 만들기 위해 필요한 물의 양 계산",
-    title: "도수 조정 계산",
-    description:
-      "현재 도수와 용량에서 원하는 도수로 만들기 위해 필요한 물의 양 계산",
-    fields: dilutionFields,
-    calculateResult: calculateDilution,
-    iconColor: "bg-red-500",
-    icon: "🧪",
-  },
-  blending: {
-    navLabel: "블렌딩 계산",
-    navDescription: "서로 다른 도수의 술을 섞어서 원하는 도수 만들기",
-    title: "블렌딩 계산",
-    description: "서로 다른 도수의 술을 섞어서 원하는 도수 만들기",
-    fields: blendingFields,
-    calculateResult: calculateBlending,
-    iconColor: "bg-pink-500",
-    icon: "🍹",
-  },
-  calorie: {
-    navLabel: "칼로리 계산",
-    navDescription: "알코올 음료의 칼로리 계산",
-    title: "칼로리 계산",
-    description: "알코올 음료의 칼로리 계산",
-    fields: calorieFields,
-    calculateResult: calculateCalorie,
-    iconColor: "bg-yellow-500",
-    icon: "🔥",
-  },
-  temperature: {
-    navLabel: "도수 확인",
-    navDescription: "측정 온도와 주정분%에 따른 실제 알코올 도수 환산",
-    title: "실제 도수 확인",
-    description: "측정 온도와 주정분%에 따른 실제 알코올 도수 환산",
-    fields: temperatureFields,
-    calculateResult: calculateTemperatureCorrection,
-    iconColor: "bg-blue-500",
-    icon: "🌡️",
-  },
-  alcoholContent: {
-    navLabel: "알코올량",
-    navDescription: "주어진 용량과 도수에 따른 순알코올량 계산",
-    title: "알코올 순함량 계산",
-    description: "주어진 용량과 도수에 따른 순알코올량 계산",
-    fields: alcoholContentFields,
-    calculateResult: calculateAlcoholContent,
-    iconColor: "bg-orange-400",
-    icon: "🥃",
-  },
-
-  freezingPoint: {
-    navLabel: "빙점 계산",
-    navDescription: "알코올 도수에 따른 예상 빙점 계산",
-    title: "빙점 계산",
-    description: "알코올 도수에 따른 예상 빙점 계산",
-    fields: freezingPointFields,
-    calculateResult: calculateFreezingPoint,
-    iconColor: "bg-green-500",
-    icon: "🧊",
-  },
-  proof: {
-    navLabel: "Proof 변환",
-    navDescription: "ABV ↔ Proof 양방향 변환",
-    title: "Proof 변환",
-    description: "ABV ↔ Proof 양방향 변환 (둘 중 하나만 입력하세요)",
-    fields: proofFields,
-    calculateResult: calculateProof,
-    iconColor: "bg-purple-500",
-    icon: "🔄",
-  },
-};
-
-type CalculatorKey = keyof typeof calculatorConfigs;
+type CalculatorKey =
+  | "dilution"
+  | "blending"
+  | "calorie"
+  | "temperature"
+  | "alcoholContent"
+  | "freezingPoint"
+  | "proof";
 
 // 메인 화면
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const [selectedCalculatorKey, setSelectedCalculatorKey] =
     useState<CalculatorKey | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
+
+  // 계산기 설정을 useMemo로 메모이제이션하여 언어 변경 시 자동으로 업데이트
+  const calculatorConfigs = useMemo(
+    () => ({
+      dilution: {
+        navLabel: t("calculators.dilution.navLabel"),
+        navDescription: t("calculators.dilution.navDescription"),
+        title: t("calculators.dilution.title"),
+        description: t("calculators.dilution.description"),
+        fields: [
+          { label: t("calculators.dilution.currentVolume"), unit: t("units.ml"), placeholder: "0" },
+          { label: t("calculators.dilution.currentABV"), unit: t("units.percent"), placeholder: "0" },
+          { label: t("calculators.dilution.targetABV"), unit: t("units.percent"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateDilution(values, t),
+        iconColor: "bg-red-500",
+        icon: "🧪",
+      },
+      blending: {
+        navLabel: t("calculators.blending.navLabel"),
+        navDescription: t("calculators.blending.navDescription"),
+        title: t("calculators.blending.title"),
+        description: t("calculators.blending.description"),
+        fields: [
+          { label: t("calculators.blending.firstABV"), unit: t("units.percent"), placeholder: "0" },
+          { label: t("calculators.blending.firstVolume"), unit: t("units.ml"), placeholder: "0" },
+          { label: t("calculators.blending.secondABV"), unit: t("units.percent"), placeholder: "0" },
+          { label: t("calculators.blending.targetABV"), unit: t("units.percent"), placeholder: "0" },
+          { label: t("calculators.blending.targetVolume"), unit: t("units.ml"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateBlending(values, t),
+        iconColor: "bg-pink-500",
+        icon: "🍹",
+      },
+      calorie: {
+        navLabel: t("calculators.calorie.navLabel"),
+        navDescription: t("calculators.calorie.navDescription"),
+        title: t("calculators.calorie.title"),
+        description: t("calculators.calorie.description"),
+        fields: [
+          { label: t("calculators.calorie.volume"), unit: t("units.ml"), placeholder: "0" },
+          { label: t("calculators.calorie.abv"), unit: t("units.percent"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateCalorie(values, t),
+        iconColor: "bg-yellow-500",
+        icon: "🔥",
+      },
+      temperature: {
+        navLabel: t("calculators.temperature.navLabel"),
+        navDescription: t("calculators.temperature.navDescription"),
+        title: t("calculators.temperature.title"),
+        description: t("calculators.temperature.description"),
+        fields: [
+          { label: t("calculators.temperature.measuredTemp"), unit: t("units.celsius"), placeholder: "0" },
+          { label: t("calculators.temperature.measuredABV"), unit: t("units.percent"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateTemperatureCorrection(values, t),
+        iconColor: "bg-blue-500",
+        icon: "🌡️",
+      },
+      alcoholContent: {
+        navLabel: t("calculators.alcoholContent.navLabel"),
+        navDescription: t("calculators.alcoholContent.navDescription"),
+        title: t("calculators.alcoholContent.title"),
+        description: t("calculators.alcoholContent.description"),
+        fields: [
+          { label: t("calculators.alcoholContent.volume"), unit: t("units.ml"), placeholder: "0" },
+          { label: t("calculators.alcoholContent.abv"), unit: t("units.percent"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateAlcoholContent(values, t),
+        iconColor: "bg-orange-400",
+        icon: "🥃",
+      },
+      freezingPoint: {
+        navLabel: t("calculators.freezingPoint.navLabel"),
+        navDescription: t("calculators.freezingPoint.navDescription"),
+        title: t("calculators.freezingPoint.title"),
+        description: t("calculators.freezingPoint.description"),
+        fields: [
+          { label: t("calculators.freezingPoint.abv"), unit: t("units.percent"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateFreezingPoint(values, t),
+        iconColor: "bg-green-500",
+        icon: "🧊",
+      },
+      proof: {
+        navLabel: t("calculators.proof.navLabel"),
+        navDescription: t("calculators.proof.navDescription"),
+        title: t("calculators.proof.title"),
+        description: t("calculators.proof.description"),
+        fields: [
+          { label: t("calculators.proof.abv"), unit: t("units.percent"), placeholder: "0" },
+          { label: t("calculators.proof.proof"), unit: t("units.proof"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => calculateProof(values, t),
+        iconColor: "bg-purple-500",
+        icon: "🔄",
+      },
+    }),
+    [t]
+  );
 
   const selectedCalculator = selectedCalculatorKey
     ? calculatorConfigs[selectedCalculatorKey]
@@ -354,7 +140,7 @@ export default function HomeScreen() {
 
   const handleBack = () => {
     setModalVisible(false);
-    setTimeout(() => setSelectedCalculatorKey(null), 300); // 모달이 닫힌 후 선택 초기화
+    setTimeout(() => setSelectedCalculatorKey(null), 300);
   };
 
   const openCalculator = (key: CalculatorKey) => {
@@ -371,14 +157,18 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text className="text-2xl font-bold text-white mb-1">주류 계산기</Text>
+        <Text className="text-2xl font-bold text-white mb-1">
+          {t("common.appTitle")}
+        </Text>
         <Text className="text-sm text-gray-400 mb-6">
-          계산하시려는 항목을 터치해주세요!
+          {t("common.appSubtitle")}
         </Text>
 
+        <LanguageSelector />
+
         <View className="flex-col space-y-4">
-          {Object.keys(calculatorConfigs).map((key) => {
-            const config = calculatorConfigs[key as CalculatorKey];
+          {(Object.keys(calculatorConfigs) as CalculatorKey[]).map((key) => {
+            const config = calculatorConfigs[key];
             return (
               <CalculatorIcon
                 key={key}
@@ -386,7 +176,7 @@ export default function HomeScreen() {
                 label={config.navLabel}
                 description={config.navDescription}
                 iconColor={config.iconColor}
-                onPress={() => openCalculator(key as CalculatorKey)}
+                onPress={() => openCalculator(key)}
               />
             );
           })}

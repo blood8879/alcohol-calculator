@@ -1,0 +1,116 @@
+{
+  "common": {
+    "appTitle": "Calculadora de Alcohol",
+    "appSubtitle": "¡Toca el elemento que quieres calcular!",
+    "calculate": "Calcular",
+    "reset": "Cerrar",
+    "error": "Error",
+    "reference": "Referencia",
+    "referenceNote": "Nota"
+  },
+  "calculators": {
+    "dilution": {
+      "navLabel": "Ajuste de Graduación",
+      "navDescription": "Calcular la cantidad de agua necesaria para alcanzar la graduación deseada",
+      "title": "Calculadora de Ajuste de Graduación",
+      "description": "Calcular la cantidad de agua necesaria para alcanzar la graduación deseada",
+      "currentVolume": "Volumen Actual",
+      "currentABV": "Graduación Actual",
+      "targetABV": "Graduación Objetivo",
+      "waterToAdd": "Agua a Añadir",
+      "finalVolume": "Volumen Final",
+      "errorHigher": "La graduación actual debe ser mayor que la graduación objetivo"
+    },
+    "blending": {
+      "navLabel": "Calculadora de Mezclas",
+      "navDescription": "Mezclar diferentes graduaciones para lograr la fuerza deseada",
+      "title": "Calculadora de Mezclas",
+      "description": "Mezclar diferentes graduaciones para lograr la fuerza deseada",
+      "firstABV": "Graduación del Primer Alcohol",
+      "firstVolume": "Volumen del Primer Alcohol",
+      "secondABV": "Graduación del Segundo Alcohol",
+      "targetABV": "Graduación Objetivo",
+      "targetVolume": "Volumen Objetivo",
+      "secondVolumeNeeded": "Volumen Necesario del Segundo Alcohol",
+      "actualABV": "Graduación Real Alcanzada",
+      "totalVolume": "Volumen Total",
+      "errorTargetRange": "La graduación objetivo debe estar entre {{min}}% y {{max}}%",
+      "errorTargetLarger": "El volumen objetivo debe ser mayor que el volumen del primer alcohol"
+    },
+    "calorie": {
+      "navLabel": "Calculadora de Calorías",
+      "navDescription": "Calcular calorías en bebidas alcohólicas",
+      "title": "Calculadora de Calorías",
+      "description": "Calcular calorías en bebidas alcohólicas",
+      "volume": "Volumen",
+      "abv": "Contenido de Alcohol",
+      "alcoholCalories": "Calorías del Alcohol",
+      "additionalNote": "La cerveza, el vino, etc. pueden tener calorías adicionales de azúcares"
+    },
+    "temperature": {
+      "navLabel": "Verificación de Graduación",
+      "navDescription": "Convertir graduación medida a temperatura específica a graduación real",
+      "title": "Verificación de Graduación Real",
+      "description": "Convertir graduación medida a temperatura específica a graduación real",
+      "measuredTemp": "Temperatura Medida",
+      "measuredABV": "Contenido de Alcohol",
+      "actualABV": "Graduación Real (a {{temp}}°C, base {{abv}}%)",
+      "errorNoData": "Datos de temperatura no encontrados.",
+      "errorNoABVData": "Datos de graduación no encontrados para esta medición."
+    },
+    "alcoholContent": {
+      "navLabel": "Contenido de Alcohol",
+      "navDescription": "Calcular el contenido de alcohol puro del volumen y graduación",
+      "title": "Calculadora de Contenido de Alcohol Puro",
+      "description": "Calcular el contenido de alcohol puro del volumen y graduación",
+      "volume": "Volumen",
+      "abv": "Graduación",
+      "pureAlcohol": "Contenido de Alcohol Puro"
+    },
+    "freezingPoint": {
+      "navLabel": "Punto de Congelación",
+      "navDescription": "Calcular el punto de congelación esperado según la graduación",
+      "title": "Calculadora de Punto de Congelación",
+      "description": "Calcular el punto de congelación esperado según la graduación",
+      "abv": "Contenido de Alcohol",
+      "expectedFreezing": "Punto de Congelación Esperado",
+      "note": "El punto de congelación real puede variar según otros componentes",
+      "errorTooHigh": "El contenido de alcohol debe ser inferior al 100%"
+    },
+    "proof": {
+      "navLabel": "Conversor de Proof",
+      "navDescription": "Conversión bidireccional ABV ↔ Proof",
+      "title": "Conversor de Proof",
+      "description": "Conversión bidireccional ABV ↔ Proof (introduce solo uno)",
+      "abv": "ABV",
+      "proof": "Proof",
+      "usProof": "Proof EE.UU.",
+      "ukProof": "Proof Reino Unido (Referencia)",
+      "abvUS": "ABV (Estándar EE.UU.)",
+      "abvUK": "ABV (Estándar Reino Unido) (Referencia)",
+      "errorBoth": "Por favor, introduce ABV o Proof, no ambos",
+      "errorNone": "Por favor, introduce ABV o Proof",
+      "errorABVHigh": "ABV debe ser 100% o menos",
+      "errorProofHigh": "Proof debe ser 200 o menos"
+    }
+  },
+  "errors": {
+    "positiveValues": "Todos los valores deben ser mayores que 0",
+    "abvUnder100": "La graduación debe ser 100% o menos",
+    "abvPositive": "La graduación debe ser mayor que 0",
+    "abvUnder100Alcohol": "El contenido de alcohol debe ser inferior al 100%",
+    "abvPositiveAlcohol": "El contenido de alcohol debe ser mayor que 0",
+    "calculationError": "Ocurrió un error durante el cálculo"
+  },
+  "units": {
+    "ml": "ml",
+    "percent": "%",
+    "celsius": "°C",
+    "proof": "Proof",
+    "kcal": "kcal"
+  },
+  "settings": {
+    "language": "Idioma",
+    "selectLanguage": "Seleccionar Idioma"
+  }
+}

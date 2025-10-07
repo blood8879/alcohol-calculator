@@ -1,0 +1,116 @@
+{
+  "common": {
+    "appTitle": "주류 계산기",
+    "appSubtitle": "계산하시려는 항목을 터치해주세요!",
+    "calculate": "계산하기",
+    "reset": "닫기",
+    "error": "오류",
+    "reference": "참고",
+    "referenceNote": "참고사항"
+  },
+  "calculators": {
+    "dilution": {
+      "navLabel": "도수 조정",
+      "navDescription": "현재 도수와 용량에서 원하는 도수로 만들기 위해 필요한 물의 양 계산",
+      "title": "도수 조정 계산",
+      "description": "현재 도수와 용량에서 원하는 도수로 만들기 위해 필요한 물의 양 계산",
+      "currentVolume": "현재 용량",
+      "currentABV": "현재 도수",
+      "targetABV": "목표 도수",
+      "waterToAdd": "추가할 물의 양",
+      "finalVolume": "최종 용량",
+      "errorHigher": "현재 도수는 목표 도수보다 높아야 합니다"
+    },
+    "blending": {
+      "navLabel": "블렌딩 계산",
+      "navDescription": "서로 다른 도수의 술을 섞어서 원하는 도수 만들기",
+      "title": "블렌딩 계산",
+      "description": "서로 다른 도수의 술을 섞어서 원하는 도수 만들기",
+      "firstABV": "첫 번째 술 도수",
+      "firstVolume": "첫 번째 술 용량",
+      "secondABV": "두 번째 술 도수",
+      "targetABV": "목표 도수",
+      "targetVolume": "목표 용량",
+      "secondVolumeNeeded": "필요한 두 번째 술의 양",
+      "actualABV": "실제 달성되는 도수",
+      "totalVolume": "총 용량",
+      "errorTargetRange": "목표 도수는 {{min}}%와 {{max}}% 사이여야 합니다",
+      "errorTargetLarger": "목표 용량은 첫 번째 술 용량보다 커야 합니다"
+    },
+    "calorie": {
+      "navLabel": "칼로리 계산",
+      "navDescription": "알코올 음료의 칼로리 계산",
+      "title": "칼로리 계산",
+      "description": "알코올 음료의 칼로리 계산",
+      "volume": "용량",
+      "abv": "알코올 도수",
+      "alcoholCalories": "알코올 칼로리",
+      "additionalNote": "맥주, 와인 등은 당분 등으로 인한 추가 칼로리가 있습니다"
+    },
+    "temperature": {
+      "navLabel": "도수 확인",
+      "navDescription": "측정 온도와 주정분%에 따른 실제 알코올 도수 환산",
+      "title": "실제 도수 확인",
+      "description": "측정 온도와 주정분%에 따른 실제 알코올 도수 환산",
+      "measuredTemp": "측정 온도",
+      "measuredABV": "주정분",
+      "actualABV": "실제 알코올 도수 ({{temp}}°C, {{abv}}% 기준)",
+      "errorNoData": "해당 온도 데이터를 찾을 수 없습니다.",
+      "errorNoABVData": "해당 측정 도수에 대한 데이터를 찾을 수 없습니다."
+    },
+    "alcoholContent": {
+      "navLabel": "알코올량",
+      "navDescription": "주어진 용량과 도수에 따른 순알코올량 계산",
+      "title": "알코올 순함량 계산",
+      "description": "주어진 용량과 도수에 따른 순알코올량 계산",
+      "volume": "용량",
+      "abv": "도수",
+      "pureAlcohol": "순알코올량"
+    },
+    "freezingPoint": {
+      "navLabel": "빙점 계산",
+      "navDescription": "알코올 도수에 따른 예상 빙점 계산",
+      "title": "빙점 계산",
+      "description": "알코올 도수에 따른 예상 빙점 계산",
+      "abv": "알코올 도수",
+      "expectedFreezing": "예상 빙점",
+      "note": "실제 빙점은 다른 성분에 따라 달라질 수 있습니다",
+      "errorTooHigh": "알코올 도수는 100% 미만이어야 합니다"
+    },
+    "proof": {
+      "navLabel": "Proof 변환",
+      "navDescription": "ABV ↔ Proof 양방향 변환",
+      "title": "Proof 변환",
+      "description": "ABV ↔ Proof 양방향 변환 (둘 중 하나만 입력하세요)",
+      "abv": "ABV",
+      "proof": "Proof",
+      "usProof": "미국 기준 Proof",
+      "ukProof": "영국 기준 Proof (참고용)",
+      "abvUS": "ABV (미국 기준)",
+      "abvUK": "ABV (영국 기준) (참고용)",
+      "errorBoth": "ABV 또는 Proof 중 하나만 입력해주세요",
+      "errorNone": "ABV 또는 Proof 중 하나를 입력해주세요",
+      "errorABVHigh": "ABV는 100% 이하여야 합니다",
+      "errorProofHigh": "Proof는 200 이하여야 합니다"
+    }
+  },
+  "errors": {
+    "positiveValues": "모든 값은 0보다 커야 합니다",
+    "abvUnder100": "도수는 100% 이하여야 합니다",
+    "abvPositive": "도수는 0보다 커야 합니다",
+    "abvUnder100Alcohol": "알코올 도수는 100% 이하여야 합니다",
+    "abvPositiveAlcohol": "알코올 도수는 0보다 커야 합니다",
+    "calculationError": "계산 중 오류가 발생했습니다"
+  },
+  "units": {
+    "ml": "ml",
+    "percent": "%",
+    "celsius": "°C",
+    "proof": "Proof",
+    "kcal": "kcal"
+  },
+  "settings": {
+    "language": "언어",
+    "selectLanguage": "언어 선택"
+  }
+}

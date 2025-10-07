@@ -15,8 +15,9 @@ import "../global.css";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import { initI18n } from "../i18n";
 import {
   BannerAd,
   BannerAdSize,
@@ -26,6 +27,7 @@ import {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
+  const [i18nInitialized, setI18nInitialized] = useState(false);
 
   const adUnitId = __DEV__
     ? TestIds.BANNER
@@ -37,7 +39,13 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  if (!loaded) {
+  useEffect(() => {
+    initI18n().then(() => {
+      setI18nInitialized(true);
+    });
+  }, []);
+
+  if (!loaded || !i18nInitialized) {
     // Async font loading only occurs in development.
     return null;
   }

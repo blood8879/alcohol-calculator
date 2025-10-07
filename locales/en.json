@@ -1,0 +1,116 @@
+{
+  "common": {
+    "appTitle": "Alcohol Calculator",
+    "appSubtitle": "Touch the item you want to calculate!",
+    "calculate": "Calculate",
+    "reset": "Close",
+    "error": "Error",
+    "reference": "Reference",
+    "referenceNote": "Note"
+  },
+  "calculators": {
+    "dilution": {
+      "navLabel": "ABV Adjustment",
+      "navDescription": "Calculate the amount of water needed to reach desired ABV",
+      "title": "ABV Adjustment Calculator",
+      "description": "Calculate the amount of water needed to reach desired ABV",
+      "currentVolume": "Current Volume",
+      "currentABV": "Current ABV",
+      "targetABV": "Target ABV",
+      "waterToAdd": "Water to Add",
+      "finalVolume": "Final Volume",
+      "errorHigher": "Current ABV must be higher than target ABV"
+    },
+    "blending": {
+      "navLabel": "Blending Calculator",
+      "navDescription": "Mix different ABVs to achieve desired strength",
+      "title": "Blending Calculator",
+      "description": "Mix different ABVs to achieve desired strength",
+      "firstABV": "First Alcohol ABV",
+      "firstVolume": "First Alcohol Volume",
+      "secondABV": "Second Alcohol ABV",
+      "targetABV": "Target ABV",
+      "targetVolume": "Target Volume",
+      "secondVolumeNeeded": "Second Alcohol Volume Needed",
+      "actualABV": "Actual ABV Achieved",
+      "totalVolume": "Total Volume",
+      "errorTargetRange": "Target ABV must be between {{min}}% and {{max}}%",
+      "errorTargetLarger": "Target volume must be larger than first alcohol volume"
+    },
+    "calorie": {
+      "navLabel": "Calorie Calculator",
+      "navDescription": "Calculate calories in alcoholic beverages",
+      "title": "Calorie Calculator",
+      "description": "Calculate calories in alcoholic beverages",
+      "volume": "Volume",
+      "abv": "Alcohol Content",
+      "alcoholCalories": "Alcohol Calories",
+      "additionalNote": "Beer, wine, etc. may have additional calories from sugars"
+    },
+    "temperature": {
+      "navLabel": "ABV Verification",
+      "navDescription": "Convert measured ABV at specific temperature to actual ABV",
+      "title": "Actual ABV Verification",
+      "description": "Convert measured ABV at specific temperature to actual ABV",
+      "measuredTemp": "Measured Temperature",
+      "measuredABV": "Spirit Content",
+      "actualABV": "Actual ABV (at {{temp}}°C, {{abv}}% basis)",
+      "errorNoData": "Temperature data not found.",
+      "errorNoABVData": "ABV data not found for this measurement."
+    },
+    "alcoholContent": {
+      "navLabel": "Alcohol Content",
+      "navDescription": "Calculate pure alcohol content from volume and ABV",
+      "title": "Pure Alcohol Content Calculator",
+      "description": "Calculate pure alcohol content from volume and ABV",
+      "volume": "Volume",
+      "abv": "ABV",
+      "pureAlcohol": "Pure Alcohol Content"
+    },
+    "freezingPoint": {
+      "navLabel": "Freezing Point",
+      "navDescription": "Calculate expected freezing point based on ABV",
+      "title": "Freezing Point Calculator",
+      "description": "Calculate expected freezing point based on ABV",
+      "abv": "Alcohol Content",
+      "expectedFreezing": "Expected Freezing Point",
+      "note": "Actual freezing point may vary depending on other components",
+      "errorTooHigh": "Alcohol content must be below 100%"
+    },
+    "proof": {
+      "navLabel": "Proof Converter",
+      "navDescription": "ABV ↔ Proof bidirectional conversion",
+      "title": "Proof Converter",
+      "description": "ABV ↔ Proof bidirectional conversion (enter only one)",
+      "abv": "ABV",
+      "proof": "Proof",
+      "usProof": "US Proof",
+      "ukProof": "UK Proof (Reference)",
+      "abvUS": "ABV (US Standard)",
+      "abvUK": "ABV (UK Standard) (Reference)",
+      "errorBoth": "Please enter either ABV or Proof, not both",
+      "errorNone": "Please enter either ABV or Proof",
+      "errorABVHigh": "ABV must be 100% or less",
+      "errorProofHigh": "Proof must be 200 or less"
+    }
+  },
+  "errors": {
+    "positiveValues": "All values must be greater than 0",
+    "abvUnder100": "ABV must be 100% or less",
+    "abvPositive": "ABV must be greater than 0",
+    "abvUnder100Alcohol": "Alcohol content must be below 100%",
+    "abvPositiveAlcohol": "Alcohol content must be greater than 0",
+    "calculationError": "An error occurred during calculation"
+  },
+  "units": {
+    "ml": "ml",
+    "percent": "%",
+    "celsius": "°C",
+    "proof": "Proof",
+    "kcal": "kcal"
+  },
+  "settings": {
+    "language": "Language",
+    "selectLanguage": "Select Language"
+  }
+}
