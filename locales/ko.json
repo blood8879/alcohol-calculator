@@ -6,7 +6,31 @@
     "reset": "닫기",
     "error": "오류",
     "reference": "참고",
-    "referenceNote": "참고사항"
+    "referenceNote": "참고사항",
+    "cancel": "취소",
+    "delete": "삭제",
+    "back": "뒤로",
+    "share": "결과 공유"
+  },
+  "time": {
+    "justNow": "방금",
+    "minutesAgo": "{{count}}분 전",
+    "hoursAgo": "{{count}}시간 전",
+    "daysAgo": "{{count}}일 전",
+    "sun": "일",
+    "mon": "월",
+    "tue": "화",
+    "wed": "수",
+    "thu": "목",
+    "fri": "금",
+    "sat": "토"
+  },
+  "tabs": {
+    "home": "홈",
+    "encyclopedia": "백과사전",
+    "recipes": "레시피",
+    "tracker": "기록",
+    "more": "더보기"
   },
   "calculators": {
     "dilution": {
@@ -92,7 +116,784 @@
       "errorNone": "ABV 또는 Proof 중 하나를 입력해주세요",
       "errorABVHigh": "ABV는 100% 이하여야 합니다",
       "errorProofHigh": "Proof는 200 이하여야 합니다"
+    },
+    "bac": {
+      "navLabel": "혈중알코올농도",
+      "navDescription": "음주 후 혈중알코올농도를 계산합니다",
+      "title": "BAC 계산기",
+      "description": "체중, 성별, 음주량으로 혈중알코올농도를 추정합니다",
+      "weight": "체중",
+      "gender": "성별",
+      "male": "남성",
+      "female": "여성",
+      "numberOfDrinks": "음주량 (표준잔)",
+      "timeSinceFirst": "경과 시간",
+      "bacLevel": "혈중알코올농도",
+      "soberTime": "해독 예상 시간",
+      "hours": "시간",
+      "bacWarningHigh": "운전 절대 금지! 매우 위험한 수준입니다.",
+      "bacWarningMedium": "운전을 삼가세요. 판단력이 저하될 수 있습니다.",
+      "bacWarningLow": "가벼운 음주 상태입니다.",
+      "bacSafe": "정상 범위입니다.",
+      "errorWeight": "체중을 입력하세요",
+      "errorDrinks": "음주량을 입력하세요"
+    },
+    "unitConverter": {
+      "navLabel": "단위 변환",
+      "navDescription": "용량, 온도, 한국 단위를 변환합니다",
+      "title": "단위 변환기",
+      "description": "다양한 단위를 상호 변환합니다",
+      "inputValue": "변환할 값",
+      "volumeMode": "용량",
+      "tempMode": "온도",
+      "koreanMode": "한국 단위",
+      "ml": "밀리리터 (ml)",
+      "oz": "온스 (oz)",
+      "cups": "컵",
+      "bottles": "병 (750ml)",
+      "celsius": "섭씨 (°C)",
+      "fahrenheit": "화씨 (°F)",
+      "sojuGlass": "소주잔 (50ml)",
+      "beerGlass": "맥주잔 (355ml)",
+      "doe": "되 (1800ml)",
+      "sojuBottle": "소주병 (360ml)",
+      "result": "변환 결과"
     }
+  },
+  "presets": {
+    "title": "프리셋 선택",
+    "selectPreset": "인기 주류 선택",
+    "clear": "초기화",
+    "drinks": {
+      "soju": "소주",
+      "beer": "맥주",
+      "makgeolli": "막걸리",
+      "redWine": "레드와인",
+      "whiteWine": "화이트와인",
+      "sparklingWine": "스파클링와인",
+      "whiskey": "위스키",
+      "vodka": "보드카",
+      "rum": "럼",
+      "gin": "진",
+      "tequila": "테킬라",
+      "sake": "사케",
+      "beerCan": "맥주캔",
+      "somaek": "소맥",
+      "draftBeer": "생맥주",
+      "highball": "하이볼"
+    }
+  },
+  "share": {
+    "button": "결과 공유",
+    "resultTitle": "계산 결과",
+    "calculatedWith": "Alcohol Calculator로 계산됨",
+    "appName": "Alcohol Calculator"
+  },
+  "history": {
+    "title": "계산 기록",
+    "empty": "아직 계산 기록이 없습니다",
+    "favorite": "즐겨찾기 추가",
+    "unfavorite": "즐겨찾기 해제",
+    "rerun": "다시 계산",
+    "delete": "삭제",
+    "clearAll": "전체 삭제",
+    "confirmClear": "모든 기록을 삭제하시겠습니까?",
+    "confirmDelete": "이 기록을 삭제하시겠습니까?",
+    "ago": "전",
+    "justNow": "방금"
+  },
+  "encyclopedia": {
+    "title": "술 백과사전",
+    "search": "검색",
+    "searchPlaceholder": "술 이름으로 검색...",
+    "abvRange": "도수 범위",
+    "calories": "칼로리 (100ml당)",
+    "origin": "원산지",
+    "servingTemp": "적정 온도",
+    "pairing": "어울리는 음식",
+    "description": "설명",
+    "items": {
+      "soju": {
+        "name": "소주",
+        "origin": "한국",
+        "servingTemp": "차갑게 (4-8°C)",
+        "pairing": "삼겹살, 치킨, 김치찌개",
+        "description": "한국의 대표적인 증류주로, 쌀이나 기타 곡물로 만들어집니다. 깨끗하고 부드러운 맛이 특징입니다."
+      },
+      "beer": {
+        "name": "맥주",
+        "origin": "독일/벨기에",
+        "servingTemp": "차갑게 (3-7°C)",
+        "pairing": "치킨, 피자, 소시지",
+        "description": "보리를 발효하여 만든 세계에서 가장 널리 소비되는 알코올 음료입니다."
+      },
+      "redWine": {
+        "name": "레드와인",
+        "origin": "프랑스/이탈리아",
+        "servingTemp": "상온 (16-18°C)",
+        "pairing": "스테이크, 치즈, 파스타",
+        "description": "적포도를 껍질째 발효시켜 만든 와인으로, 탄닌의 풍부한 맛이 특징입니다."
+      },
+      "whiteWine": {
+        "name": "화이트와인",
+        "origin": "프랑스/독일",
+        "servingTemp": "차갑게 (8-12°C)",
+        "pairing": "해산물, 샐러드, 가벼운 치즈",
+        "description": "청포도를 발효시켜 만든 와인으로, 상쾌하고 가벼운 맛이 특징입니다."
+      },
+      "sparklingWine": {
+        "name": "스파클링와인",
+        "origin": "프랑스",
+        "servingTemp": "매우 차갑게 (6-8°C)",
+        "pairing": "디저트, 과일, 카나페",
+        "description": "탄산이 포함된 와인으로, 축하의 자리에서 자주 즐깁니다."
+      },
+      "whiskey": {
+        "name": "위스키",
+        "origin": "스코틀랜드/아일랜드",
+        "servingTemp": "상온 또는 온더록 (15-20°C)",
+        "pairing": "다크초콜릿, 치즈, 훈제 연어",
+        "description": "곡물을 발효, 증류한 후 오크통에서 숙성시킨 증류주입니다."
+      },
+      "vodka": {
+        "name": "보드카",
+        "origin": "러시아/폴란드",
+        "servingTemp": "매우 차갑게 (-18~0°C)",
+        "pairing": "캐비어, 피클, 안주류",
+        "description": "감자나 곡물로 만든 무색투명한 증류주로, 칵테일의 기본 재료입니다."
+      },
+      "rum": {
+        "name": "럼",
+        "origin": "카리브해",
+        "servingTemp": "상온 또는 온더록",
+        "pairing": "열대과일, 디저트, 해산물",
+        "description": "사탕수수를 발효, 증류하여 만든 증류주입니다."
+      },
+      "gin": {
+        "name": "진",
+        "origin": "네덜란드/영국",
+        "servingTemp": "차갑게",
+        "pairing": "토닉워터, 올리브, 해산물",
+        "description": "주니퍼 베리로 향을 낸 증류주로, 진토닉의 기본입니다."
+      },
+      "tequila": {
+        "name": "테킬라",
+        "origin": "멕시코",
+        "servingTemp": "상온",
+        "pairing": "라임, 소금, 멕시코 요리",
+        "description": "블루 아가베로 만든 멕시코의 대표 증류주입니다."
+      },
+      "sake": {
+        "name": "사케",
+        "origin": "일본",
+        "servingTemp": "차갑게 또는 따뜻하게 (5-55°C)",
+        "pairing": "스시, 사시미, 일본 요리",
+        "description": "쌀을 발효시켜 만든 일본의 전통 양조주입니다."
+      },
+      "makgeolli": {
+        "name": "막걸리",
+        "origin": "한국",
+        "servingTemp": "차갑게 (4-8°C)",
+        "pairing": "파전, 김치전, 두부김치",
+        "description": "쌀로 만든 한국의 전통 탁주로, 유산균이 풍부합니다."
+      },
+      "brandy": {
+        "name": "브랜디",
+        "origin": "프랑스",
+        "servingTemp": "상온 (18-20°C)",
+        "pairing": "시가, 다크초콜릿, 치즈",
+        "description": "와인이나 과일주를 증류하여 만든 고급 증류주입니다."
+      },
+      "liqueur": {
+        "name": "리큐르",
+        "origin": "유럽 전역",
+        "servingTemp": "차갑게 또는 상온",
+        "pairing": "디저트, 아이스크림, 케이크",
+        "description": "설탕과 과일, 허브 등으로 향을 더한 달콤한 증류주입니다."
+      },
+      "champagne": {
+        "name": "샴페인",
+        "origin": "프랑스 샹파뉴",
+        "servingTemp": "매우 차갑게 (6-8°C)",
+        "pairing": "캐비어, 굴, 디저트",
+        "description": "프랑스 샹파뉴 지방에서만 생산되는 프리미엄 스파클링 와인입니다."
+      }
+    }
+  },
+  "recipes": {
+    "title": "칵테일 레시피",
+    "search": "검색",
+    "searchPlaceholder": "칵테일 검색...",
+    "ingredientsTitle": "재료",
+    "instructions": "만드는 법",
+    "difficulty": "난이도",
+    "easy": "쉬움",
+    "medium": "보통",
+    "hard": "어려움",
+    "totalVolume": "총 용량",
+    "totalAbv": "총 도수",
+    "totalCalories": "총 칼로리",
+    "openCalculator": "계산기에서 열기",
+    "filter": {
+      "all": "전체",
+      "korean": "한국",
+      "global": "글로벌"
+    },
+    "ingredients": {
+      "soju": "소주",
+      "beer": "맥주",
+      "bokbunjaWine": "복분자주",
+      "sparklingWater": "탄산수",
+      "lemonJuice": "레몬즙",
+      "maesilju": "매실주",
+      "soda": "탄산수",
+      "lemonSlice": "레몬 슬라이스",
+      "yuzaSyrup": "유자청",
+      "tequila": "테킬라",
+      "tripleSec": "트리플 섹",
+      "limeJuice": "라임즙",
+      "whiteRum": "화이트 럼",
+      "sugar": "설탕",
+      "mintLeaves": "민트잎",
+      "bourbonWhiskey": "버번 위스키",
+      "angosturaBitters": "앙고스투라 비터스",
+      "sugarCube": "각설탕",
+      "water": "물",
+      "gin": "진",
+      "dryVermouth": "드라이 베르무트",
+      "campari": "캄파리",
+      "sweetVermouth": "스위트 베르무트",
+      "simpleSyrup": "설탕 시럽",
+      "ryeWhiskey": "라이 위스키",
+      "citrusVodka": "시트러스 보드카",
+      "cranberryJuice": "크랜베리 주스",
+      "tonicWater": "토닉워터",
+      "limeWedge": "라임 웨지",
+      "coconutCream": "코코넛 크림",
+      "pineappleJuice": "파인애플 주스",
+      "kahlua": "깔루아",
+      "milk": "우유",
+      "vodka": "보드카",
+      "cola": "콜라",
+      "eggWhite": "달걀 흰자",
+      "tomatoJuice": "토마토 주스",
+      "worcestershireSauce": "우스터 소스",
+      "tabasco": "타바스코",
+      "aperol": "아페롤",
+      "prosecco": "프로세코"
+    },
+    "items": {
+      "somaek": {
+        "name": "소맥",
+        "ing1": "소주",
+        "ing2": "맥주",
+        "instructions": "맥주잔에 맥주를 2/3 정도 따른 후, 소주를 1/3 비율로 넣어 가볍게 섞어줍니다."
+      },
+      "poktanju": {
+        "name": "폭탄주",
+        "ing1": "소주",
+        "ing2": "맥주",
+        "instructions": "맥주잔에 맥주를 채우고, 소주잔을 맥주잔에 빠뜨려 원샷합니다."
+      },
+      "bokbunja": {
+        "name": "복분자 칵테일",
+        "ing1": "복분자주",
+        "ing2": "탄산수",
+        "ing3": "라임",
+        "instructions": "복분자주에 탄산수를 넣고 라임을 곁들입니다."
+      },
+      "maesil": {
+        "name": "매실주 하이볼",
+        "ing1": "매실주",
+        "ing2": "탄산수",
+        "ing3": "얼음",
+        "instructions": "잔에 얼음을 채우고 매실주와 탄산수를 1:2 비율로 섞습니다."
+      },
+      "yuja": {
+        "name": "유자 사워",
+        "ing1": "유자청",
+        "ing2": "소주 또는 보드카",
+        "ing3": "레몬즙",
+        "ing4": "탄산수",
+        "instructions": "유자청, 소주, 레몬즙을 섞고 탄산수로 채웁니다."
+      },
+      "margarita": {
+        "name": "마가리타",
+        "ing1": "테킬라",
+        "ing2": "트리플 섹",
+        "ing3": "라임즙",
+        "instructions": "테킬라, 트리플 섹, 라임즙을 셰이커에 넣고 얼음과 함께 흔들어 잔에 따릅니다."
+      },
+      "mojito": {
+        "name": "모히또",
+        "ing1": "화이트 럼",
+        "ing2": "라임즙",
+        "ing3": "설탕 시럽",
+        "ing4": "탄산수",
+        "ing5": "민트잎",
+        "instructions": "민트잎을 머들링하고 럼, 라임즙, 시럽을 넣고 탄산수로 채웁니다."
+      },
+      "oldFashioned": {
+        "name": "올드 패션드",
+        "ing1": "버번 위스키",
+        "ing2": "설탕",
+        "ing3": "앙고스투라 비터스",
+        "ing4": "오렌지 껍질",
+        "instructions": "설탕에 비터스를 적시고 버번을 넣어 천천히 저어줍니다. 오렌지 껍질로 장식합니다."
+      },
+      "martini": {
+        "name": "마티니",
+        "ing1": "진",
+        "ing2": "드라이 베르무트",
+        "ing3": "올리브",
+        "instructions": "진과 베르무트를 믹싱글라스에서 저어 차갑게 한 후 칵테일 글라스에 따릅니다."
+      },
+      "negroni": {
+        "name": "네그로니",
+        "ing1": "진",
+        "ing2": "캄파리",
+        "ing3": "스위트 베르무트",
+        "instructions": "진, 캄파리, 스위트 베르무트를 같은 비율로 넣고 저어줍니다."
+      },
+      "daiquiri": {
+        "name": "다이키리",
+        "ing1": "화이트 럼",
+        "ing2": "라임즙",
+        "ing3": "설탕 시럽",
+        "instructions": "모든 재료를 셰이커에 넣고 얼음과 함께 흔들어 칵테일 글라스에 따릅니다."
+      },
+      "manhattan": {
+        "name": "맨해튼",
+        "ing1": "라이 위스키",
+        "ing2": "스위트 베르무트",
+        "ing3": "앙고스투라 비터스",
+        "instructions": "위스키, 베르무트, 비터스를 저어 칵테일 글라스에 따릅니다."
+      },
+      "cosmopolitan": {
+        "name": "코스모폴리탄",
+        "ing1": "보드카",
+        "ing2": "트리플 섹",
+        "ing3": "크랜베리 주스",
+        "ing4": "라임즙",
+        "instructions": "모든 재료를 셰이커에 넣고 얼음과 함께 흔들어 마티니 글라스에 따릅니다."
+      },
+      "ginTonic": {
+        "name": "진 토닉",
+        "ing1": "진",
+        "ing2": "토닉워터",
+        "ing3": "라임",
+        "instructions": "잔에 얼음과 진을 넣고 토닉워터로 채운 뒤 라임을 곁들입니다."
+      },
+      "pinaColada": {
+        "name": "피나 콜라다",
+        "ing1": "화이트 럼",
+        "ing2": "코코넛 크림",
+        "ing3": "파인애플 주스",
+        "instructions": "모든 재료를 블렌더에 넣고 갈아 유리잔에 따릅니다."
+      },
+      "kahluaMilk": {
+        "name": "깔루아 밀크",
+        "ing1": "깔루아",
+        "ing2": "우유",
+        "instructions": "잔에 얼음을 넣고 깔루아와 우유를 1:3 비율로 넣어 저어줍니다."
+      },
+      "longIsland": {
+        "name": "롱아일랜드 아이스티",
+        "ing1": "보드카",
+        "ing2": "럼",
+        "ing3": "진",
+        "ing4": "테킬라",
+        "ing5": "트리플 섹",
+        "ing6": "레몬즙",
+        "ing7": "콜라",
+        "instructions": "모든 증류주와 레몬즙을 넣고 콜라로 채워줍니다."
+      },
+      "whiskeySour": {
+        "name": "위스키 사워",
+        "ing1": "버번 위스키",
+        "ing2": "레몬즙",
+        "ing3": "설탕 시럽",
+        "instructions": "모든 재료를 셰이커에 넣고 얼음과 함께 흔들어 따릅니다."
+      },
+      "bloodyMary": {
+        "name": "블러디 메리",
+        "ing1": "보드카",
+        "ing2": "토마토 주스",
+        "ing3": "레몬즙",
+        "ing4": "타바스코",
+        "ing5": "우스터 소스",
+        "instructions": "보드카와 토마토 주스를 섞고 레몬즙, 타바스코, 우스터 소스로 간합니다."
+      },
+      "aperolSpritz": {
+        "name": "아페롤 스프리츠",
+        "ing1": "아페롤",
+        "ing2": "프로세코",
+        "ing3": "탄산수",
+        "instructions": "잔에 얼음을 넣고 아페롤, 프로세코, 탄산수를 3:3:1 비율로 넣어줍니다."
+      }
+    }
+  },
+  "tracker": {
+    "title": "음주 기록",
+    "addDrink": "음주 추가",
+    "todayLog": "오늘의 기록",
+    "empty": "오늘 기록이 없습니다",
+    "weeklyStats": "주간 통계",
+    "monthlyStats": "월간 통계",
+    "totalDrinks": "총 음주 횟수",
+    "totalCalories": "총 칼로리",
+    "averageDrinks": "일평균 음주량",
+    "selectDate": "날짜 선택",
+    "delete": "삭제",
+    "manual": "직접 입력",
+    "preset": "프리셋 선택",
+    "volume": "용량",
+    "abv": "도수",
+    "drinkName": "음료 이름",
+    "drinks": "잔",
+    "kcal": "kcal",
+    "emoji": "이모지"
+  },
+  "quiz": {
+    "title": "술 퀴즈",
+    "subtitle": "당신의 술 지식을 테스트해보세요!",
+    "description": "랜덤 10문제로 당신의 지식을 테스트해보세요",
+    "start": "시작하기",
+    "next": "다음",
+    "nextQuestion": "다음 문제",
+    "seeResults": "결과 보기",
+    "finish": "결과 보기",
+    "score": "점수",
+    "yourScore": "당신의 점수",
+    "correct": "정답!",
+    "incorrect": "오답!",
+    "explanation": "해설",
+    "shareScore": "점수 공유",
+    "tryAgain": "다시 도전",
+    "resultExcellent": "훌륭해요! 당신은 전문가입니다!",
+    "resultGood": "잘했어요! 거의 다 왔어요!",
+    "resultAverage": "나쁘지 않아요! 계속 배워보세요!",
+    "resultKeepTrying": "포기하지 마세요! 다시 도전해보세요!",
+    "questionOf": "문제",
+    "questions": {
+      "q1": {
+        "question": "소주의 일반적인 도수는?",
+        "a": "8-12%",
+        "b": "16-20%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "한국 소주의 일반적인 도수는 16-20% 범위입니다."
+      },
+      "q2": {
+        "question": "일반 맥주의 도수 범위는?",
+        "a": "1-2%",
+        "b": "4-6%",
+        "c": "10-14%",
+        "d": "18-22%",
+        "correct": "b",
+        "explanation": "대부분의 일반 맥주는 4-6% 범위의 도수를 가집니다."
+      },
+      "q3": {
+        "question": "레드와인의 일반적인 도수는?",
+        "a": "5-8%",
+        "b": "12-15%",
+        "c": "20-25%",
+        "d": "30-35%",
+        "correct": "b",
+        "explanation": "레드와인은 보통 12-15% 사이의 도수를 가집니다."
+      },
+      "q4": {
+        "question": "위스키의 일반적인 도수는?",
+        "a": "15-20%",
+        "b": "25-30%",
+        "c": "40-46%",
+        "d": "60-70%",
+        "correct": "c",
+        "explanation": "대부분의 위스키는 40-46% 도수로 병입됩니다."
+      },
+      "q5": {
+        "question": "보드카의 최소 도수는 일반적으로 얼마인가요?",
+        "a": "20%",
+        "b": "30%",
+        "c": "37.5%",
+        "d": "50%",
+        "correct": "c",
+        "explanation": "EU 기준 보드카의 최소 도수는 37.5%이며, 미국에서는 40%입니다."
+      },
+      "q6": {
+        "question": "사케(일본 청주)의 일반적인 도수는?",
+        "a": "5-8%",
+        "b": "15-17%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "사케는 보통 15-17% 정도의 도수를 가집니다."
+      },
+      "q7": {
+        "question": "세계에서 가장 높은 도수의 주류는?",
+        "a": "앱생트 (72%)",
+        "b": "에버클리어 (95%)",
+        "c": "스피리투스 (96%)",
+        "d": "바카디 151 (75.5%)",
+        "correct": "c",
+        "explanation": "폴란드산 스피리투스는 96%로 시판되는 주류 중 가장 높은 도수입니다."
+      },
+      "q8": {
+        "question": "한국의 '표준잔'에 해당하는 순알코올량은?",
+        "a": "5g",
+        "b": "8g",
+        "c": "14g",
+        "d": "20g",
+        "correct": "c",
+        "explanation": "미국 표준잔 기준 순알코올 14g이며, 이는 맥주 355ml(5%) 또는 소주 약 1.5잔에 해당합니다."
+      },
+      "q9": {
+        "question": "위스키의 발상지는 어디인가요?",
+        "a": "미국",
+        "b": "스코틀랜드/아일랜드",
+        "c": "프랑스",
+        "d": "일본",
+        "correct": "b",
+        "explanation": "위스키는 스코틀랜드와 아일랜드에서 처음 만들어졌다고 알려져 있습니다."
+      },
+      "q10": {
+        "question": "소주는 어느 나라에서 유래했나요?",
+        "a": "일본",
+        "b": "중국",
+        "c": "한국",
+        "d": "태국",
+        "correct": "c",
+        "explanation": "소주는 한국의 전통 증류주로, 고려 시대에 원나라를 통해 증류 기술이 전해진 것으로 알려져 있습니다."
+      },
+      "q11": {
+        "question": "테킬라는 어느 나라의 술인가요?",
+        "a": "스페인",
+        "b": "멕시코",
+        "c": "브라질",
+        "d": "아르헨티나",
+        "correct": "b",
+        "explanation": "테킬라는 멕시코의 대표적인 증류주로, 블루 아가베로 만들어집니다."
+      },
+      "q12": {
+        "question": "럼의 주요 생산지는?",
+        "a": "북유럽",
+        "b": "카리브해 지역",
+        "c": "동남아시아",
+        "d": "아프리카",
+        "correct": "b",
+        "explanation": "럼은 사탕수수를 원료로 하며, 카리브해 지역이 주요 생산지입니다."
+      },
+      "q13": {
+        "question": "샴페인은 어느 지역에서만 생산될 수 있나요?",
+        "a": "보르도",
+        "b": "부르고뉴",
+        "c": "샹파뉴",
+        "d": "프로방스",
+        "correct": "c",
+        "explanation": "샴페인이라는 이름은 프랑스 샹파뉴 지방에서 생산된 스파클링 와인에만 사용할 수 있습니다."
+      },
+      "q14": {
+        "question": "사케(일본 청주)의 원산지는?",
+        "a": "중국",
+        "b": "한국",
+        "c": "일본",
+        "d": "베트남",
+        "correct": "c",
+        "explanation": "사케는 일본의 전통 양조주로, 쌀을 발효시켜 만듭니다."
+      },
+      "q15": {
+        "question": "사케를 만드는 주요 재료는?",
+        "a": "밀",
+        "b": "쌀",
+        "c": "보리",
+        "d": "옥수수",
+        "correct": "b",
+        "explanation": "사케는 쌀을 주재료로 하여 누룩(코지)으로 발효시켜 만듭니다."
+      },
+      "q16": {
+        "question": "버번 위스키의 주재료는 최소 몇 % 옥수수여야 하나요?",
+        "a": "30%",
+        "b": "41%",
+        "c": "51%",
+        "d": "75%",
+        "correct": "c",
+        "explanation": "미국 법률상 버번은 최소 51%의 옥수수를 곡물 원료로 사용해야 합니다."
+      },
+      "q17": {
+        "question": "맥주에서 쓴맛을 내는 재료는?",
+        "a": "맥아",
+        "b": "효모",
+        "c": "홉",
+        "d": "물",
+        "correct": "c",
+        "explanation": "홉은 맥주에 쓴맛과 향을 부여하는 핵심 재료입니다."
+      },
+      "q18": {
+        "question": "와인 발효에 필수적인 미생물은?",
+        "a": "유산균",
+        "b": "효모",
+        "c": "곰팡이",
+        "d": "세균",
+        "correct": "b",
+        "explanation": "와인은 효모가 포도의 당분을 알코올로 전환하는 발효 과정을 통해 만들어집니다."
+      },
+      "q19": {
+        "question": "막걸리는 어떤 종류의 술인가요?",
+        "a": "증류주",
+        "b": "발효주 (탁주)",
+        "c": "혼성주",
+        "d": "과실주",
+        "correct": "b",
+        "explanation": "막걸리는 쌀을 발효시켜 만든 한국의 전통 탁주(발효주)입니다."
+      },
+      "q20": {
+        "question": "Proof는 ABV와 어떤 관계인가요?",
+        "a": "Proof = ABV",
+        "b": "Proof = ABV × 2",
+        "c": "Proof = ABV ÷ 2",
+        "d": "Proof = ABV + 10",
+        "correct": "b",
+        "explanation": "미국 기준으로 Proof는 ABV의 2배입니다. 예: 40% ABV = 80 Proof"
+      },
+      "q21": {
+        "question": "ABV는 무엇의 약자인가요?",
+        "a": "Alcohol By Value",
+        "b": "Alcohol By Volume",
+        "c": "Alcohol Beverage Verification",
+        "d": "Alcohol Brewing Volume",
+        "correct": "b",
+        "explanation": "ABV는 Alcohol By Volume의 약자로, 전체 용량 대비 알코올의 비율을 나타냅니다."
+      },
+      "q22": {
+        "question": "와인에서 '빈티지(Vintage)'란?",
+        "a": "와인 제조 방법",
+        "b": "포도 수확 연도",
+        "c": "와인 등급",
+        "d": "와인 숙성 기간",
+        "correct": "b",
+        "explanation": "빈티지는 포도가 수확된 연도를 의미하며, 와인 라벨에 표시됩니다."
+      },
+      "q23": {
+        "question": "'캐스크 스트렝스(Cask Strength)'는 무슨 뜻인가요?",
+        "a": "오크통의 강도",
+        "b": "물을 타지 않은 원액 그대로의 도수",
+        "c": "가장 높은 등급",
+        "d": "최소 숙성 기간",
+        "correct": "b",
+        "explanation": "캐스크 스트렝스는 물을 희석하지 않고 통에서 바로 병입한 원액 도수를 의미합니다."
+      },
+      "q24": {
+        "question": "'폭탄주'는 어떻게 만드나요?",
+        "a": "소주에 맥주를 섞는다",
+        "b": "소주잔을 맥주잔에 빠뜨린다",
+        "c": "맥주에 위스키를 넣는다",
+        "d": "소주에 사이다를 섞는다",
+        "correct": "b",
+        "explanation": "폭탄주는 맥주잔에 소주잔을 통째로 빠뜨려 만드는 한국 특유의 음주 문화입니다."
+      },
+      "q25": {
+        "question": "한국 음주 예절에서, 윗사람에게 술을 따를 때 어떻게 해야 하나요?",
+        "a": "한 손으로 따른다",
+        "b": "두 손으로 따른다",
+        "c": "앉아서 따른다",
+        "d": "고개를 돌리고 따른다",
+        "correct": "b",
+        "explanation": "한국에서는 윗사람에게 술을 따를 때 두 손으로 잡고 따르는 것이 예의입니다."
+      },
+      "q26": {
+        "question": "'소맥'은 무엇인가요?",
+        "a": "소주와 막걸리의 혼합",
+        "b": "소주와 맥주의 혼합",
+        "c": "소주와 매실주의 혼합",
+        "d": "소주와 사이다의 혼합",
+        "correct": "b",
+        "explanation": "소맥은 '소주+맥주'의 줄임말로, 소주와 맥주를 적정 비율로 섞은 음료입니다."
+      },
+      "q27": {
+        "question": "막걸리에 풍부하게 들어있는 성분은?",
+        "a": "카페인",
+        "b": "타우린",
+        "c": "유산균",
+        "d": "비타민 C",
+        "correct": "c",
+        "explanation": "막걸리에는 발효 과정에서 생성된 유산균이 풍부하게 들어있습니다."
+      },
+      "q28": {
+        "question": "체내에서 알코올을 분해하는 데 1표준잔당 약 얼마나 걸리나요?",
+        "a": "약 30분",
+        "b": "약 1시간",
+        "c": "약 2시간",
+        "d": "약 4시간",
+        "correct": "b",
+        "explanation": "보통 건강한 성인은 1표준잔의 알코올을 분해하는 데 약 1시간이 소요됩니다."
+      },
+      "q29": {
+        "question": "알코올을 주로 분해하는 장기는?",
+        "a": "위",
+        "b": "신장",
+        "c": "간",
+        "d": "폐",
+        "correct": "c",
+        "explanation": "간은 체내 알코올의 약 90%를 분해하는 주요 장기입니다."
+      },
+      "q30": {
+        "question": "숙취의 주요 원인 물질은?",
+        "a": "에탄올",
+        "b": "아세트알데히드",
+        "c": "메탄올",
+        "d": "글리세롤",
+        "correct": "b",
+        "explanation": "아세트알데히드는 알코올 분해 과정에서 생성되는 독성 물질로, 숙취의 주요 원인입니다."
+      },
+      "q31": {
+        "question": "다음 중 같은 양 기준으로 칼로리가 가장 높은 것은?",
+        "a": "맥주",
+        "b": "와인",
+        "c": "위스키",
+        "d": "소주",
+        "correct": "c",
+        "explanation": "같은 용량 기준으로 도수가 높은 위스키가 가장 높은 칼로리를 가집니다. 알코올 1g당 약 7kcal입니다."
+      },
+      "q32": {
+        "question": "한국의 법적 음주운전 기준 혈중알코올농도는?",
+        "a": "0.01%",
+        "b": "0.03%",
+        "c": "0.05%",
+        "d": "0.08%",
+        "correct": "b",
+        "explanation": "한국의 음주운전 단속 기준은 혈중알코올농도 0.03% 이상입니다."
+      }
+    }
+  },
+  "settings": {
+    "language": "언어",
+    "selectLanguage": "언어 선택",
+    "title": "설정",
+    "notifications": "알림",
+    "dailyReminder": "일일 음주 기록 알림",
+    "weeklyStats": "주간 통계 알림",
+    "reminderTime": "알림 시간",
+    "about": "앱 정보",
+    "version": "버전",
+    "appInfo": "음주 관련 다양한 계산과 정보를 제공하는 앱입니다."
+  },
+  "notifications": {
+    "dailyTitle": "오늘의 음주 기록",
+    "dailyBody": "오늘 마신 음료를 기록해보세요!",
+    "weeklyTitle": "주간 음주 통계",
+    "weeklyBody": "이번 주 음주 통계를 확인해보세요!",
+    "permissionRequired": "알림을 사용하려면 권한이 필요합니다"
+  },
+  "more": {
+    "title": "더보기",
+    "history": "계산 기록",
+    "quiz": "술 퀴즈",
+    "settings": "설정",
+    "historyDescription": "이전 계산 결과를 확인하세요",
+    "quizDescription": "술에 대한 지식을 테스트해보세요",
+    "settingsDescription": "언어, 알림 등을 설정하세요",
+    "subtitle": "추가 기능 및 설정"
   },
   "errors": {
     "positiveValues": "모든 값은 0보다 커야 합니다",
@@ -108,9 +909,5 @@
     "celsius": "°C",
     "proof": "Proof",
     "kcal": "kcal"
-  },
-  "settings": {
-    "language": "언어",
-    "selectLanguage": "언어 선택"
   }
 }

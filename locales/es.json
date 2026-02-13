@@ -6,7 +6,31 @@
     "reset": "Cerrar",
     "error": "Error",
     "reference": "Referencia",
-    "referenceNote": "Nota"
+    "referenceNote": "Nota",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "back": "Atrás",
+    "share": "Compartir Resultados"
+  },
+  "time": {
+    "justNow": "Ahora mismo",
+    "minutesAgo": "hace {{count}}m",
+    "hoursAgo": "hace {{count}}h",
+    "daysAgo": "hace {{count}}d",
+    "sun": "Dom",
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mié",
+    "thu": "Jue",
+    "fri": "Vie",
+    "sat": "Sáb"
+  },
+  "tabs": {
+    "home": "Inicio",
+    "encyclopedia": "Enciclopedia",
+    "recipes": "Recetas",
+    "tracker": "Registro",
+    "more": "Más"
   },
   "calculators": {
     "dilution": {
@@ -92,7 +116,784 @@
       "errorNone": "Por favor, introduce ABV o Proof",
       "errorABVHigh": "ABV debe ser 100% o menos",
       "errorProofHigh": "Proof debe ser 200 o menos"
+    },
+    "bac": {
+      "navLabel": "Calculadora BAC",
+      "navDescription": "Estima tu concentración de alcohol en sangre",
+      "title": "Calculadora BAC",
+      "description": "Estima BAC por peso, género, bebidas y tiempo",
+      "weight": "Peso",
+      "gender": "Género",
+      "male": "Masculino",
+      "female": "Femenino",
+      "numberOfDrinks": "Bebidas Estándar",
+      "timeSinceFirst": "Horas Desde Primera Bebida",
+      "bacLevel": "Nivel de BAC",
+      "soberTime": "Tiempo Estimado para Sobriedad",
+      "hours": "horas",
+      "bacWarningHigh": "¡NO conduzca! Nivel peligrosamente alto.",
+      "bacWarningMedium": "Evite conducir. El juicio puede estar afectado.",
+      "bacWarningLow": "Intoxicación leve.",
+      "bacSafe": "Dentro del rango normal.",
+      "errorWeight": "Por favor ingrese su peso",
+      "errorDrinks": "Por favor ingrese número de bebidas"
+    },
+    "unitConverter": {
+      "navLabel": "Conversor de Unidades",
+      "navDescription": "Convierte volumen, temperatura y unidades coreanas",
+      "title": "Conversor de Unidades",
+      "description": "Convierte entre diferentes unidades de medida",
+      "inputValue": "Valor a Convertir",
+      "volumeMode": "Volumen",
+      "tempMode": "Temperatura",
+      "koreanMode": "Unidades Coreanas",
+      "ml": "Mililitros (ml)",
+      "oz": "Onzas (oz)",
+      "cups": "Tazas",
+      "bottles": "Botellas (750ml)",
+      "celsius": "Celsius (°C)",
+      "fahrenheit": "Fahrenheit (°F)",
+      "sojuGlass": "Vaso de Soju (50ml)",
+      "beerGlass": "Vaso de Cerveza (355ml)",
+      "doe": "Doe (1800ml)",
+      "sojuBottle": "Botella de Soju (360ml)",
+      "result": "Resultado de Conversión"
     }
+  },
+  "presets": {
+    "title": "Seleccionar Preset",
+    "selectPreset": "Bebidas Populares",
+    "clear": "Limpiar",
+    "drinks": {
+      "soju": "Soju",
+      "beer": "Cerveza",
+      "makgeolli": "Makgeolli",
+      "redWine": "Vino Tinto",
+      "whiteWine": "Vino Blanco",
+      "sparklingWine": "Vino Espumoso",
+      "whiskey": "Whisky",
+      "vodka": "Vodka",
+      "rum": "Ron",
+      "gin": "Ginebra",
+      "tequila": "Tequila",
+      "sake": "Sake",
+      "beerCan": "Lata de Cerveza",
+      "somaek": "Somaek",
+      "draftBeer": "Cerveza de Barril",
+      "highball": "Highball"
+    }
+  },
+  "share": {
+    "button": "Compartir Resultados",
+    "resultTitle": "Resultado del Cálculo",
+    "calculatedWith": "Calculado con Alcohol Calculator",
+    "appName": "Alcohol Calculator"
+  },
+  "history": {
+    "title": "Historial de Cálculos",
+    "empty": "Aún no hay historial de cálculos",
+    "favorite": "Agregar a Favoritos",
+    "unfavorite": "Quitar de Favoritos",
+    "rerun": "Recalcular",
+    "delete": "Eliminar",
+    "clearAll": "Borrar Todo",
+    "confirmClear": "¿Borrar todo el historial?",
+    "confirmDelete": "¿Eliminar este registro?",
+    "ago": "hace",
+    "justNow": "Ahora mismo"
+  },
+  "encyclopedia": {
+    "title": "Enciclopedia de Bebidas",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar por nombre de bebida...",
+    "abvRange": "Rango de ABV",
+    "calories": "Calorías (por 100ml)",
+    "origin": "Origen",
+    "servingTemp": "Temperatura de Servicio",
+    "pairing": "Maridaje",
+    "description": "Descripción",
+    "items": {
+      "soju": {
+        "name": "Soju",
+        "origin": "Corea del Sur",
+        "servingTemp": "Frío (4-8°C)",
+        "pairing": "Cerdo a la parrilla, Pollo frito, Estofado de kimchi",
+        "description": "El licor destilado icónico de Corea hecho de arroz u otros granos. Conocido por su sabor limpio y suave."
+      },
+      "beer": {
+        "name": "Cerveza",
+        "origin": "Alemania/Bélgica",
+        "servingTemp": "Frío (3-7°C)",
+        "pairing": "Pollo, Pizza, Salchichas",
+        "description": "La bebida alcohólica más consumida del mundo, hecha fermentando cebada."
+      },
+      "redWine": {
+        "name": "Vino Tinto",
+        "origin": "Francia/Italia",
+        "servingTemp": "Temperatura ambiente (16-18°C)",
+        "pairing": "Bistec, Queso, Pasta",
+        "description": "Vino hecho fermentando uvas rojas con sus pieles, conocido por sus ricos sabores de tanino."
+      },
+      "whiteWine": {
+        "name": "Vino Blanco",
+        "origin": "Francia/Alemania",
+        "servingTemp": "Frío (8-12°C)",
+        "pairing": "Mariscos, Ensalada, Queso ligero",
+        "description": "Vino hecho de uvas verdes, caracterizado por sabores refrescantes y ligeros."
+      },
+      "sparklingWine": {
+        "name": "Vino Espumoso",
+        "origin": "Francia",
+        "servingTemp": "Muy frío (6-8°C)",
+        "pairing": "Postres, Frutas, Canapés",
+        "description": "Vino carbonatado a menudo disfrutado en celebraciones."
+      },
+      "whiskey": {
+        "name": "Whisky",
+        "origin": "Escocia/Irlanda",
+        "servingTemp": "Solo o con hielo (15-20°C)",
+        "pairing": "Chocolate oscuro, Queso, Salmón ahumado",
+        "description": "Licor destilado hecho de grano fermentado, envejecido en barriles de roble."
+      },
+      "vodka": {
+        "name": "Vodka",
+        "origin": "Rusia/Polonia",
+        "servingTemp": "Muy frío (-18~0°C)",
+        "pairing": "Caviar, Pepinillos, Aperitivos",
+        "description": "Licor destilado transparente hecho de papas o granos, base para muchos cócteles."
+      },
+      "rum": {
+        "name": "Ron",
+        "origin": "Caribe",
+        "servingTemp": "Solo o con hielo",
+        "pairing": "Frutas tropicales, Postres, Mariscos",
+        "description": "Licor destilado hecho de subproductos de caña de azúcar."
+      },
+      "gin": {
+        "name": "Ginebra",
+        "origin": "Países Bajos/Reino Unido",
+        "servingTemp": "Frío",
+        "pairing": "Agua tónica, Aceitunas, Mariscos",
+        "description": "Licor destilado aromatizado con bayas de enebro, base del gin tonic."
+      },
+      "tequila": {
+        "name": "Tequila",
+        "origin": "México",
+        "servingTemp": "Temperatura ambiente",
+        "pairing": "Lima, Sal, Cocina mexicana",
+        "description": "El licor icónico de México hecho de agave azul."
+      },
+      "sake": {
+        "name": "Sake",
+        "origin": "Japón",
+        "servingTemp": "Frío o caliente (5-55°C)",
+        "pairing": "Sushi, Sashimi, Cocina japonesa",
+        "description": "Vino de arroz tradicional japonés hecho fermentando arroz."
+      },
+      "makgeolli": {
+        "name": "Makgeolli",
+        "origin": "Corea del Sur",
+        "servingTemp": "Frío (4-8°C)",
+        "pairing": "Panqueque coreano, Panqueque de kimchi, Tofu kimchi",
+        "description": "Vino de arroz tradicional coreano, rico en probióticos."
+      },
+      "brandy": {
+        "name": "Brandy",
+        "origin": "Francia",
+        "servingTemp": "Temperatura ambiente (18-20°C)",
+        "pairing": "Puros, Chocolate oscuro, Queso",
+        "description": "Licor premium destilado de vino o vino de frutas."
+      },
+      "liqueur": {
+        "name": "Licor",
+        "origin": "Europa",
+        "servingTemp": "Frío o temperatura ambiente",
+        "pairing": "Postres, Helado, Pastel",
+        "description": "Licor dulce aromatizado con azúcar, frutas, hierbas y más."
+      },
+      "champagne": {
+        "name": "Champán",
+        "origin": "Champaña, Francia",
+        "servingTemp": "Muy frío (6-8°C)",
+        "pairing": "Caviar, Ostras, Postres",
+        "description": "Vino espumoso premium exclusivamente de la región de Champaña de Francia."
+      }
+    }
+  },
+  "recipes": {
+    "title": "Recetas de Cócteles",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar cócteles...",
+    "ingredientsTitle": "Ingredientes",
+    "instructions": "Instrucciones",
+    "difficulty": "Dificultad",
+    "easy": "Fácil",
+    "medium": "Medio",
+    "hard": "Difícil",
+    "totalVolume": "Volumen Total",
+    "totalAbv": "ABV Total",
+    "totalCalories": "Calorías Totales",
+    "openCalculator": "Abrir en Calculadora",
+    "filter": {
+      "all": "Todos",
+      "korean": "Coreano",
+      "global": "Global"
+    },
+    "ingredients": {
+      "soju": "Soju",
+      "beer": "Cerveza",
+      "bokbunjaWine": "Vino de Bokbunja",
+      "sparklingWater": "Agua con gas",
+      "lemonJuice": "Jugo de Limón",
+      "maesilju": "Licor de Maesil",
+      "soda": "Agua con gas",
+      "lemonSlice": "Rodaja de Limón",
+      "yuzaSyrup": "Jarabe de Yuzu",
+      "tequila": "Tequila",
+      "tripleSec": "Triple Sec",
+      "limeJuice": "Jugo de Lima",
+      "whiteRum": "Ron Blanco",
+      "sugar": "Azúcar",
+      "mintLeaves": "Hojas de Menta",
+      "bourbonWhiskey": "Whiskey Bourbon",
+      "angosturaBitters": "Angostura Bitters",
+      "sugarCube": "Cubo de Azúcar",
+      "water": "Agua",
+      "gin": "Ginebra",
+      "dryVermouth": "Vermouth Seco",
+      "campari": "Campari",
+      "sweetVermouth": "Vermouth Dulce",
+      "simpleSyrup": "Jarabe Simple",
+      "ryeWhiskey": "Whiskey de Centeno",
+      "citrusVodka": "Vodka Cítrico",
+      "cranberryJuice": "Jugo de Arándano",
+      "tonicWater": "Agua Tónica",
+      "limeWedge": "Cuña de Lima",
+      "coconutCream": "Crema de Coco",
+      "pineappleJuice": "Jugo de Piña",
+      "kahlua": "Kahlúa",
+      "milk": "Leche",
+      "vodka": "Vodka",
+      "cola": "Cola",
+      "eggWhite": "Clara de Huevo",
+      "tomatoJuice": "Jugo de Tomate",
+      "worcestershireSauce": "Salsa Worcestershire",
+      "tabasco": "Tabasco",
+      "aperol": "Aperol",
+      "prosecco": "Prosecco"
+    },
+    "items": {
+      "somaek": {
+        "name": "Somaek (Soju+Cerveza)",
+        "ing1": "Soju",
+        "ing2": "Cerveza",
+        "instructions": "Llene un vaso de cerveza 2/3 con cerveza, agregue 1/3 de soju y mezcle suavemente."
+      },
+      "poktanju": {
+        "name": "Bomba",
+        "ing1": "Soju",
+        "ing2": "Cerveza",
+        "instructions": "Llene un vaso de cerveza, deje caer un vaso de soju adentro y beba."
+      },
+      "bokbunja": {
+        "name": "Cóctel de Bokbunja",
+        "ing1": "Vino de Bokbunja",
+        "ing2": "Agua con gas",
+        "ing3": "Lima",
+        "instructions": "Mezcle vino de bokbunja con agua con gas y decore con lima."
+      },
+      "maesil": {
+        "name": "Highball de Maesil",
+        "ing1": "Licor de Maesil",
+        "ing2": "Agua con gas",
+        "ing3": "Hielo",
+        "instructions": "Llene el vaso con hielo, mezcle licor de maesil y agua con gas en proporción 1:2."
+      },
+      "yuja": {
+        "name": "Sour de Yuzu",
+        "ing1": "Jarabe de Yuzu",
+        "ing2": "Soju o Vodka",
+        "ing3": "Jugo de Limón",
+        "ing4": "Agua con gas",
+        "instructions": "Mezcle jarabe de yuzu, soju, jugo de limón y complete con agua con gas."
+      },
+      "margarita": {
+        "name": "Margarita",
+        "ing1": "Tequila",
+        "ing2": "Triple Sec",
+        "ing3": "Jugo de Lima",
+        "instructions": "Agite tequila, triple sec y jugo de lima con hielo. Cuele en un vaso con borde de sal."
+      },
+      "mojito": {
+        "name": "Mojito",
+        "ing1": "Ron Blanco",
+        "ing2": "Jugo de Lima",
+        "ing3": "Jarabe Simple",
+        "ing4": "Agua con gas",
+        "ing5": "Hojas de Menta",
+        "instructions": "Machaque hojas de menta, agregue ron, jugo de lima, jarabe y complete con agua con gas."
+      },
+      "oldFashioned": {
+        "name": "Old Fashioned",
+        "ing1": "Whiskey Bourbon",
+        "ing2": "Azúcar",
+        "ing3": "Angostura Bitters",
+        "ing4": "Cáscara de Naranja",
+        "instructions": "Empape azúcar con bitters, agregue bourbon y revuelva lentamente. Decore con cáscara de naranja."
+      },
+      "martini": {
+        "name": "Martini",
+        "ing1": "Ginebra",
+        "ing2": "Vermouth Seco",
+        "ing3": "Aceituna",
+        "instructions": "Revuelva ginebra y vermouth con hielo. Cuele en una copa de cóctel fría."
+      },
+      "negroni": {
+        "name": "Negroni",
+        "ing1": "Ginebra",
+        "ing2": "Campari",
+        "ing3": "Vermouth Dulce",
+        "instructions": "Revuelva partes iguales de ginebra, Campari y vermouth dulce sobre hielo."
+      },
+      "daiquiri": {
+        "name": "Daiquiri",
+        "ing1": "Ron Blanco",
+        "ing2": "Jugo de Lima",
+        "ing3": "Jarabe Simple",
+        "instructions": "Agite todos los ingredientes con hielo y cuele en una copa de cóctel."
+      },
+      "manhattan": {
+        "name": "Manhattan",
+        "ing1": "Whiskey de Centeno",
+        "ing2": "Vermouth Dulce",
+        "ing3": "Angostura Bitters",
+        "instructions": "Revuelva whiskey, vermouth y bitters con hielo. Cuele en una copa de cóctel."
+      },
+      "cosmopolitan": {
+        "name": "Cosmopolitan",
+        "ing1": "Vodka",
+        "ing2": "Triple Sec",
+        "ing3": "Jugo de Arándano",
+        "ing4": "Jugo de Lima",
+        "instructions": "Agite todos los ingredientes con hielo y cuele en una copa de martini."
+      },
+      "ginTonic": {
+        "name": "Gin Tonic",
+        "ing1": "Ginebra",
+        "ing2": "Agua Tónica",
+        "ing3": "Lima",
+        "instructions": "Agregue hielo y ginebra a un vaso, complete con agua tónica y decore con lima."
+      },
+      "pinaColada": {
+        "name": "Piña Colada",
+        "ing1": "Ron Blanco",
+        "ing2": "Crema de Coco",
+        "ing3": "Jugo de Piña",
+        "instructions": "Mezcle todos los ingredientes con hielo y vierta en un vaso."
+      },
+      "kahluaMilk": {
+        "name": "Leche con Kahlúa",
+        "ing1": "Kahlúa",
+        "ing2": "Leche",
+        "instructions": "Agregue hielo, luego mezcle Kahlúa y leche en proporción 1:3."
+      },
+      "longIsland": {
+        "name": "Té Helado Long Island",
+        "ing1": "Vodka",
+        "ing2": "Ron",
+        "ing3": "Ginebra",
+        "ing4": "Tequila",
+        "ing5": "Triple Sec",
+        "ing6": "Jugo de Limón",
+        "ing7": "Cola",
+        "instructions": "Combine todos los licores y jugo de limón, complete con cola."
+      },
+      "whiskeySour": {
+        "name": "Whiskey Sour",
+        "ing1": "Whiskey Bourbon",
+        "ing2": "Jugo de Limón",
+        "ing3": "Jarabe Simple",
+        "instructions": "Agite todos los ingredientes con hielo y cuele en un vaso."
+      },
+      "bloodyMary": {
+        "name": "Bloody Mary",
+        "ing1": "Vodka",
+        "ing2": "Jugo de Tomate",
+        "ing3": "Jugo de Limón",
+        "ing4": "Tabasco",
+        "ing5": "Salsa Worcestershire",
+        "instructions": "Mezcle vodka con jugo de tomate, sazone con jugo de limón, Tabasco y salsa Worcestershire."
+      },
+      "aperolSpritz": {
+        "name": "Aperol Spritz",
+        "ing1": "Aperol",
+        "ing2": "Prosecco",
+        "ing3": "Agua con gas",
+        "instructions": "Agregue hielo, luego Aperol, Prosecco y agua con gas en proporción 3:3:1."
+      }
+    }
+  },
+  "tracker": {
+    "title": "Registro de Bebidas",
+    "addDrink": "Agregar Bebida",
+    "todayLog": "Registro de Hoy",
+    "empty": "Sin registros para hoy",
+    "weeklyStats": "Estadísticas Semanales",
+    "monthlyStats": "Estadísticas Mensuales",
+    "totalDrinks": "Total de Bebidas",
+    "totalCalories": "Calorías Totales",
+    "averageDrinks": "Promedio Bebidas/Día",
+    "selectDate": "Seleccionar Fecha",
+    "delete": "Eliminar",
+    "manual": "Entrada Manual",
+    "preset": "Seleccionar Preset",
+    "volume": "Volumen",
+    "abv": "ABV",
+    "drinkName": "Nombre de Bebida",
+    "drinks": "bebidas",
+    "kcal": "kcal",
+    "emoji": "Emoji"
+  },
+  "quiz": {
+    "title": "Quiz de Alcohol",
+    "subtitle": "¡Pon a prueba tu conocimiento sobre alcohol!",
+    "description": "Pon a prueba tu conocimiento con 10 preguntas aleatorias",
+    "start": "Iniciar Quiz",
+    "next": "Siguiente",
+    "nextQuestion": "Siguiente Pregunta",
+    "seeResults": "Ver Resultados",
+    "finish": "Ver Resultados",
+    "score": "Puntuación",
+    "yourScore": "Tu Puntuación",
+    "correct": "¡Correcto!",
+    "incorrect": "¡Incorrecto!",
+    "explanation": "Explicación",
+    "shareScore": "Compartir Puntuación",
+    "tryAgain": "Intentar de Nuevo",
+    "resultExcellent": "¡Excelente! ¡Eres un experto!",
+    "resultGood": "¡Buen trabajo! ¡Casi lo logras!",
+    "resultAverage": "¡No está mal! ¡Sigue aprendiendo!",
+    "resultKeepTrying": "¡No te rindas! ¡Inténtalo de nuevo!",
+    "questionOf": "de",
+    "questions": {
+      "q1": {
+        "question": "¿Cuál es el ABV típico del soju?",
+        "a": "8-12%",
+        "b": "16-20%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "El soju coreano típicamente tiene entre 16-20% de ABV."
+      },
+      "q2": {
+        "question": "¿Cuál es el rango de ABV típico de la cerveza regular?",
+        "a": "1-2%",
+        "b": "4-6%",
+        "c": "10-14%",
+        "d": "18-22%",
+        "correct": "b",
+        "explanation": "La mayoría de las cervezas regulares tienen un ABV en el rango de 4-6%."
+      },
+      "q3": {
+        "question": "¿Cuál es el ABV típico del vino tinto?",
+        "a": "5-8%",
+        "b": "12-15%",
+        "c": "20-25%",
+        "d": "30-35%",
+        "correct": "b",
+        "explanation": "El vino tinto típicamente tiene un ABV entre 12-15%."
+      },
+      "q4": {
+        "question": "¿Cuál es el ABV típico del whisky?",
+        "a": "15-20%",
+        "b": "25-30%",
+        "c": "40-46%",
+        "d": "60-70%",
+        "correct": "c",
+        "explanation": "La mayoría de los whiskies se embotellan con 40-46% de ABV."
+      },
+      "q5": {
+        "question": "¿Cuál es el ABV mínimo general del vodka?",
+        "a": "20%",
+        "b": "30%",
+        "c": "37.5%",
+        "d": "50%",
+        "correct": "c",
+        "explanation": "El ABV mínimo del vodka en la UE es 37.5%, mientras que en EE.UU. es 40%."
+      },
+      "q6": {
+        "question": "¿Cuál es el ABV típico del sake?",
+        "a": "5-8%",
+        "b": "15-17%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "El sake típicamente tiene un ABV de alrededor de 15-17%."
+      },
+      "q7": {
+        "question": "¿Cuál es el licor comercial con mayor ABV?",
+        "a": "Absenta (72%)",
+        "b": "Everclear (95%)",
+        "c": "Spirytus (96%)",
+        "d": "Bacardi 151 (75.5%)",
+        "correct": "c",
+        "explanation": "El Spirytus polaco con 96% es el licor comercial con mayor ABV disponible."
+      },
+      "q8": {
+        "question": "¿Cuánto alcohol puro contiene una bebida estándar?",
+        "a": "5g",
+        "b": "8g",
+        "c": "14g",
+        "d": "20g",
+        "correct": "c",
+        "explanation": "Una bebida estándar estadounidense contiene 14g de alcohol puro, equivalente a una cerveza de 355ml al 5% o aproximadamente 1.5 vasos de soju."
+      },
+      "q9": {
+        "question": "¿Dónde se originó el whisky?",
+        "a": "Estados Unidos",
+        "b": "Escocia/Irlanda",
+        "c": "Francia",
+        "d": "Japón",
+        "correct": "b",
+        "explanation": "Se cree que el whisky se originó en Escocia e Irlanda."
+      },
+      "q10": {
+        "question": "¿De qué país proviene el soju?",
+        "a": "Japón",
+        "b": "China",
+        "c": "Corea del Sur",
+        "d": "Tailandia",
+        "correct": "c",
+        "explanation": "El soju es un licor destilado tradicional coreano, con técnicas de destilación introducidas a través del Imperio Mongol durante la Dinastía Goryeo."
+      },
+      "q11": {
+        "question": "¿De qué país es el tequila?",
+        "a": "España",
+        "b": "México",
+        "c": "Brasil",
+        "d": "Argentina",
+        "correct": "b",
+        "explanation": "El tequila es el licor destilado icónico de México, hecho de agave azul."
+      },
+      "q12": {
+        "question": "¿Dónde se produce principalmente el ron?",
+        "a": "Norte de Europa",
+        "b": "Región del Caribe",
+        "c": "Sudeste Asiático",
+        "d": "África",
+        "correct": "b",
+        "explanation": "El ron se hace de caña de azúcar y la región del Caribe es su principal zona de producción."
+      },
+      "q13": {
+        "question": "¿Qué región produce exclusivamente el Champán?",
+        "a": "Burdeos",
+        "b": "Borgoña",
+        "c": "Champaña",
+        "d": "Provenza",
+        "correct": "c",
+        "explanation": "El nombre 'Champán' solo puede usarse para vino espumoso producido en la región de Champaña de Francia."
+      },
+      "q14": {
+        "question": "¿De dónde proviene el sake?",
+        "a": "China",
+        "b": "Corea",
+        "c": "Japón",
+        "d": "Vietnam",
+        "correct": "c",
+        "explanation": "El sake es una bebida fermentada tradicional japonesa hecha fermentando arroz."
+      },
+      "q15": {
+        "question": "¿Cuál es el ingrediente principal del sake?",
+        "a": "Trigo",
+        "b": "Arroz",
+        "c": "Cebada",
+        "d": "Maíz",
+        "correct": "b",
+        "explanation": "El sake se hace principalmente de arroz, fermentado usando moho koji."
+      },
+      "q16": {
+        "question": "¿Qué porcentaje mínimo de maíz debe contener el bourbon?",
+        "a": "30%",
+        "b": "41%",
+        "c": "51%",
+        "d": "75%",
+        "correct": "c",
+        "explanation": "Por ley estadounidense, el bourbon debe hacerse de una mezcla de granos con al menos 51% de maíz."
+      },
+      "q17": {
+        "question": "¿Qué ingrediente le da amargor a la cerveza?",
+        "a": "Malta",
+        "b": "Levadura",
+        "c": "Lúpulo",
+        "d": "Agua",
+        "correct": "c",
+        "explanation": "El lúpulo es el ingrediente clave que le da a la cerveza su amargor y aroma."
+      },
+      "q18": {
+        "question": "¿Qué microorganismo es esencial para la fermentación del vino?",
+        "a": "Bacterias ácido lácticas",
+        "b": "Levadura",
+        "c": "Moho",
+        "d": "Bacterias",
+        "correct": "b",
+        "explanation": "El vino se hace mediante fermentación donde la levadura convierte los azúcares de la uva en alcohol."
+      },
+      "q19": {
+        "question": "¿Qué tipo de alcohol es el makgeolli?",
+        "a": "Licor destilado",
+        "b": "Vino de arroz fermentado (sin filtrar)",
+        "c": "Licor mezclado",
+        "d": "Vino de frutas",
+        "correct": "b",
+        "explanation": "El makgeolli es un vino de arroz tradicional coreano sin filtrar (bebida fermentada)."
+      },
+      "q20": {
+        "question": "¿Cuál es la relación entre Proof y ABV?",
+        "a": "Proof = ABV",
+        "b": "Proof = ABV × 2",
+        "c": "Proof = ABV ÷ 2",
+        "d": "Proof = ABV + 10",
+        "correct": "b",
+        "explanation": "En el sistema estadounidense, Proof es el doble del ABV. Por ejemplo: 40% ABV = 80 Proof."
+      },
+      "q21": {
+        "question": "¿Qué significa ABV?",
+        "a": "Alcohol By Value",
+        "b": "Alcohol By Volume",
+        "c": "Alcohol Beverage Verification",
+        "d": "Alcohol Brewing Volume",
+        "correct": "b",
+        "explanation": "ABV significa Alcohol By Volume (Alcohol por Volumen), que representa el porcentaje de alcohol en el volumen total del líquido."
+      },
+      "q22": {
+        "question": "¿Qué significa 'Vintage' en terminología vinícola?",
+        "a": "Método de elaboración",
+        "b": "Año de cosecha de la uva",
+        "c": "Grado del vino",
+        "d": "Período de envejecimiento",
+        "correct": "b",
+        "explanation": "Vintage se refiere al año en que se cosecharon las uvas, que se muestra en la etiqueta del vino."
+      },
+      "q23": {
+        "question": "¿Qué significa 'Cask Strength'?",
+        "a": "Resistencia del barril de roble",
+        "b": "Sin diluir, embotellado directamente del barril",
+        "c": "Grado más alto",
+        "d": "Período mínimo de envejecimiento",
+        "correct": "b",
+        "explanation": "Cask strength significa que el licor se embotella directamente del barril sin dilución con agua."
+      },
+      "q24": {
+        "question": "¿Cómo se hace una 'Bomba' coreana (폭탄주)?",
+        "a": "Mezclar soju en cerveza",
+        "b": "Dejar caer un vaso de soju en un vaso de cerveza",
+        "c": "Agregar whisky a la cerveza",
+        "d": "Mezclar soju con refresco",
+        "correct": "b",
+        "explanation": "La bomba coreana se hace dejando caer un vaso entero de soju en un vaso de cerveza — una tradición única coreana."
+      },
+      "q25": {
+        "question": "En la etiqueta coreana, ¿cómo se debe servir a los mayores?",
+        "a": "Con una mano",
+        "b": "Con ambas manos",
+        "c": "Sentado",
+        "d": "Girando la cabeza",
+        "correct": "b",
+        "explanation": "En la cultura coreana, es cortés sostener la botella con ambas manos al servir a alguien mayor."
+      },
+      "q26": {
+        "question": "¿Qué es el 'Somaek'?",
+        "a": "Mezcla de soju y makgeolli",
+        "b": "Mezcla de soju y cerveza",
+        "c": "Mezcla de soju y vino de ciruela",
+        "d": "Mezcla de soju y refresco",
+        "correct": "b",
+        "explanation": "Somaek es la abreviatura de 'soju + maekju (cerveza)' — soju y cerveza mezclados en la proporción preferida."
+      },
+      "q27": {
+        "question": "¿Qué ingrediente beneficioso abunda en el makgeolli?",
+        "a": "Cafeína",
+        "b": "Taurina",
+        "c": "Probióticos (bacterias ácido lácticas)",
+        "d": "Vitamina C",
+        "correct": "c",
+        "explanation": "El makgeolli es rico en probióticos (bacterias ácido lácticas) producidos durante la fermentación."
+      },
+      "q28": {
+        "question": "¿Cuánto tarda el cuerpo en metabolizar una bebida estándar?",
+        "a": "Aproximadamente 30 minutos",
+        "b": "Aproximadamente 1 hora",
+        "c": "Aproximadamente 2 horas",
+        "d": "Aproximadamente 4 horas",
+        "correct": "b",
+        "explanation": "Un adulto sano típicamente metaboliza una bebida estándar de alcohol en aproximadamente 1 hora."
+      },
+      "q29": {
+        "question": "¿Qué órgano descompone principalmente el alcohol?",
+        "a": "Estómago",
+        "b": "Riñones",
+        "c": "Hígado",
+        "d": "Pulmones",
+        "correct": "c",
+        "explanation": "El hígado metaboliza aproximadamente el 90% del alcohol en el cuerpo."
+      },
+      "q30": {
+        "question": "¿Cuál es la sustancia principal que causa la resaca?",
+        "a": "Etanol",
+        "b": "Acetaldehído",
+        "c": "Metanol",
+        "d": "Glicerol",
+        "correct": "b",
+        "explanation": "El acetaldehído es una sustancia tóxica producida durante el metabolismo del alcohol y es la principal causa de la resaca."
+      },
+      "q31": {
+        "question": "¿Cuál de los siguientes tiene más calorías por volumen igual?",
+        "a": "Cerveza",
+        "b": "Vino",
+        "c": "Whisky",
+        "d": "Soju",
+        "correct": "c",
+        "explanation": "Por volumen igual, el whisky tiene las calorías más altas debido a su alto ABV. El alcohol contiene aproximadamente 7 kcal por gramo."
+      },
+      "q32": {
+        "question": "¿Cuál es el límite legal de BAC para conducir en Corea del Sur?",
+        "a": "0.01%",
+        "b": "0.03%",
+        "c": "0.05%",
+        "d": "0.08%",
+        "correct": "b",
+        "explanation": "El límite legal de BAC para conducir en Corea del Sur es 0.03%."
+      }
+    }
+  },
+  "settings": {
+    "language": "Idioma",
+    "selectLanguage": "Seleccionar Idioma",
+    "title": "Configuración",
+    "notifications": "Notificaciones",
+    "dailyReminder": "Recordatorio Diario de Registro",
+    "weeklyStats": "Notificación de Estadísticas Semanales",
+    "reminderTime": "Hora de Recordatorio",
+    "about": "Acerca de",
+    "version": "Versión",
+    "appInfo": "Una aplicación que proporciona diversos cálculos e información relacionados con el alcohol."
+  },
+  "notifications": {
+    "dailyTitle": "Registro de Bebidas de Hoy",
+    "dailyBody": "¡Registra lo que bebiste hoy!",
+    "weeklyTitle": "Estadísticas Semanales de Bebidas",
+    "weeklyBody": "¡Revisa tus estadísticas semanales!",
+    "permissionRequired": "Se requiere permiso de notificación"
+  },
+  "more": {
+    "title": "Más",
+    "history": "Historial de Cálculos",
+    "quiz": "Quiz de Alcohol",
+    "settings": "Configuración",
+    "historyDescription": "Vea sus cálculos anteriores",
+    "quizDescription": "Pon a prueba tu conocimiento sobre alcohol",
+    "settingsDescription": "Gestione idioma, notificaciones, etc.",
+    "subtitle": "Funciones y configuración adicionales"
   },
   "errors": {
     "positiveValues": "Todos los valores deben ser mayores que 0",
@@ -108,9 +909,5 @@
     "celsius": "°C",
     "proof": "Proof",
     "kcal": "kcal"
-  },
-  "settings": {
-    "language": "Idioma",
-    "selectLanguage": "Seleccionar Idioma"
   }
 }

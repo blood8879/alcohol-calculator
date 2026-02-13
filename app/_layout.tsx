@@ -4,7 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import {
@@ -45,6 +45,20 @@ export default function RootLayout() {
     });
   }, []);
 
+  useEffect(() => {
+    const setupNotifications = async () => {
+      const Notifications = await import("expo-notifications");
+      Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldShowAlert: true,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+        }),
+      });
+    };
+    setupNotifications();
+  }, []);
+
   if (!loaded || !i18nInitialized) {
     // Async font loading only occurs in development.
     return null;
@@ -54,18 +68,11 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <View style={{ flex: 1 }}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            {/* <Stack.Screen name="(tabs)" options={{ headerShown: true }} /> */}
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <Slot />
           <StatusBar style="auto" />
         </View>
       </ThemeProvider>
-      <View
-        className="absolute bottom-0 left-0 right-0 items-center"
-        style={{ paddingBottom: insets.bottom }}
-      >
+      <View className="items-center" style={{ paddingBottom: insets.bottom }}>
         <BannerAd
           ref={bannerRef}
           unitId={adUnitId}

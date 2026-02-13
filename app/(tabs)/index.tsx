@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
 import Modal from "react-native-modal";
-import CalculationCard from "../components/CalculationCard";
-import CalculatorIcon from "../components/CalculatorIcon";
-import LanguageSelector from "../components/LanguageSelector";
+import CalculationCard, { CalculationField } from "../../components/CalculationCard";
+import CalculatorIcon from "../../components/CalculatorIcon";
+import LanguageSelector from "../../components/LanguageSelector";
 import {
   calculateDilution,
   calculateAlcoholContent,
@@ -15,7 +15,10 @@ import {
   calculateProof,
   calculateBlending,
   calculateCalorie,
-} from "../utils/calculatorUtils";
+} from "../../utils/calculatorUtils";
+import { calculateBAC } from "../../utils/bacCalculator";
+import { drinkPresets } from "../../data/drinkPresets";
+import { DrinkPreset } from "../../data/types";
 
 type CalculatorKey =
   | "dilution"
@@ -24,7 +27,22 @@ type CalculatorKey =
   | "temperature"
   | "alcoholContent"
   | "freezingPoint"
-  | "proof";
+  | "proof"
+  | "bac"
+  | "unitConverter";
+
+type CalculatorConfig = {
+  navLabel: string;
+  navDescription: string;
+  title: string;
+  description: string;
+  fields: CalculationField[];
+  calculateResult: (values: number[]) => { label: string; value: string }[];
+  iconColor: string;
+  icon: string;
+  presets?: DrinkPreset[];
+  presetFieldMapping?: { volumeIndex: number; abvIndex: number };
+};
 
 // 메인 화면
 export default function HomeScreen() {
@@ -34,7 +52,7 @@ export default function HomeScreen() {
   const [isModalVisible, setModalVisible] = useState(false);
 
   // 계산기 설정을 useMemo로 메모이제이션하여 언어 변경 시 자동으로 업데이트
-  const calculatorConfigs = useMemo(
+  const calculatorConfigs: Record<CalculatorKey, CalculatorConfig> = useMemo(
     () => ({
       dilution: {
         navLabel: t("calculators.dilution.navLabel"),
@@ -49,6 +67,8 @@ export default function HomeScreen() {
         calculateResult: (values: number[]) => calculateDilution(values, t),
         iconColor: "bg-red-500",
         icon: "🧪",
+        presets: drinkPresets,
+        presetFieldMapping: { volumeIndex: 0, abvIndex: 1 },
       },
       blending: {
         navLabel: t("calculators.blending.navLabel"),
@@ -65,6 +85,8 @@ export default function HomeScreen() {
         calculateResult: (values: number[]) => calculateBlending(values, t),
         iconColor: "bg-pink-500",
         icon: "🍹",
+        presets: drinkPresets,
+        presetFieldMapping: { volumeIndex: 1, abvIndex: 0 },
       },
       calorie: {
         navLabel: t("calculators.calorie.navLabel"),
@@ -78,6 +100,8 @@ export default function HomeScreen() {
         calculateResult: (values: number[]) => calculateCalorie(values, t),
         iconColor: "bg-yellow-500",
         icon: "🔥",
+        presets: drinkPresets,
+        presetFieldMapping: { volumeIndex: 0, abvIndex: 1 },
       },
       temperature: {
         navLabel: t("calculators.temperature.navLabel"),
@@ -104,6 +128,8 @@ export default function HomeScreen() {
         calculateResult: (values: number[]) => calculateAlcoholContent(values, t),
         iconColor: "bg-orange-400",
         icon: "🥃",
+        presets: drinkPresets,
+        presetFieldMapping: { volumeIndex: 0, abvIndex: 1 },
       },
       freezingPoint: {
         navLabel: t("calculators.freezingPoint.navLabel"),
@@ -129,6 +155,84 @@ export default function HomeScreen() {
         calculateResult: (values: number[]) => calculateProof(values, t),
         iconColor: "bg-purple-500",
         icon: "🔄",
+      },
+      bac: {
+        navLabel: t("calculators.bac.navLabel"),
+        navDescription: t("calculators.bac.navDescription"),
+        title: t("calculators.bac.title"),
+        description: t("calculators.bac.description"),
+        fields: [
+          { label: t("calculators.bac.weight"), unit: "kg", placeholder: "0" },
+          {
+            label: t("calculators.bac.gender"),
+            unit: "",
+            placeholder: "",
+            fieldType: "radio" as const,
+            options: [
+              { label: t("calculators.bac.male"), value: 0 },
+              { label: t("calculators.bac.female"), value: 1 },
+            ],
+          },
+          { label: t("calculators.bac.numberOfDrinks"), unit: "", placeholder: "0" },
+          { label: t("calculators.bac.timeSinceFirst"), unit: t("calculators.bac.hours"), placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => {
+          const gender = values[1] === 0 ? "male" : "female";
+          return calculateBAC(values[0], gender, values[2], values[3], t);
+        },
+        iconColor: "bg-teal-500",
+        icon: "🍺",
+      },
+      unitConverter: {
+        navLabel: t("calculators.unitConverter.navLabel"),
+        navDescription: t("calculators.unitConverter.navDescription"),
+        title: t("calculators.unitConverter.title"),
+        description: t("calculators.unitConverter.description"),
+        fields: [
+          {
+            label: t("calculators.unitConverter.volumeMode"),
+            unit: "",
+            placeholder: "",
+            fieldType: "select" as const,
+            options: [
+              { label: t("calculators.unitConverter.volumeMode"), value: 0 },
+              { label: t("calculators.unitConverter.tempMode"), value: 1 },
+              { label: t("calculators.unitConverter.koreanMode"), value: 2 },
+            ],
+          },
+          { label: t("calculators.unitConverter.inputValue"), unit: "", placeholder: "0" },
+        ],
+        calculateResult: (values: number[]) => {
+          const modes = ["volume", "temperature", "korean"] as const;
+          const mode = modes[values[0]] || "volume";
+
+          if (mode === "volume") {
+            const ml = values[1];
+            return [
+              { label: t("calculators.unitConverter.ml"), value: `${ml.toFixed(2)} ml` },
+              { label: t("calculators.unitConverter.oz"), value: `${(ml / 29.5735).toFixed(2)} oz` },
+              { label: t("calculators.unitConverter.cups"), value: `${(ml / 236.588).toFixed(2)}` },
+              { label: t("calculators.unitConverter.bottles"), value: `${(ml / 750).toFixed(2)}` },
+            ];
+          } else if (mode === "temperature") {
+            const celsius = values[1];
+            return [
+              { label: t("calculators.unitConverter.celsius"), value: `${celsius.toFixed(1)} °C` },
+              { label: t("calculators.unitConverter.fahrenheit"), value: `${(celsius * 9 / 5 + 32).toFixed(1)} °F` },
+            ];
+          } else {
+            const ml = values[1];
+            return [
+              { label: "ml", value: `${ml.toFixed(1)} ml` },
+              { label: t("calculators.unitConverter.sojuGlass"), value: `${(ml / 50).toFixed(2)}` },
+              { label: t("calculators.unitConverter.beerGlass"), value: `${(ml / 355).toFixed(2)}` },
+              { label: t("calculators.unitConverter.sojuBottle"), value: `${(ml / 360).toFixed(2)}` },
+              { label: t("calculators.unitConverter.doe"), value: `${(ml / 1800).toFixed(4)}` },
+            ];
+          }
+        },
+        iconColor: "bg-indigo-500",
+        icon: "📐",
       },
     }),
     [t]
@@ -201,6 +305,10 @@ export default function HomeScreen() {
               fields={selectedCalculator.fields}
               calculateResult={selectedCalculator.calculateResult}
               onBack={handleBack}
+              presets={selectedCalculator.presets}
+              presetFieldMapping={selectedCalculator.presetFieldMapping}
+              calculatorType={selectedCalculatorKey || undefined}
+              calculatorIcon={selectedCalculator.icon}
             />
           </View>
         )}

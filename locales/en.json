@@ -6,7 +6,31 @@
     "reset": "Close",
     "error": "Error",
     "reference": "Reference",
-    "referenceNote": "Note"
+    "referenceNote": "Note",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "back": "Back",
+    "share": "Share Results"
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "tabs": {
+    "home": "Home",
+    "encyclopedia": "Encyclopedia",
+    "recipes": "Recipes",
+    "tracker": "Tracker",
+    "more": "More"
   },
   "calculators": {
     "dilution": {
@@ -92,7 +116,784 @@
       "errorNone": "Please enter either ABV or Proof",
       "errorABVHigh": "ABV must be 100% or less",
       "errorProofHigh": "Proof must be 200 or less"
+    },
+    "bac": {
+      "navLabel": "BAC Calculator",
+      "navDescription": "Estimate your blood alcohol concentration",
+      "title": "BAC Calculator",
+      "description": "Estimate BAC from weight, gender, drinks and time",
+      "weight": "Weight",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "numberOfDrinks": "Standard Drinks",
+      "timeSinceFirst": "Hours Since First Drink",
+      "bacLevel": "BAC Level",
+      "soberTime": "Estimated Time to Sober",
+      "hours": "hours",
+      "bacWarningHigh": "Do NOT drive! Dangerously high level.",
+      "bacWarningMedium": "Avoid driving. Judgment may be impaired.",
+      "bacWarningLow": "Light intoxication.",
+      "bacSafe": "Within normal range.",
+      "errorWeight": "Please enter your weight",
+      "errorDrinks": "Please enter number of drinks"
+    },
+    "unitConverter": {
+      "navLabel": "Unit Converter",
+      "navDescription": "Convert volume, temperature, and Korean units",
+      "title": "Unit Converter",
+      "description": "Convert between different measurement units",
+      "inputValue": "Value to Convert",
+      "volumeMode": "Volume",
+      "tempMode": "Temperature",
+      "koreanMode": "Korean Units",
+      "ml": "Milliliters (ml)",
+      "oz": "Ounces (oz)",
+      "cups": "Cups",
+      "bottles": "Bottles (750ml)",
+      "celsius": "Celsius (°C)",
+      "fahrenheit": "Fahrenheit (°F)",
+      "sojuGlass": "Soju Glass (50ml)",
+      "beerGlass": "Beer Glass (355ml)",
+      "doe": "Doe (1800ml)",
+      "sojuBottle": "Soju Bottle (360ml)",
+      "result": "Conversion Result"
     }
+  },
+  "presets": {
+    "title": "Select Preset",
+    "selectPreset": "Popular Drinks",
+    "clear": "Clear",
+    "drinks": {
+      "soju": "Soju",
+      "beer": "Beer",
+      "makgeolli": "Makgeolli",
+      "redWine": "Red Wine",
+      "whiteWine": "White Wine",
+      "sparklingWine": "Sparkling Wine",
+      "whiskey": "Whiskey",
+      "vodka": "Vodka",
+      "rum": "Rum",
+      "gin": "Gin",
+      "tequila": "Tequila",
+      "sake": "Sake",
+      "beerCan": "Beer Can",
+      "somaek": "Somaek",
+      "draftBeer": "Draft Beer",
+      "highball": "Highball"
+    }
+  },
+  "share": {
+    "button": "Share Results",
+    "resultTitle": "Calculation Result",
+    "calculatedWith": "Calculated with Alcohol Calculator",
+    "appName": "Alcohol Calculator"
+  },
+  "history": {
+    "title": "Calculation History",
+    "empty": "No calculation history yet",
+    "favorite": "Add to Favorites",
+    "unfavorite": "Remove from Favorites",
+    "rerun": "Recalculate",
+    "delete": "Delete",
+    "clearAll": "Clear All",
+    "confirmClear": "Clear all history?",
+    "confirmDelete": "Delete this record?",
+    "ago": "ago",
+    "justNow": "Just now"
+  },
+  "encyclopedia": {
+    "title": "Drink Encyclopedia",
+    "search": "Search",
+    "searchPlaceholder": "Search by drink name...",
+    "abvRange": "ABV Range",
+    "calories": "Calories (per 100ml)",
+    "origin": "Origin",
+    "servingTemp": "Serving Temperature",
+    "pairing": "Food Pairing",
+    "description": "Description",
+    "items": {
+      "soju": {
+        "name": "Soju",
+        "origin": "South Korea",
+        "servingTemp": "Cold (4-8°C)",
+        "pairing": "Grilled pork belly, Fried chicken, Kimchi stew",
+        "description": "Korea's iconic distilled spirit made from rice or other grains. Known for its clean, smooth taste."
+      },
+      "beer": {
+        "name": "Beer",
+        "origin": "Germany/Belgium",
+        "servingTemp": "Cold (3-7°C)",
+        "pairing": "Chicken, Pizza, Sausages",
+        "description": "The world's most widely consumed alcoholic beverage, made by fermenting barley."
+      },
+      "redWine": {
+        "name": "Red Wine",
+        "origin": "France/Italy",
+        "servingTemp": "Room temp (16-18°C)",
+        "pairing": "Steak, Cheese, Pasta",
+        "description": "Wine made by fermenting red grapes with their skins, known for rich tannin flavors."
+      },
+      "whiteWine": {
+        "name": "White Wine",
+        "origin": "France/Germany",
+        "servingTemp": "Chilled (8-12°C)",
+        "pairing": "Seafood, Salad, Light cheese",
+        "description": "Wine made from green grapes, characterized by refreshing and light flavors."
+      },
+      "sparklingWine": {
+        "name": "Sparkling Wine",
+        "origin": "France",
+        "servingTemp": "Very cold (6-8°C)",
+        "pairing": "Desserts, Fruits, Canapés",
+        "description": "Carbonated wine often enjoyed at celebrations."
+      },
+      "whiskey": {
+        "name": "Whiskey",
+        "origin": "Scotland/Ireland",
+        "servingTemp": "Neat or on the rocks (15-20°C)",
+        "pairing": "Dark chocolate, Cheese, Smoked salmon",
+        "description": "Distilled spirit made from fermented grain mash, aged in oak barrels."
+      },
+      "vodka": {
+        "name": "Vodka",
+        "origin": "Russia/Poland",
+        "servingTemp": "Very cold (-18~0°C)",
+        "pairing": "Caviar, Pickles, Appetizers",
+        "description": "Clear distilled spirit made from potatoes or grains, a base for many cocktails."
+      },
+      "rum": {
+        "name": "Rum",
+        "origin": "Caribbean",
+        "servingTemp": "Neat or on the rocks",
+        "pairing": "Tropical fruits, Desserts, Seafood",
+        "description": "Distilled spirit made from sugarcane byproducts."
+      },
+      "gin": {
+        "name": "Gin",
+        "origin": "Netherlands/UK",
+        "servingTemp": "Chilled",
+        "pairing": "Tonic water, Olives, Seafood",
+        "description": "Distilled spirit flavored with juniper berries, the base of gin and tonic."
+      },
+      "tequila": {
+        "name": "Tequila",
+        "origin": "Mexico",
+        "servingTemp": "Room temperature",
+        "pairing": "Lime, Salt, Mexican cuisine",
+        "description": "Mexico's iconic spirit made from blue agave."
+      },
+      "sake": {
+        "name": "Sake",
+        "origin": "Japan",
+        "servingTemp": "Cold or warm (5-55°C)",
+        "pairing": "Sushi, Sashimi, Japanese cuisine",
+        "description": "Japanese traditional rice wine made by fermenting rice."
+      },
+      "makgeolli": {
+        "name": "Makgeolli",
+        "origin": "South Korea",
+        "servingTemp": "Cold (4-8°C)",
+        "pairing": "Korean pancake, Kimchi pancake, Tofu kimchi",
+        "description": "Korean traditional rice wine, rich in probiotics."
+      },
+      "brandy": {
+        "name": "Brandy",
+        "origin": "France",
+        "servingTemp": "Room temp (18-20°C)",
+        "pairing": "Cigars, Dark chocolate, Cheese",
+        "description": "Premium spirit distilled from wine or fruit wine."
+      },
+      "liqueur": {
+        "name": "Liqueur",
+        "origin": "Europe",
+        "servingTemp": "Chilled or room temp",
+        "pairing": "Desserts, Ice cream, Cake",
+        "description": "Sweet spirit flavored with sugar, fruits, herbs and more."
+      },
+      "champagne": {
+        "name": "Champagne",
+        "origin": "Champagne, France",
+        "servingTemp": "Very cold (6-8°C)",
+        "pairing": "Caviar, Oysters, Desserts",
+        "description": "Premium sparkling wine exclusively from the Champagne region of France."
+      }
+    }
+  },
+  "recipes": {
+    "title": "Cocktail Recipes",
+    "search": "Search",
+    "searchPlaceholder": "Search cocktails...",
+    "ingredientsTitle": "Ingredients",
+    "instructions": "Instructions",
+    "difficulty": "Difficulty",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "totalVolume": "Total Volume",
+    "totalAbv": "Total ABV",
+    "totalCalories": "Total Calories",
+    "openCalculator": "Open in Calculator",
+    "filter": {
+      "all": "All",
+      "korean": "Korean",
+      "global": "Global"
+    },
+    "ingredients": {
+      "soju": "Soju",
+      "beer": "Beer",
+      "bokbunjaWine": "Bokbunja Wine",
+      "sparklingWater": "Sparkling Water",
+      "lemonJuice": "Lemon Juice",
+      "maesilju": "Maesil Liqueur",
+      "soda": "Soda Water",
+      "lemonSlice": "Lemon Slice",
+      "yuzaSyrup": "Yuzu Syrup",
+      "tequila": "Tequila",
+      "tripleSec": "Triple Sec",
+      "limeJuice": "Lime Juice",
+      "whiteRum": "White Rum",
+      "sugar": "Sugar",
+      "mintLeaves": "Mint Leaves",
+      "bourbonWhiskey": "Bourbon Whiskey",
+      "angosturaBitters": "Angostura Bitters",
+      "sugarCube": "Sugar Cube",
+      "water": "Water",
+      "gin": "Gin",
+      "dryVermouth": "Dry Vermouth",
+      "campari": "Campari",
+      "sweetVermouth": "Sweet Vermouth",
+      "simpleSyrup": "Simple Syrup",
+      "ryeWhiskey": "Rye Whiskey",
+      "citrusVodka": "Citrus Vodka",
+      "cranberryJuice": "Cranberry Juice",
+      "tonicWater": "Tonic Water",
+      "limeWedge": "Lime Wedge",
+      "coconutCream": "Coconut Cream",
+      "pineappleJuice": "Pineapple Juice",
+      "kahlua": "Kahlúa",
+      "milk": "Milk",
+      "vodka": "Vodka",
+      "cola": "Cola",
+      "eggWhite": "Egg White",
+      "tomatoJuice": "Tomato Juice",
+      "worcestershireSauce": "Worcestershire Sauce",
+      "tabasco": "Tabasco",
+      "aperol": "Aperol",
+      "prosecco": "Prosecco"
+    },
+    "items": {
+      "somaek": {
+        "name": "Somaek (Soju+Beer)",
+        "ing1": "Soju",
+        "ing2": "Beer",
+        "instructions": "Fill a beer glass 2/3 with beer, add 1/3 soju and gently stir."
+      },
+      "poktanju": {
+        "name": "Bomb Shot",
+        "ing1": "Soju",
+        "ing2": "Beer",
+        "instructions": "Fill a beer glass with beer, drop a shot glass of soju into it and drink."
+      },
+      "bokbunja": {
+        "name": "Bokbunja Cocktail",
+        "ing1": "Bokbunja Wine",
+        "ing2": "Sparkling Water",
+        "ing3": "Lime",
+        "instructions": "Mix bokbunja wine with sparkling water and garnish with lime."
+      },
+      "maesil": {
+        "name": "Maesil Highball",
+        "ing1": "Maesil Liqueur",
+        "ing2": "Sparkling Water",
+        "ing3": "Ice",
+        "instructions": "Fill glass with ice, mix maesil liqueur and sparkling water at 1:2 ratio."
+      },
+      "yuja": {
+        "name": "Yuzu Sour",
+        "ing1": "Yuzu Syrup",
+        "ing2": "Soju or Vodka",
+        "ing3": "Lemon Juice",
+        "ing4": "Sparkling Water",
+        "instructions": "Mix yuzu syrup, soju, lemon juice and top with sparkling water."
+      },
+      "margarita": {
+        "name": "Margarita",
+        "ing1": "Tequila",
+        "ing2": "Triple Sec",
+        "ing3": "Lime Juice",
+        "instructions": "Shake tequila, triple sec, and lime juice with ice. Strain into a salt-rimmed glass."
+      },
+      "mojito": {
+        "name": "Mojito",
+        "ing1": "White Rum",
+        "ing2": "Lime Juice",
+        "ing3": "Simple Syrup",
+        "ing4": "Soda Water",
+        "ing5": "Mint Leaves",
+        "instructions": "Muddle mint leaves, add rum, lime juice, syrup, and top with soda water."
+      },
+      "oldFashioned": {
+        "name": "Old Fashioned",
+        "ing1": "Bourbon Whiskey",
+        "ing2": "Sugar",
+        "ing3": "Angostura Bitters",
+        "ing4": "Orange Peel",
+        "instructions": "Soak sugar with bitters, add bourbon and stir slowly. Garnish with orange peel."
+      },
+      "martini": {
+        "name": "Martini",
+        "ing1": "Gin",
+        "ing2": "Dry Vermouth",
+        "ing3": "Olive",
+        "instructions": "Stir gin and vermouth with ice in a mixing glass. Strain into a chilled cocktail glass."
+      },
+      "negroni": {
+        "name": "Negroni",
+        "ing1": "Gin",
+        "ing2": "Campari",
+        "ing3": "Sweet Vermouth",
+        "instructions": "Stir equal parts gin, Campari, and sweet vermouth over ice."
+      },
+      "daiquiri": {
+        "name": "Daiquiri",
+        "ing1": "White Rum",
+        "ing2": "Lime Juice",
+        "ing3": "Simple Syrup",
+        "instructions": "Shake all ingredients with ice and strain into a cocktail glass."
+      },
+      "manhattan": {
+        "name": "Manhattan",
+        "ing1": "Rye Whiskey",
+        "ing2": "Sweet Vermouth",
+        "ing3": "Angostura Bitters",
+        "instructions": "Stir whiskey, vermouth, and bitters with ice. Strain into a cocktail glass."
+      },
+      "cosmopolitan": {
+        "name": "Cosmopolitan",
+        "ing1": "Vodka",
+        "ing2": "Triple Sec",
+        "ing3": "Cranberry Juice",
+        "ing4": "Lime Juice",
+        "instructions": "Shake all ingredients with ice and strain into a martini glass."
+      },
+      "ginTonic": {
+        "name": "Gin & Tonic",
+        "ing1": "Gin",
+        "ing2": "Tonic Water",
+        "ing3": "Lime",
+        "instructions": "Add ice and gin to a glass, top with tonic water and garnish with lime."
+      },
+      "pinaColada": {
+        "name": "Piña Colada",
+        "ing1": "White Rum",
+        "ing2": "Coconut Cream",
+        "ing3": "Pineapple Juice",
+        "instructions": "Blend all ingredients with ice and pour into a glass."
+      },
+      "kahluaMilk": {
+        "name": "Kahlúa Milk",
+        "ing1": "Kahlúa",
+        "ing2": "Milk",
+        "instructions": "Add ice, then mix Kahlúa and milk at 1:3 ratio."
+      },
+      "longIsland": {
+        "name": "Long Island Iced Tea",
+        "ing1": "Vodka",
+        "ing2": "Rum",
+        "ing3": "Gin",
+        "ing4": "Tequila",
+        "ing5": "Triple Sec",
+        "ing6": "Lemon Juice",
+        "ing7": "Cola",
+        "instructions": "Combine all spirits and lemon juice, top with cola."
+      },
+      "whiskeySour": {
+        "name": "Whiskey Sour",
+        "ing1": "Bourbon Whiskey",
+        "ing2": "Lemon Juice",
+        "ing3": "Simple Syrup",
+        "instructions": "Shake all ingredients with ice and strain into a glass."
+      },
+      "bloodyMary": {
+        "name": "Bloody Mary",
+        "ing1": "Vodka",
+        "ing2": "Tomato Juice",
+        "ing3": "Lemon Juice",
+        "ing4": "Tabasco",
+        "ing5": "Worcestershire Sauce",
+        "instructions": "Mix vodka with tomato juice, season with lemon juice, Tabasco, and Worcestershire sauce."
+      },
+      "aperolSpritz": {
+        "name": "Aperol Spritz",
+        "ing1": "Aperol",
+        "ing2": "Prosecco",
+        "ing3": "Soda Water",
+        "instructions": "Add ice, then Aperol, Prosecco, and soda water at 3:3:1 ratio."
+      }
+    }
+  },
+  "tracker": {
+    "title": "Drink Tracker",
+    "addDrink": "Add Drink",
+    "todayLog": "Today's Log",
+    "empty": "No logs for today",
+    "weeklyStats": "Weekly Stats",
+    "monthlyStats": "Monthly Stats",
+    "totalDrinks": "Total Drinks",
+    "totalCalories": "Total Calories",
+    "averageDrinks": "Average Drinks/Day",
+    "selectDate": "Select Date",
+    "delete": "Delete",
+    "manual": "Manual Entry",
+    "preset": "Select Preset",
+    "volume": "Volume",
+    "abv": "ABV",
+    "drinkName": "Drink Name",
+    "drinks": "drinks",
+    "kcal": "kcal",
+    "emoji": "Emoji"
+  },
+  "quiz": {
+    "title": "Alcohol Quiz",
+    "subtitle": "Test your alcohol knowledge!",
+    "description": "Test your knowledge with 10 random questions",
+    "start": "Start Quiz",
+    "next": "Next",
+    "nextQuestion": "Next Question",
+    "seeResults": "See Results",
+    "finish": "See Results",
+    "score": "Score",
+    "yourScore": "Your Score",
+    "correct": "Correct!",
+    "incorrect": "Incorrect!",
+    "explanation": "Explanation",
+    "shareScore": "Share Score",
+    "tryAgain": "Try Again",
+    "resultExcellent": "Excellent! You're an expert!",
+    "resultGood": "Good job! Almost there!",
+    "resultAverage": "Not bad! Keep learning!",
+    "resultKeepTrying": "Don't give up! Try again!",
+    "questionOf": "of",
+    "questions": {
+      "q1": {
+        "question": "What is the typical ABV of soju?",
+        "a": "8-12%",
+        "b": "16-20%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "Korean soju typically ranges from 16-20% ABV."
+      },
+      "q2": {
+        "question": "What is the typical ABV range of regular beer?",
+        "a": "1-2%",
+        "b": "4-6%",
+        "c": "10-14%",
+        "d": "18-22%",
+        "correct": "b",
+        "explanation": "Most regular beers have an ABV in the 4-6% range."
+      },
+      "q3": {
+        "question": "What is the typical ABV of red wine?",
+        "a": "5-8%",
+        "b": "12-15%",
+        "c": "20-25%",
+        "d": "30-35%",
+        "correct": "b",
+        "explanation": "Red wine typically has an ABV between 12-15%."
+      },
+      "q4": {
+        "question": "What is the typical ABV of whiskey?",
+        "a": "15-20%",
+        "b": "25-30%",
+        "c": "40-46%",
+        "d": "60-70%",
+        "correct": "c",
+        "explanation": "Most whiskeys are bottled at 40-46% ABV."
+      },
+      "q5": {
+        "question": "What is the general minimum ABV for vodka?",
+        "a": "20%",
+        "b": "30%",
+        "c": "37.5%",
+        "d": "50%",
+        "correct": "c",
+        "explanation": "The EU minimum ABV for vodka is 37.5%, while in the US it is 40%."
+      },
+      "q6": {
+        "question": "What is the typical ABV of sake?",
+        "a": "5-8%",
+        "b": "15-17%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "Sake typically has an ABV of around 15-17%."
+      },
+      "q7": {
+        "question": "What is the highest ABV commercially available spirit?",
+        "a": "Absinthe (72%)",
+        "b": "Everclear (95%)",
+        "c": "Spirytus (96%)",
+        "d": "Bacardi 151 (75.5%)",
+        "correct": "c",
+        "explanation": "Polish Spirytus at 96% is the highest ABV commercially available spirit."
+      },
+      "q8": {
+        "question": "How much pure alcohol is in one standard drink?",
+        "a": "5g",
+        "b": "8g",
+        "c": "14g",
+        "d": "20g",
+        "correct": "c",
+        "explanation": "A US standard drink contains 14g of pure alcohol, equivalent to one 355ml beer at 5% or about 1.5 shots of soju."
+      },
+      "q9": {
+        "question": "Where did whiskey originate?",
+        "a": "United States",
+        "b": "Scotland/Ireland",
+        "c": "France",
+        "d": "Japan",
+        "correct": "b",
+        "explanation": "Whiskey is believed to have originated in Scotland and Ireland."
+      },
+      "q10": {
+        "question": "Which country does soju originate from?",
+        "a": "Japan",
+        "b": "China",
+        "c": "South Korea",
+        "d": "Thailand",
+        "correct": "c",
+        "explanation": "Soju is a traditional Korean distilled spirit, with distillation techniques introduced through the Mongol Empire during the Goryeo Dynasty."
+      },
+      "q11": {
+        "question": "Which country is tequila from?",
+        "a": "Spain",
+        "b": "Mexico",
+        "c": "Brazil",
+        "d": "Argentina",
+        "correct": "b",
+        "explanation": "Tequila is Mexico's iconic distilled spirit, made from blue agave."
+      },
+      "q12": {
+        "question": "Where is rum primarily produced?",
+        "a": "Northern Europe",
+        "b": "Caribbean region",
+        "c": "Southeast Asia",
+        "d": "Africa",
+        "correct": "b",
+        "explanation": "Rum is made from sugarcane and the Caribbean region is its primary production area."
+      },
+      "q13": {
+        "question": "Which region exclusively produces Champagne?",
+        "a": "Bordeaux",
+        "b": "Burgundy",
+        "c": "Champagne",
+        "d": "Provence",
+        "correct": "c",
+        "explanation": "The name 'Champagne' can only be used for sparkling wine produced in the Champagne region of France."
+      },
+      "q14": {
+        "question": "Where does sake originate from?",
+        "a": "China",
+        "b": "Korea",
+        "c": "Japan",
+        "d": "Vietnam",
+        "correct": "c",
+        "explanation": "Sake is a traditional Japanese brewed beverage made by fermenting rice."
+      },
+      "q15": {
+        "question": "What is the main ingredient in sake?",
+        "a": "Wheat",
+        "b": "Rice",
+        "c": "Barley",
+        "d": "Corn",
+        "correct": "b",
+        "explanation": "Sake is primarily made from rice, fermented using koji mold."
+      },
+      "q16": {
+        "question": "What minimum percentage of corn must bourbon contain?",
+        "a": "30%",
+        "b": "41%",
+        "c": "51%",
+        "d": "75%",
+        "correct": "c",
+        "explanation": "By US law, bourbon must be made from a grain mixture that is at least 51% corn."
+      },
+      "q17": {
+        "question": "What ingredient gives beer its bitterness?",
+        "a": "Malt",
+        "b": "Yeast",
+        "c": "Hops",
+        "d": "Water",
+        "correct": "c",
+        "explanation": "Hops are the key ingredient that gives beer its bitterness and aroma."
+      },
+      "q18": {
+        "question": "What microorganism is essential for wine fermentation?",
+        "a": "Lactic acid bacteria",
+        "b": "Yeast",
+        "c": "Mold",
+        "d": "Bacteria",
+        "correct": "b",
+        "explanation": "Wine is made through fermentation where yeast converts grape sugars into alcohol."
+      },
+      "q19": {
+        "question": "What type of alcohol is makgeolli?",
+        "a": "Distilled spirit",
+        "b": "Fermented rice wine (unfiltered)",
+        "c": "Blended spirit",
+        "d": "Fruit wine",
+        "correct": "b",
+        "explanation": "Makgeolli is a traditional Korean unfiltered rice wine (fermented beverage)."
+      },
+      "q20": {
+        "question": "What is the relationship between Proof and ABV?",
+        "a": "Proof = ABV",
+        "b": "Proof = ABV × 2",
+        "c": "Proof = ABV ÷ 2",
+        "d": "Proof = ABV + 10",
+        "correct": "b",
+        "explanation": "In the US system, Proof is twice the ABV. For example: 40% ABV = 80 Proof."
+      },
+      "q21": {
+        "question": "What does ABV stand for?",
+        "a": "Alcohol By Value",
+        "b": "Alcohol By Volume",
+        "c": "Alcohol Beverage Verification",
+        "d": "Alcohol Brewing Volume",
+        "correct": "b",
+        "explanation": "ABV stands for Alcohol By Volume, representing the percentage of alcohol in a total volume of liquid."
+      },
+      "q22": {
+        "question": "What does 'Vintage' mean in wine terminology?",
+        "a": "Winemaking method",
+        "b": "Year of grape harvest",
+        "c": "Wine grade",
+        "d": "Aging period",
+        "correct": "b",
+        "explanation": "Vintage refers to the year the grapes were harvested, which is displayed on the wine label."
+      },
+      "q23": {
+        "question": "What does 'Cask Strength' mean?",
+        "a": "Strength of the oak barrel",
+        "b": "Undiluted, bottled directly from the cask",
+        "c": "Highest grade",
+        "d": "Minimum aging period",
+        "correct": "b",
+        "explanation": "Cask strength means the spirit is bottled directly from the barrel without water dilution."
+      },
+      "q24": {
+        "question": "How is a Korean 'Bomb Shot' (폭탄주) made?",
+        "a": "Mix soju into beer",
+        "b": "Drop a shot glass of soju into a beer glass",
+        "c": "Add whiskey to beer",
+        "d": "Mix soju with soda",
+        "correct": "b",
+        "explanation": "A Korean bomb shot is made by dropping an entire shot glass of soju into a glass of beer — a uniquely Korean drinking tradition."
+      },
+      "q25": {
+        "question": "In Korean drinking etiquette, how should you pour for elders?",
+        "a": "With one hand",
+        "b": "With both hands",
+        "c": "While sitting",
+        "d": "While turning your head away",
+        "correct": "b",
+        "explanation": "In Korean culture, it is polite to hold the bottle with both hands when pouring for someone older."
+      },
+      "q26": {
+        "question": "What is 'Somaek'?",
+        "a": "Soju and makgeolli mix",
+        "b": "Soju and beer mix",
+        "c": "Soju and plum wine mix",
+        "d": "Soju and soda mix",
+        "correct": "b",
+        "explanation": "Somaek is short for 'soju + maekju (beer)' — soju and beer mixed at a preferred ratio."
+      },
+      "q27": {
+        "question": "What beneficial ingredient is abundant in makgeolli?",
+        "a": "Caffeine",
+        "b": "Taurine",
+        "c": "Probiotics (lactic acid bacteria)",
+        "d": "Vitamin C",
+        "correct": "c",
+        "explanation": "Makgeolli is rich in probiotics (lactic acid bacteria) produced during fermentation."
+      },
+      "q28": {
+        "question": "How long does it take the body to metabolize one standard drink?",
+        "a": "About 30 minutes",
+        "b": "About 1 hour",
+        "c": "About 2 hours",
+        "d": "About 4 hours",
+        "correct": "b",
+        "explanation": "A healthy adult typically metabolizes one standard drink of alcohol in about 1 hour."
+      },
+      "q29": {
+        "question": "Which organ primarily breaks down alcohol?",
+        "a": "Stomach",
+        "b": "Kidneys",
+        "c": "Liver",
+        "d": "Lungs",
+        "correct": "c",
+        "explanation": "The liver metabolizes approximately 90% of alcohol in the body."
+      },
+      "q30": {
+        "question": "What is the primary substance that causes hangovers?",
+        "a": "Ethanol",
+        "b": "Acetaldehyde",
+        "c": "Methanol",
+        "d": "Glycerol",
+        "correct": "b",
+        "explanation": "Acetaldehyde is a toxic substance produced during alcohol metabolism and is the primary cause of hangovers."
+      },
+      "q31": {
+        "question": "Which of the following has the highest calories per equal volume?",
+        "a": "Beer",
+        "b": "Wine",
+        "c": "Whiskey",
+        "d": "Soju",
+        "correct": "c",
+        "explanation": "Per equal volume, whiskey has the highest calories due to its high ABV. Alcohol contains about 7 kcal per gram."
+      },
+      "q32": {
+        "question": "What is the legal BAC limit for driving in South Korea?",
+        "a": "0.01%",
+        "b": "0.03%",
+        "c": "0.05%",
+        "d": "0.08%",
+        "correct": "b",
+        "explanation": "South Korea's legal BAC limit for driving is 0.03%."
+      }
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "title": "Settings",
+    "notifications": "Notifications",
+    "dailyReminder": "Daily Drink Log Reminder",
+    "weeklyStats": "Weekly Stats Notification",
+    "reminderTime": "Reminder Time",
+    "about": "About",
+    "version": "Version",
+    "appInfo": "An app providing various alcohol-related calculations and information."
+  },
+  "notifications": {
+    "dailyTitle": "Today's Drink Log",
+    "dailyBody": "Log what you drank today!",
+    "weeklyTitle": "Weekly Drinking Stats",
+    "weeklyBody": "Check your weekly drinking stats!",
+    "permissionRequired": "Notification permission is required"
+  },
+  "more": {
+    "title": "More",
+    "subtitle": "Additional features and settings",
+    "history": "Calculation History",
+    "quiz": "Alcohol Quiz",
+    "settings": "Settings",
+    "historyDescription": "View your past calculations",
+    "quizDescription": "Test your alcohol knowledge",
+    "settingsDescription": "Manage language, notifications, etc."
   },
   "errors": {
     "positiveValues": "All values must be greater than 0",
@@ -108,9 +909,5 @@
     "celsius": "°C",
     "proof": "Proof",
     "kcal": "kcal"
-  },
-  "settings": {
-    "language": "Language",
-    "selectLanguage": "Select Language"
   }
 }

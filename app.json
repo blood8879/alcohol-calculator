@@ -44,7 +44,8 @@
           "androidAppId": "ca-app-pub-7612314432840835~5764066171"
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
