@@ -19,7 +19,7 @@ type QuizState = "idle" | "playing" | "results";
 
 const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
-  : "ca-app-pub-7612314432840835~3082062514";
+  : "ca-app-pub-7612314432840835/3082062514";
 
 const interstitial = InterstitialAd.createForAdRequest(adUnitId);
 
