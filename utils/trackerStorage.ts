@@ -11,6 +11,7 @@ export interface DrinkLog {
   volume: number;
   abv: number;
   calories: number;
+  price?: number;
   timestamp: number;
 }
 
@@ -36,6 +37,26 @@ export const addDrinkLog = async (
     await AsyncStorage.setItem(TRACKER_KEY, JSON.stringify(logs));
   } catch (error) {
     console.error('Error adding drink log:', error);
+  }
+};
+
+// 세션 종료 시 잔별 실제 시각을 유지한 채 일괄 기록한다.
+export const addDrinkLogsWithTimestamps = async (
+  entries: Array<Omit<DrinkLog, 'id' | 'calories'>>
+): Promise<void> => {
+  try {
+    const logs = await getAllLogs();
+    entries.forEach((entry) => {
+      const calories = entry.volume * (entry.abv / 100) * 5.6;
+      logs.push({
+        ...entry,
+        id: generateId(),
+        calories: Math.round(calories * 10) / 10,
+      });
+    });
+    await AsyncStorage.setItem(TRACKER_KEY, JSON.stringify(logs));
+  } catch (error) {
+    console.error('Error adding drink logs:', error);
   }
 };
 
@@ -79,8 +100,8 @@ export const deleteDrinkLog = async (id: string): Promise<void> => {
 
 export const getWeeklyStats = async (
   date: Date
-): Promise<{ labels: string[]; drinks: number[]; calories: number[]; totalDrinks: number; totalCalories: number }> => {
-  const result = { labels: [] as string[], drinks: [] as number[], calories: [] as number[], totalDrinks: 0, totalCalories: 0 };
+): Promise<{ labels: string[]; drinks: number[]; calories: number[]; totalDrinks: number; totalCalories: number; totalSpend: number }> => {
+  const result = { labels: [] as string[], drinks: [] as number[], calories: [] as number[], totalDrinks: 0, totalCalories: 0, totalSpend: 0 };
 
   const dayOfWeek = date.getDay();
   const startOfWeek = new Date(date);
@@ -100,9 +121,11 @@ export const getWeeklyStats = async (
     result.calories.push(Math.round(dayCals));
     result.totalDrinks += logs.length;
     result.totalCalories += dayCals;
+    result.totalSpend += logs.reduce((sum, l) => sum + (l.price ?? 0), 0);
   }
 
   result.totalCalories = Math.round(result.totalCalories);
+  result.totalSpend = Math.round(result.totalSpend);
   return result;
 };
 

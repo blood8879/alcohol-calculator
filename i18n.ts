@@ -61,7 +61,7 @@ export const initI18n = async () => {
       interpolation: {
         escapeValue: false,
       },
-      compatibilityJSON: 'v3',
+      compatibilityJSON: 'v4',
     });
 
   return i18n;

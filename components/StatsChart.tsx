@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
+import Card from "./ui/Card";
 
 interface StatsChartProps {
   data: { labels: string[]; values: number[] };
@@ -18,7 +19,7 @@ const StatsChart = ({ data, color = "#22c55e", title }: StatsChartProps) => {
   const maxValue = Math.max(...data.values, 1);
 
   return (
-    <View className="bg-gray-800 rounded-xl p-4 mb-4">
+    <Card className="mb-4">
       <Text className="text-white text-base font-semibold mb-3">{title}</Text>
       <BarChart
         data={barData}
@@ -35,7 +36,7 @@ const StatsChart = ({ data, color = "#22c55e", title }: StatsChartProps) => {
         spacing={16}
         isAnimated={false}
       />
-    </View>
+    </Card>
   );
 };
 

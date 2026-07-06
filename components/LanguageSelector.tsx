@@ -27,6 +27,9 @@ export default function LanguageSelector() {
           <TouchableOpacity
             key={lang.code}
             onPress={() => handleLanguageChange(lang.code)}
+            accessibilityRole="radio"
+            accessibilityLabel={lang.label}
+            accessibilityState={{ selected: currentLanguage === lang.code }}
             className={`flex-1 p-3 rounded-lg ${
               currentLanguage === lang.code
                 ? "bg-blue-500"

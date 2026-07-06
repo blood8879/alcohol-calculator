@@ -27,10 +27,23 @@
   },
   "tabs": {
     "home": "Inicio",
+    "explore": "Explorar",
     "encyclopedia": "Enciclopedia",
     "recipes": "Recetas",
+    "culture": "Cultura",
+    "quiz": "Quiz",
     "tracker": "Registro",
     "more": "Más"
+  },
+  "home": {
+    "calculatorsTitle": "Calculadoras",
+    "todayTitle": "Hoy",
+    "todayTipLabel": "Dato del día",
+    "quizBannerTitle": "Haz el quiz de bebidas",
+    "quizBannerDescription": "10 preguntas rápidas sobre ABV, calorías y consumo.",
+    "contentRailTitle": "Favoritos y vistos recientemente",
+    "openRecipe": "Abrir receta",
+    "openGuide": "Abrir guía"
   },
   "calculators": {
     "dilution": {
@@ -317,6 +330,76 @@
         "servingTemp": "Muy frío (6-8°C)",
         "pairing": "Caviar, Ostras, Postres",
         "description": "Vino espumoso premium exclusivamente de la región de Champaña de Francia."
+      },
+      "cheongju": {
+        "name": "Cheongju",
+        "origin": "Corea",
+        "servingTemp": "Frío o tibio 10–45°C",
+        "pairing": "Tortitas coreanas, pescado a la parrilla",
+        "description": "Vino de arroz coreano claro, usado en ceremonias."
+      },
+      "bokbunjaWine": {
+        "name": "Vino de bokbunja",
+        "origin": "Corea",
+        "servingTemp": "Frío 8–12°C",
+        "pairing": "Fruta, queso, postre",
+        "description": "Vino dulce de frambuesa negra coreana."
+      },
+      "baijiu": {
+        "name": "Baijiu",
+        "origin": "China",
+        "servingTemp": "Temperatura ambiente o tibio",
+        "pairing": "Comida china grasosa, cacahuetes",
+        "description": "Aguardiente chino fuerte de sorgo con aroma intenso."
+      },
+      "absinthe": {
+        "name": "Absenta",
+        "origin": "Suiza/Francia",
+        "servingTemp": "Diluida con agua helada",
+        "pairing": "Mejor diluida, sola",
+        "description": "Licor herbal de alta graduación con ajenjo, se sirve diluido."
+      },
+      "cognac": {
+        "name": "Coñac",
+        "origin": "Cognac, Francia",
+        "servingTemp": "Temperatura ambiente",
+        "pairing": "Chocolate, puros, postre",
+        "description": "Brandy de uva premium de la región de Cognac."
+      },
+      "mezcal": {
+        "name": "Mezcal",
+        "origin": "México",
+        "servingTemp": "Temperatura ambiente, solo",
+        "pairing": "Naranja, sal, tacos",
+        "description": "Aguardiente de agave mexicano ahumado, primo del tequila."
+      },
+      "portWine": {
+        "name": "Vino de Oporto",
+        "origin": "Portugal",
+        "servingTemp": "Ligeramente frío",
+        "pairing": "Queso azul, chocolate",
+        "description": "Vino fortificado portugués dulce."
+      },
+      "vermouth": {
+        "name": "Vermut",
+        "origin": "Italia/Francia",
+        "servingTemp": "Frío 6–10°C",
+        "pairing": "Aceitunas, canapés, base de cóctel",
+        "description": "Vino fortificado aromatizado con hierbas, clave en cócteles."
+      },
+      "fruitSoju": {
+        "name": "Soju saborizado",
+        "origin": "Corea",
+        "servingTemp": "Frío 4–8°C",
+        "pairing": "Aperitivos, fruta",
+        "description": "Soju de baja graduación con sabores de fruta."
+      },
+      "stout": {
+        "name": "Stout",
+        "origin": "Irlanda",
+        "servingTemp": "Ligeramente fresco",
+        "pairing": "Ostras, filete, chocolate",
+        "description": "Cerveza oscura y cremosa de cebada tostada."
       }
     }
   },
@@ -380,7 +463,28 @@
       "worcestershireSauce": "Salsa Worcestershire",
       "tabasco": "Tabasco",
       "aperol": "Aperol",
-      "prosecco": "Prosecco"
+      "prosecco": "Prosecco",
+      "makgeolli": "Makgeolli",
+      "cider": "Refresco de lima-limón",
+      "hongcho": "Vinagre de fruta",
+      "cheongju": "Cheongju (vino de arroz)",
+      "honey": "Miel",
+      "greenGrape": "Uvas verdes",
+      "scotchWhisky": "Whisky escocés",
+      "drambuie": "Drambuie",
+      "coffeeLiqueur": "Licor de café",
+      "espresso": "Espresso",
+      "vodkaPlain": "Vodka",
+      "gingerBeer": "Cerveza de jengibre",
+      "grenadine": "Granadina",
+      "orangeJuice": "Zumo de naranja",
+      "peachLiqueur": "Licor de melocotón",
+      "amaretto": "Amaretto",
+      "cachaca": "Cachaça",
+      "brownSugar": "Azúcar moreno",
+      "appleJuice": "Zumo de manzana",
+      "cinnamon": "Canela",
+      "redWineGeneric": "Vino tinto"
     },
     "items": {
       "somaek": {
@@ -530,6 +634,66 @@
         "ing2": "Prosecco",
         "ing3": "Agua con gas",
         "instructions": "Agregue hielo, luego Aperol, Prosecco y agua con gas en proporción 3:3:1."
+      },
+      "makgeolliCider": {
+        "name": "Makgeolli con refresco",
+        "instructions": "Remueve el makgeolli frío y añade refresco de lima-limón para una bebida dulce y con gas."
+      },
+      "hongchoHighball": {
+        "name": "Highball de vinagre de fruta",
+        "instructions": "Llena un vaso con hielo, añade soju y vinagre de fruta, completa con soda y remueve."
+      },
+      "cheongjuHoney": {
+        "name": "Cheongju con miel",
+        "instructions": "Disuelve la miel en agua tibia, mezcla con cheongju y sirve caliente."
+      },
+      "greenGrapeSoju": {
+        "name": "Soju de uva verde",
+        "instructions": "Machaca las uvas verdes, añade soju y refresco de lima-limón."
+      },
+      "maesilMakgeolli": {
+        "name": "Makgeolli de ciruela",
+        "instructions": "Mezcla licor de ciruela en el makgeolli para un dulzor refrescante."
+      },
+      "espressoMartini": {
+        "name": "Martini de espresso",
+        "instructions": "Agita vodka, licor de café y espresso con hielo y cuela en copa fría."
+      },
+      "moscowMule": {
+        "name": "Moscow Mule",
+        "instructions": "Llena una taza con hielo, añade vodka y lima, completa con cerveza de jengibre."
+      },
+      "tequilaSunrise": {
+        "name": "Tequila Sunrise",
+        "instructions": "Mezcla tequila y zumo de naranja, luego vierte granadina lentamente para el degradado."
+      },
+      "rustyNail": {
+        "name": "Rusty Nail",
+        "instructions": "Vierte whisky escocés y Drambuie sobre hielo y remueve."
+      },
+      "caipirinha": {
+        "name": "Caipirinha",
+        "instructions": "Machaca lima y azúcar moreno en el vaso, añade cachaça y hielo."
+      },
+      "amarettoSour": {
+        "name": "Amaretto Sour",
+        "instructions": "Agita amaretto, zumo de limón y jarabe, sirve sobre hielo."
+      },
+      "seaBreeze": {
+        "name": "Sea Breeze",
+        "instructions": "Llena un vaso con hielo, añade vodka y zumo de arándano, termina con granadina."
+      },
+      "fuzzyNavel": {
+        "name": "Fuzzy Navel",
+        "instructions": "Mezcla licor de melocotón y zumo de naranja sobre hielo."
+      },
+      "kalimotxo": {
+        "name": "Kalimotxo",
+        "instructions": "Mezcla vino tinto y cola 1:1 sobre hielo."
+      },
+      "hotToddy": {
+        "name": "Hot Toddy",
+        "instructions": "Mezcla miel, limón y whisky en agua caliente, decora con canela."
       }
     }
   },
@@ -552,7 +716,39 @@
     "drinkName": "Nombre de Bebida",
     "drinks": "bebidas",
     "kcal": "kcal",
-    "emoji": "Emoji"
+    "emoji": "Emoji",
+    "price": "Precio (opcional)",
+    "spend": "Gasto"
+  },
+  "session": {
+    "title": "Sesión en vivo",
+    "subtitle": "¿Bebiendo ahora? Inicia una sesión",
+    "description": "Cada bebida actualiza tu BAC estimado y la hora en que estarás sobrio. Al terminar, todo se guarda en tu registro.",
+    "weight": "Peso",
+    "gender": "Género",
+    "male": "Hombre",
+    "female": "Mujer",
+    "start": "Iniciar sesión",
+    "activeBadge": "Activa",
+    "bacNow": "BAC estimado ahora",
+    "standardDrinks": "Tragos est.",
+    "soberAt": "Sobrio a las",
+    "addDrink": "Añadir bebida",
+    "logTitle": "Bebidas registradas ({{count}})",
+    "undo": "Deshacer",
+    "empty": "Aún no hay bebidas. Toca una arriba para registrarla.",
+    "endSave": "Terminar y guardar en registro",
+    "discard": "Terminar sin guardar",
+    "discardTitle": "¿Descartar esta sesión?",
+    "discardMessage": "Las bebidas de esta sesión no se guardarán.",
+    "levelSafe": "Rango seguro",
+    "levelCaution": "Precaución — no conduzcas",
+    "levelDanger": "Riesgo — baja el ritmo",
+    "levelHigh": "Muy alto — deja de beber",
+    "disclaimer": "Estimación aproximada basada en la fórmula de Widmark; puede diferir de tu BAC real. Nunca conduzcas después de beber.",
+    "homeCta": "Bebiendo ahora",
+    "homeCtaDescription": "Registra bebidas y mira tu BAC estimado en vivo",
+    "homeCtaActive": "Sesión en curso — sigue registrando"
   },
   "quiz": {
     "title": "Quiz de Alcohol",
@@ -863,8 +1059,174 @@
         "d": "0.08%",
         "correct": "b",
         "explanation": "El límite legal de BAC para conducir en Corea del Sur es 0.03%."
+      },
+      "q33": {
+        "question": "¿Diferencia clave entre destilado y fermentado?",
+        "a": "Color",
+        "b": "Si hay destilación",
+        "c": "Ingredientes",
+        "d": "Precio",
+        "correct": "b",
+        "explanation": "El destilado se fermenta y luego se destila para subir el ABV."
+      },
+      "q34": {
+        "question": "En EE.UU., ¿qué ABV es 100 proof?",
+        "a": "25%",
+        "b": "40%",
+        "c": "50%",
+        "d": "100%",
+        "correct": "c",
+        "explanation": "El proof de EE.UU. es el doble del ABV: 100 proof = 50%."
+      },
+      "q35": {
+        "question": "¿De qué se fermenta el vino?",
+        "a": "Cebada",
+        "b": "Uvas",
+        "c": "Arroz",
+        "d": "Patata",
+        "correct": "b",
+        "explanation": "El vino se hace fermentando uvas."
+      },
+      "q36": {
+        "question": "¿Cuál suele tener mayor ABV?",
+        "a": "Cerveza",
+        "b": "Makgeolli",
+        "c": "Whisky",
+        "d": "Vino",
+        "correct": "c",
+        "explanation": "El whisky suele ser 40%+, el más alto."
+      },
+      "q37": {
+        "question": "¿Diferencia entre cheongju y makgeolli?",
+        "a": "Ingrediente",
+        "b": "Si se filtra claro",
+        "c": "Solo ABV",
+        "d": "Colorante",
+        "correct": "b",
+        "explanation": "Filtrado claro es cheongju; turbio sin filtrar es makgeolli."
+      },
+      "q38": {
+        "question": "¿De qué se hace el vino bokbunja?",
+        "a": "Frambuesa negra",
+        "b": "Ciruela",
+        "c": "Yuzu",
+        "d": "Uva",
+        "correct": "a",
+        "explanation": "El bokbunja se hace de frambuesa negra coreana."
+      },
+      "q39": {
+        "question": "¿Qué dos bebidas mezcla el somaek?",
+        "a": "Soju y vino",
+        "b": "Soju y cerveza",
+        "c": "Makgeolli y cerveza",
+        "d": "Whisky y cerveza",
+        "correct": "b",
+        "explanation": "El somaek mezcla soju y cerveza."
+      },
+      "q40": {
+        "question": "¿Temperatura adecuada para servir yakju tibio?",
+        "a": "Bajo 0°C",
+        "b": "5°C",
+        "c": "35–45°C",
+        "d": "Más de 80°C",
+        "correct": "c",
+        "explanation": "El yakju tibio suele servirse a 35–45°C."
+      },
+      "q41": {
+        "question": "¿Espíritu base del Espresso Martini?",
+        "a": "Vodka",
+        "b": "Ron",
+        "c": "Ginebra",
+        "d": "Tequila",
+        "correct": "a",
+        "explanation": "Mezcla vodka con licor de café y espresso."
+      },
+      "q42": {
+        "question": "¿Qué gaseosa lleva el Moscow Mule?",
+        "a": "Agua tónica",
+        "b": "Cerveza de jengibre",
+        "c": "Cola",
+        "d": "Refresco de lima",
+        "correct": "b",
+        "explanation": "El Moscow Mule añade cerveza de jengibre a vodka y lima."
+      },
+      "q43": {
+        "question": "¿Qué NO es parte del Negroni?",
+        "a": "Ginebra",
+        "b": "Campari",
+        "c": "Cola",
+        "d": "Vermut dulce",
+        "correct": "c",
+        "explanation": "El Negroni lleva ginebra, Campari y vermut dulce a partes iguales."
+      },
+      "q44": {
+        "question": "¿Qué da el degradado al Tequila Sunrise?",
+        "a": "Granadina",
+        "b": "Leche",
+        "c": "Café",
+        "d": "Menta",
+        "correct": "a",
+        "explanation": "La granadina se hunde y crea el degradado."
+      },
+      "q45": {
+        "question": "¿Espíritu base de la Caipirinha?",
+        "a": "Ron",
+        "b": "Cachaça",
+        "c": "Ginebra",
+        "d": "Vodka",
+        "correct": "b",
+        "explanation": "La Caipirinha usa cachaça, aguardiente brasileño de caña."
+      },
+      "q46": {
+        "question": "¿Cómo se sirve la absenta?",
+        "a": "Solo de un trago",
+        "b": "Con leche",
+        "c": "Diluida con agua helada",
+        "d": "Caliente",
+        "correct": "c",
+        "explanation": "La absenta es fuerte y se diluye con agua helada."
+      },
+      "q47": {
+        "question": "¿Cuánto alcohol puro tiene un trago estándar?",
+        "a": "5g",
+        "b": "14g",
+        "c": "30g",
+        "d": "50g",
+        "correct": "b",
+        "explanation": "Un trago estándar tiene unos 14g de alcohol puro."
+      },
+      "q48": {
+        "question": "¿Cuánto alcohol elimina el cuerpo por hora?",
+        "a": "~0.1 trago",
+        "b": "~5 tragos",
+        "c": "~1 trago",
+        "d": "~3 tragos",
+        "correct": "c",
+        "explanation": "En promedio el cuerpo elimina ~1 trago (~0.015% BAC) por hora."
+      },
+      "q49": {
+        "question": "¿Qué ayuda más con la resaca?",
+        "a": "Agua/electrolitos y descanso",
+        "b": "Más alcohol",
+        "c": "Mucho café fuerte",
+        "d": "Fumar",
+        "correct": "a",
+        "explanation": "Hidratación, electrolitos y descanso ayudan; más alcohol empeora."
+      },
+      "q50": {
+        "question": "¿Qué pasa al beber con el estómago vacío?",
+        "a": "Absorción más lenta",
+        "b": "Absorción más rápida, más ebriedad",
+        "c": "Baja el ABV",
+        "d": "Menos calorías",
+        "correct": "b",
+        "explanation": "Con el estómago vacío el alcohol se absorbe más rápido."
       }
-    }
+    },
+    "pickTopicSubtitle": "Elige un tema y ponte a prueba con un quiz rápido de 10 preguntas.",
+    "dailyTitle": "Quiz rápido del día",
+    "dailyStreak": "Racha de {{count}} días",
+    "dailyStart": "Responde 5 preguntas"
   },
   "settings": {
     "language": "Idioma",
@@ -876,7 +1238,19 @@
     "reminderTime": "Hora de Recordatorio",
     "about": "Acerca de",
     "version": "Versión",
-    "appInfo": "Una aplicación que proporciona diversos cálculos e información relacionados con el alcohol."
+    "appInfo": "Una aplicación que proporciona diversos cálculos e información relacionados con el alcohol.",
+    "dataSection": "Datos",
+    "dataDescription": "Exporta todos tus datos (registros, cálculos, retos, progreso del quiz) como texto y pégalo en otro dispositivo para restaurarlos.",
+    "exportData": "Exportar datos",
+    "importData": "Importar datos",
+    "importDescription": "Pega abajo una copia de seguridad exportada.",
+    "importConfirmTitle": "¿Restaurar datos?",
+    "importConfirmMessage": "Los elementos de la copia sobrescribirán tus datos actuales.",
+    "importSuccess": "Tus datos han sido restaurados.",
+    "importError": "No parece una copia de seguridad válida.",
+    "restore": "Restaurar",
+    "trackingHabitTitle": "Mantén tu hábito de registro",
+    "trackingHabitDescription": "Los recordatorios diarios y semanales te ayudan a revisar bebidas, calorías y promedios semanales."
   },
   "notifications": {
     "dailyTitle": "Registro de Bebidas de Hoy",
@@ -893,7 +1267,77 @@
     "historyDescription": "Vea sus cálculos anteriores",
     "quizDescription": "Pon a prueba tu conocimiento sobre alcohol",
     "settingsDescription": "Gestione idioma, notificaciones, etc.",
-    "subtitle": "Funciones y configuración adicionales"
+    "subtitle": "Funciones y configuración adicionales",
+    "recovery": "Resaca y recuperación",
+    "recoveryDescription": "Cronología de BAC y consejos de recuperación"
+  },
+  "recovery": {
+    "back": "Atrás",
+    "title": "Pronóstico de resaca y recuperación",
+    "yourDetails": "Tus datos",
+    "weight": "Peso (kg)",
+    "gender": "Sexo",
+    "male": "Hombre",
+    "female": "Mujer",
+    "standardDrinks": "Tragos estándar",
+    "bacTimeline": "Cronología de BAC",
+    "peakBac": "BAC máximo estimado",
+    "timeToSober": "Tiempo hasta estar sobrio",
+    "hoursUnit": " h",
+    "emptyState": "Introduce un peso y un número de tragos mayores que 0 para ver la cronología de BAC.",
+    "tipsTitle": "Consejos de recuperación",
+    "tip1": "Hidrátate bien con agua o bebidas con electrolitos.",
+    "tip2": "Comer antes y durante el consumo ralentiza la absorción del alcohol.",
+    "tip3": "Reponer vitaminas y electrolitos puede favorecer la recuperación.",
+    "tip4": "Duerme lo suficiente para que tu cuerpo tenga tiempo de recuperarse.",
+    "tip5": "Evita el exceso de cafeína y beber más para \"curar\" la resaca; descansa al menos 48 horas antes de volver a beber.",
+    "disclaimer": "No es un consejo médico; los resultados varían según la persona."
+  },
+  "challenge": {
+    "title": "Reto de sobriedad",
+    "subtitle": "Rétate a no beber alcohol durante tu meta de días.",
+    "startA11y": "Iniciar reto de {{count}} días",
+    "dayOption": "{{count}} días",
+    "stopA11y": "Detener reto",
+    "stop": "Detener",
+    "streakLabel": "Días sin alcohol",
+    "moneySaved": "💰 Ahorro estimado: {{amount}}",
+    "shareSucceeded": "🏆 ¡Completé mi reto de {{target}} días sin alcohol!{{savedLine}}",
+    "shareInProgress": "🔥 Día {{streak}} de mi reto de {{target}} días sin alcohol.{{savedLine}}",
+    "goalReached": "¡Meta alcanzada! 🎉",
+    "shareA11y": "Compartir reto",
+    "share": "📣 Compartir"
+  },
+  "insights": {
+    "title": "Resumen semanal",
+    "comparisonSame": "Igual que la semana pasada",
+    "comparisonUp": "{{count}} más que la semana pasada",
+    "comparisonDown": "{{count}} menos que la semana pasada",
+    "statDrinks": "Bebidas",
+    "statCalories": "Calorías",
+    "statAvgAbv": "ABV medio",
+    "mostCommon": "Tu bebida más registrada esta semana es {{name}}.",
+    "empty": "Agrega registros para ver patrones semanales.",
+    "openGuide": "Abrir guía de trago estándar"
+  },
+  "recommender": {
+    "title": "Recomendador de recetas",
+    "subtitle": "Filtra por ingredientes y ABV.",
+    "style": "Estilo",
+    "all": "Todo",
+    "maxAbv": "ABV máximo",
+    "maxCalories": "Kcal máximo",
+    "openDetails": "Ver detalles",
+    "emptyTitle": "No hay recetas compatibles",
+    "emptySubtitle": "Relaja los filtros de ABV o calorías."
+  },
+  "culture": {
+    "cultureTitle": "Cultura del beber por país",
+    "pairingTitle": "Maridaje de bebidas y aperitivos",
+    "customs": "Características",
+    "etiquette": "Etiqueta",
+    "pairings": "Aperitivos recomendados",
+    "tip": "Consejo"
   },
   "errors": {
     "positiveValues": "Todos los valores deben ser mayores que 0",

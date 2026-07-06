@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
@@ -19,16 +19,19 @@ const isSameDay = (a: Date, b: Date): boolean =>
 const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
   const { t } = useTranslation();
   const scrollRef = useRef<ScrollView>(null);
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const DAY_NAMES = [t("time.sun"), t("time.mon"), t("time.tue"), t("time.wed"), t("time.thu"), t("time.fri"), t("time.sat")];
 
-  const days: Date[] = [];
-  for (let i = TOTAL_DAYS - 1; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    d.setHours(0, 0, 0, 0);
-    days.push(d);
-  }
+  const days = useMemo(() => {
+    const result: Date[] = [];
+    for (let i = TOTAL_DAYS - 1; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      d.setHours(0, 0, 0, 0);
+      result.push(d);
+    }
+    return result;
+  }, [today]);
 
   useEffect(() => {
     const idx = days.findIndex((d) => isSameDay(d, selectedDate));
@@ -38,7 +41,7 @@ const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
         scrollRef.current?.scrollTo({ x: offset, animated: false });
       }, 100);
     }
-  }, []);
+  }, [days, selectedDate]);
 
   return (
     <View className="mb-4">
@@ -62,6 +65,9 @@ const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
               }`}
               onPress={() => onSelectDate(day)}
               activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={`${dayName} ${dayNum}`}
+              accessibilityState={{ selected: isSelected }}
             >
               <Text
                 className={`text-xs ${

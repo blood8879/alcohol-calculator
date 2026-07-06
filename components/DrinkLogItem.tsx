@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { DrinkLog } from "../utils/trackerStorage";
+import Card from "./ui/Card";
 
 interface DrinkLogItemProps {
   log: DrinkLog;
@@ -19,7 +20,7 @@ const formatTime = (timestamp: number): string => {
 const DrinkLogItem = ({ log, onDelete }: DrinkLogItemProps) => {
   const { t } = useTranslation();
   return (
-    <View className="bg-gray-800 rounded-xl p-4 mb-3 flex-row items-center">
+    <Card className="mb-3 flex-row items-center">
       <Text className="text-3xl mr-3">{log.emoji}</Text>
 
       <View className="flex-1 mr-2">
@@ -38,10 +39,12 @@ const DrinkLogItem = ({ log, onDelete }: DrinkLogItemProps) => {
         onPress={() => onDelete(log.id)}
         className="p-2"
         activeOpacity={0.6}
+        accessibilityRole="button"
+        accessibilityLabel={`${t("tracker.delete")} - ${log.name}`}
       >
         <Ionicons name="trash-outline" size={18} color="#EF4444" />
       </TouchableOpacity>
-    </View>
+    </Card>
   );
 };
 

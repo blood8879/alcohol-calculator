@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import * as Haptics from "expo-haptics";
 
 export default function TabLayout() {
   const { t } = useTranslation();
@@ -16,6 +17,11 @@ export default function TabLayout() {
         tabBarActiveTintColor: "#22c55e",
         tabBarInactiveTintColor: "#9ca3af",
       }}
+      screenListeners={{
+        tabPress: () => {
+          Haptics.selectionAsync().catch(() => {});
+        },
+      }}
     >
       <Tabs.Screen
         name="index"
@@ -27,20 +33,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="encyclopedia"
+        name="explore"
         options={{
-          title: t("tabs.encyclopedia"),
+          title: t("tabs.explore"),
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="book" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="recipes"
-        options={{
-          title: t("tabs.recipes"),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="wine" size={size} color={color} />
+            <Ionicons name="compass" size={size} color={color} />
           ),
         }}
       />
@@ -50,6 +47,15 @@ export default function TabLayout() {
           title: t("tabs.tracker"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="stats-chart" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="quiz"
+        options={{
+          title: t("tabs.quiz"),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="bulb" size={size} color={color} />
           ),
         }}
       />

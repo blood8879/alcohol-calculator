@@ -1,7 +1,9 @@
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { CocktailRecipe } from "../data/types";
+import { translateWithFallback } from "../utils/localizedText";
+import Card from "./ui/Card";
 
 type RecipeCardProps = {
   recipe: CocktailRecipe;
@@ -15,16 +17,16 @@ const difficultyColors: Record<CocktailRecipe["difficulty"], string> = {
 };
 
 const RecipeCard = ({ recipe, onPress }: RecipeCardProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const name = t(recipe.nameKey);
+  const name = translateWithFallback(t, recipe.nameKey, recipe.displayName, i18n.language);
   const difficultyLabel = t(`recipes.${recipe.difficulty}`);
 
   return (
-    <TouchableOpacity
-      className="bg-gray-800 rounded-xl p-4 mb-3 flex-row items-center"
+    <Card
+      className="mb-3 flex-row items-center"
       onPress={onPress}
-      activeOpacity={0.7}
+      accessibilityLabel={name}
     >
       <Text className="text-3xl mr-4">{recipe.emoji}</Text>
 
@@ -47,7 +49,7 @@ const RecipeCard = ({ recipe, onPress }: RecipeCardProps) => {
       </View>
 
       <Text className="text-gray-500 text-xl ml-2">›</Text>
-    </TouchableOpacity>
+    </Card>
   );
 };
 

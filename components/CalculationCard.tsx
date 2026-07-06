@@ -11,7 +11,8 @@ import { DrinkPreset } from "../data/types";
 import { shareResults } from "../utils/shareUtils";
 import { saveCalculation } from "../utils/historyStorage";
 import PresetPicker from "./PresetPicker";
-import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads";
+import { getCalculatorGuide } from "../data/calculatorGuides";
+import { pickLocalizedText } from "../utils/localizedText";
 
 export type FieldOption = {
   label: string;
@@ -26,6 +27,16 @@ export type CalculationField = {
   options?: FieldOption[];
 };
 
+type RecommendationTarget = "recipes" | "encyclopedia" | "tracker";
+
+type ContentRecommendation = {
+  emoji: string;
+  title: string;
+  description: string;
+  action: string;
+  target: RecommendationTarget;
+};
+
 export type CalculationCardProps = {
   title: string;
   description: string;
@@ -36,6 +47,50 @@ export type CalculationCardProps = {
   presetFieldMapping?: { volumeIndex: number; abvIndex: number };
   calculatorType?: string;
   calculatorIcon?: string;
+  onRecommendationPress?: (target: RecommendationTarget) => void;
+};
+
+const getRecommendation = (
+  calculatorType: string | undefined,
+  isKorean: boolean
+): ContentRecommendation => {
+  if (calculatorType === "calorie") {
+    return {
+      emoji: "🔥",
+      title: isKorean ? "칼로리가 낮은 술 고르기" : "Choose lower-calorie drinks",
+      description: isKorean ? "계산한 칼로리를 바탕으로 가벼운 조합과 관련 상식을 확인해보세요." : "Use your result to explore lighter drink choices and practical tips.",
+      action: isKorean ? "백과 보기" : "Open encyclopedia",
+      target: "encyclopedia",
+    };
+  }
+
+  if (calculatorType === "bac") {
+    return {
+      emoji: "📊",
+      title: isKorean ? "이번 주 음주 기록 확인" : "Review your weekly drinking pattern",
+      description: isKorean ? "BAC는 참고용입니다. 기록을 남기면 주간 잔 수와 칼로리를 함께 볼 수 있습니다." : "BAC is an estimate. Logging drinks helps track weekly drinks and calories.",
+      action: isKorean ? "기록 보기" : "View tracker",
+      target: "tracker",
+    };
+  }
+
+  if (calculatorType === "blending" || calculatorType === "dilution") {
+    return {
+      emoji: "🍹",
+      title: isKorean ? "이 도수로 만들 수 있는 레시피" : "Recipes for this style",
+      description: isKorean ? "도수 조정 결과를 레시피와 연결해 실제로 만들어볼 조합을 찾아보세요." : "Turn your calculation into a practical drink idea.",
+      action: isKorean ? "레시피 보기" : "View recipes",
+      target: "recipes",
+    };
+  }
+
+  return {
+    emoji: "📚",
+    title: isKorean ? "계산 결과를 더 잘 이해하기" : "Understand your result better",
+    description: isKorean ? "도수, 표준잔, 온도, 페어링 같은 관련 정보를 이어서 확인해보세요." : "Continue with ABV, standard drink, temperature, and pairing guides.",
+    action: isKorean ? "백과 보기" : "Open encyclopedia",
+    target: "encyclopedia",
+  };
 };
 
 const CalculationCard = ({
@@ -48,11 +103,9 @@ const CalculationCard = ({
   presetFieldMapping,
   calculatorType,
   calculatorIcon,
+  onRecommendationPress,
 }: CalculationCardProps) => {
-  const { t } = useTranslation();
-  const bannerAdUnitId = __DEV__
-    ? TestIds.BANNER
-    : "ca-app-pub-7612314432840835/5764066171";
+  const { t, i18n } = useTranslation();
   const [values, setValues] = useState<number[]>(Array(fields.length).fill(0));
   const [inputTexts, setInputTexts] = useState<string[]>(
     Array(fields.length).fill("")
@@ -60,6 +113,10 @@ const CalculationCard = ({
   const [results, setResults] = useState<{ label: string; value: string }[]>(
     []
   );
+  const recommendation = getRecommendation(calculatorType, i18n.language.startsWith("ko"));
+  const guide = getCalculatorGuide(calculatorType);
+  const isKorean = i18n.language.startsWith("ko");
+  const [guideOpen, setGuideOpen] = useState(false);
 
   const handleInputChange = (text: string, index: number) => {
     const newValues = [...values];
@@ -129,6 +186,9 @@ const CalculationCard = ({
                   isSelected ? "bg-green-500" : "bg-gray-200"
                 }`}
                 onPress={() => handleOptionSelect(index, option.value)}
+                accessibilityRole="radio"
+                accessibilityLabel={option.label}
+                accessibilityState={{ selected: isSelected }}
               >
                 <Text
                   className={`text-center font-semibold ${
@@ -160,6 +220,9 @@ const CalculationCard = ({
                   isSelected ? "bg-green-500" : "bg-gray-200"
                 }`}
                 onPress={() => handleOptionSelect(index, option.value)}
+                accessibilityRole="radio"
+                accessibilityLabel={option.label}
+                accessibilityState={{ selected: isSelected }}
               >
                 <Text
                   className={`text-sm font-medium ${
@@ -225,6 +288,42 @@ const CalculationCard = ({
 
       {/* 계산 영역 */}
       <ScrollView className="px-4" showsVerticalScrollIndicator={false}>
+        {guide && (
+          <View className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-3">
+            <TouchableOpacity
+              className="flex-row items-center justify-between"
+              onPress={() => setGuideOpen((prev) => !prev)}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={isKorean ? "이 계산기는 무엇인가요?" : "What is this calculator?"}
+              accessibilityState={{ expanded: guideOpen }}
+            >
+              <Text className="text-blue-900 font-semibold text-sm">
+                {isKorean ? "ℹ️ 이 계산기는 무엇인가요?" : "ℹ️ What is this calculator?"}
+              </Text>
+              <Text className="text-blue-400 text-base">{guideOpen ? "▾" : "▸"}</Text>
+            </TouchableOpacity>
+            <Text className="text-gray-700 text-sm leading-5 mt-2">
+              {pickLocalizedText(guide.what, i18n.language)}
+            </Text>
+            {guideOpen && (
+              <View className="mt-3">
+                <Text className="text-blue-900 font-semibold text-xs mb-1">
+                  {isKorean ? "언제 쓰나요" : "When to use"}
+                </Text>
+                <Text className="text-gray-700 text-sm leading-5 mb-3">
+                  {pickLocalizedText(guide.when, i18n.language)}
+                </Text>
+                <Text className="text-blue-900 font-semibold text-xs mb-1">
+                  {isKorean ? "어떻게 계산하나요" : "How it works"}
+                </Text>
+                <Text className="text-gray-700 text-sm leading-5">
+                  {pickLocalizedText(guide.formula, i18n.language)}
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
         {presets && presets.length > 0 && presetFieldMapping && (
           <PresetPicker presets={presets} onSelect={handlePresetSelect} />
         )}
@@ -234,6 +333,8 @@ const CalculationCard = ({
         <TouchableOpacity
           className="bg-green-500 p-3 rounded-lg mt-2"
           onPress={handleCalculate}
+          accessibilityRole="button"
+          accessibilityLabel={t("common.calculate")}
         >
           <Text className="text-white text-center font-bold text-base">
             {t("common.calculate")}
@@ -259,6 +360,8 @@ const CalculationCard = ({
           <TouchableOpacity
             className="border border-green-500 p-3 rounded-lg mt-3 flex-row items-center justify-center"
             onPress={handleShare}
+            accessibilityRole="button"
+            accessibilityLabel={t("common.share")}
           >
             <Text className="text-green-600 text-center font-semibold">
               📤 {t("common.share")}
@@ -266,17 +369,38 @@ const CalculationCard = ({
           </TouchableOpacity>
         )}
 
-        <View className="items-center my-3">
-          <BannerAd
-            unitId={bannerAdUnitId}
-            size={BannerAdSize.BANNER}
-          />
-        </View>
+        {results.length > 0 && onRecommendationPress && (
+          <TouchableOpacity
+            className="bg-green-50 border border-green-200 p-4 rounded-xl mt-3"
+            onPress={() => onRecommendationPress(recommendation.target)}
+            activeOpacity={0.75}
+            accessibilityRole="button"
+            accessibilityLabel={`${recommendation.title} - ${recommendation.action}`}
+          >
+            <View className="flex-row items-center">
+              <Text className="text-3xl mr-3">{recommendation.emoji}</Text>
+              <View className="flex-1">
+                <Text className="text-gray-900 font-bold text-base">
+                  {recommendation.title}
+                </Text>
+                <Text className="text-gray-600 text-sm mt-1 leading-5">
+                  {recommendation.description}
+                </Text>
+                <Text className="text-green-700 font-semibold text-sm mt-2">
+                  {recommendation.action} ›
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+
 
         {/* 닫기 버튼 */}
         <TouchableOpacity
           className="border border-gray-300 p-3 rounded-lg mt-4 mb-4"
           onPress={onBack}
+          accessibilityRole="button"
+          accessibilityLabel={t("common.reset")}
         >
           <Text className="text-gray-800 text-center">{t("common.reset")}</Text>
         </TouchableOpacity>

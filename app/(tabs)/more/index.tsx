@@ -1,8 +1,9 @@
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
+import Card from "../../../components/ui/Card";
 
 interface MenuCardProps {
   emoji: string;
@@ -13,10 +14,10 @@ interface MenuCardProps {
 
 function MenuCard({ emoji, title, description, onPress }: MenuCardProps) {
   return (
-    <TouchableOpacity
-      className="bg-gray-800 rounded-xl p-4 flex-row items-center mb-3"
+    <Card
+      className="flex-row items-center mb-3"
       onPress={onPress}
-      activeOpacity={0.7}
+      accessibilityLabel={title}
     >
       <Text className="text-3xl mr-4">{emoji}</Text>
       <View className="flex-1">
@@ -24,7 +25,7 @@ function MenuCard({ emoji, title, description, onPress }: MenuCardProps) {
         <Text className="text-gray-400 text-sm mt-1">{description}</Text>
       </View>
       <Text className="text-gray-500 text-xl ml-2">›</Text>
-    </TouchableOpacity>
+    </Card>
   );
 }
 
@@ -51,10 +52,10 @@ export default function MoreScreen() {
           onPress={() => router.push("/(tabs)/more/history")}
         />
         <MenuCard
-          emoji="🧠"
-          title={t("more.quiz")}
-          description={t("more.quizDescription")}
-          onPress={() => router.push("/(tabs)/more/quiz")}
+          emoji="🤕"
+          title={t("more.recovery")}
+          description={t("more.recoveryDescription")}
+          onPress={() => router.push("/(tabs)/more/recovery")}
         />
         <MenuCard
           emoji="⚙️"

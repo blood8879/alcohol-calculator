@@ -27,10 +27,23 @@
   },
   "tabs": {
     "home": "홈",
+    "explore": "탐색",
     "encyclopedia": "백과사전",
     "recipes": "레시피",
+    "culture": "문화",
+    "quiz": "퀴즈",
     "tracker": "기록",
     "more": "더보기"
+  },
+  "home": {
+    "calculatorsTitle": "계산기",
+    "todayTitle": "오늘",
+    "todayTipLabel": "오늘의 술 상식",
+    "quizBannerTitle": "술 상식 퀴즈 도전하기",
+    "quizBannerDescription": "10문제로 도수·칼로리·음주 상식을 확인해보세요.",
+    "contentRailTitle": "즐겨찾기 & 최근 본 콘텐츠",
+    "openRecipe": "레시피 다시 보기",
+    "openGuide": "백과 다시 보기"
   },
   "calculators": {
     "dilution": {
@@ -317,6 +330,76 @@
         "servingTemp": "매우 차갑게 (6-8°C)",
         "pairing": "캐비어, 굴, 디저트",
         "description": "프랑스 샹파뉴 지방에서만 생산되는 프리미엄 스파클링 와인입니다."
+      },
+      "cheongju": {
+        "name": "청주",
+        "origin": "한국",
+        "servingTemp": "차갑게 또는 따뜻하게 10–45°C",
+        "pairing": "전, 생선구이, 나물",
+        "description": "맑은 쌀로 빚은 한국 전통 약주로 제례·차례에 쓰입니다."
+      },
+      "bokbunjaWine": {
+        "name": "복분자주",
+        "origin": "한국",
+        "servingTemp": "차갑게 8–12°C",
+        "pairing": "과일, 치즈, 디저트",
+        "description": "한국산 복분자(산딸기)로 담그는 달콤한 과실주입니다."
+      },
+      "baijiu": {
+        "name": "백주(베이주)",
+        "origin": "중국",
+        "servingTemp": "상온 또는 살짝 데워서",
+        "pairing": "기름진 중식, 땅콩",
+        "description": "수수·곡물로 증류한 고도수 중국 백주로 향이 강렬합니다."
+      },
+      "absinthe": {
+        "name": "압생트",
+        "origin": "스위스/프랑스",
+        "servingTemp": "찬물 희석 4–8°C",
+        "pairing": "희석해서 단독으로",
+        "description": "약쑥·허브로 만든 고도수 리큐어로 반드시 희석해 마십니다."
+      },
+      "cognac": {
+        "name": "코냑",
+        "origin": "프랑스 코냑",
+        "servingTemp": "상온 16–18°C",
+        "pairing": "초콜릿, 시가, 디저트",
+        "description": "프랑스 코냑 지역에서 명정된 고급 포도 브랜디입니다."
+      },
+      "mezcal": {
+        "name": "메스칼",
+        "origin": "멕시코",
+        "servingTemp": "상온, 스트레이트",
+        "pairing": "오렌지, 소금, 타코",
+        "description": "용설란을 구워 훈제한 멕시코 증류주로 스모키한 향이 특징입니다."
+      },
+      "portWine": {
+        "name": "포트와인",
+        "origin": "포르투갈",
+        "servingTemp": "약간 차갑게 12–16°C",
+        "pairing": "블루치즈, 초콜릿",
+        "description": "발효 중 브랜디를 첨가한 달콤한 포르투갈 주정강화 와인입니다."
+      },
+      "vermouth": {
+        "name": "베르무트",
+        "origin": "이탈리아/프랑스",
+        "servingTemp": "차갑게 6–10°C",
+        "pairing": "올리브, 카나페, 칵테일 재료",
+        "description": "허브로 풍미를 더한 가향 주정강화 와인으로 칵테일에 많이 쓰입니다."
+      },
+      "fruitSoju": {
+        "name": "과일 소주",
+        "origin": "한국",
+        "servingTemp": "차갑게 4–8°C",
+        "pairing": "안주 전반, 과일",
+        "description": "자몽·복숭아 등 과일향을 더한 저도수 소주로 입문자에게 인기입니다."
+      },
+      "stout": {
+        "name": "스타웃 맥주",
+        "origin": "아일랜드",
+        "servingTemp": "약간 서늘하게 7–10°C",
+        "pairing": "굴, 스테이크, 초콜릿",
+        "description": "구운 보리로 만든 진하고 크리미한 흑맥주입니다."
       }
     }
   },
@@ -380,7 +463,28 @@
       "worcestershireSauce": "우스터 소스",
       "tabasco": "타바스코",
       "aperol": "아페롤",
-      "prosecco": "프로세코"
+      "prosecco": "프로세코",
+      "makgeolli": "막걸리",
+      "cider": "사이다",
+      "hongcho": "홍초(과일식초)",
+      "cheongju": "청주",
+      "honey": "꿀",
+      "greenGrape": "청포도",
+      "scotchWhisky": "스카치 위스키",
+      "drambuie": "드람뷔",
+      "coffeeLiqueur": "커피 리큐어",
+      "espresso": "에스프레소",
+      "vodkaPlain": "보드카",
+      "gingerBeer": "진저비어",
+      "grenadine": "그레나딘 시럽",
+      "orangeJuice": "오렌지 주스",
+      "peachLiqueur": "피치 리큐어",
+      "amaretto": "아마레또",
+      "cachaca": "카샤사",
+      "brownSugar": "흑설탕",
+      "appleJuice": "사과 주스",
+      "cinnamon": "계피",
+      "redWineGeneric": "레드와인"
     },
     "items": {
       "somaek": {
@@ -530,6 +634,66 @@
         "ing2": "프로세코",
         "ing3": "탄산수",
         "instructions": "잔에 얼음을 넣고 아페롤, 프로세코, 탄산수를 3:3:1 비율로 넣어줍니다."
+      },
+      "makgeolliCider": {
+        "name": "막걸리 사이다",
+        "instructions": "차가운 막걸리를 가볍게 저은 뒤 사이다를 부어 달콤하게 즐깁니다."
+      },
+      "hongchoHighball": {
+        "name": "홍초 하이볼",
+        "instructions": "얼음을 채운 잔에 소주와 홍초를 넣고 소다로 채운 뒤 가볍게 저어줍니다."
+      },
+      "cheongjuHoney": {
+        "name": "꿀 청주",
+        "instructions": "꿀을 따뜻한 물에 개얰 녹인 뒤 청주와 섞어 따뜻하게 마십니다."
+      },
+      "greenGrapeSoju": {
+        "name": "청포도 소주",
+        "instructions": "청포도를 잠시 으깨어 잔에 넣고 소주와 사이다를 부어 즐깁니다."
+      },
+      "maesilMakgeolli": {
+        "name": "매실 막걸리",
+        "instructions": "막걸리에 매실주를 섮어 상큼한 단맛을 더합니다."
+      },
+      "espressoMartini": {
+        "name": "에스프레소 마티니",
+        "instructions": "보드카, 커피 리큐어, 에스프레소를 얼음과 세게 셰이크해 잔에 따릅니다."
+      },
+      "moscowMule": {
+        "name": "모스코 몼",
+        "instructions": "얼음을 채운 잔에 보드카와 라임을 넣고 진저비어로 채웁니다."
+      },
+      "tequilaSunrise": {
+        "name": "데키라 선라이즈",
+        "instructions": "데타와 오렌지 주스를 섞고 그레나딘을 천천히 부어 그라데이션을 만듭니다."
+      },
+      "rustyNail": {
+        "name": "러스티 네일",
+        "instructions": "얼음 위에 스카치와 드람뷔를 부어 가볍게 저어줍니다."
+      },
+      "caipirinha": {
+        "name": "카이피리냐",
+        "instructions": "라임과 흑설탕을 잔에서 으깨고 카샤사와 얼음을 채웁니다."
+      },
+      "amarettoSour": {
+        "name": "아마레또 사우어",
+        "instructions": "아마레또, 레몬즙, 시럽을 셰이크해 얼음 잔에 따릅니다."
+      },
+      "seaBreeze": {
+        "name": "씨 브리즈",
+        "instructions": "얼음 잔에 보드카와 크랜베리 주스를 넣고 그레나딘으로 마무리합니다."
+      },
+      "fuzzyNavel": {
+        "name": "퍼지 네이블",
+        "instructions": "피치 리큐어와 오렌지 주스를 얼음 잔에 섞어 즐깁니다."
+      },
+      "kalimotxo": {
+        "name": "칼리모추",
+        "instructions": "레드와인과 콜라를 1:1로 얼음 잔에 섞습니다."
+      },
+      "hotToddy": {
+        "name": "핫 토디",
+        "instructions": "따뜻한 물에 꿀·레몬·위스키를 섞고 계피를 올려 따뜻하게 마십니다."
       }
     }
   },
@@ -552,7 +716,39 @@
     "drinkName": "음료 이름",
     "drinks": "잔",
     "kcal": "kcal",
-    "emoji": "이모지"
+    "emoji": "이모지",
+    "price": "금액 (선택)",
+    "spend": "지출"
+  },
+  "session": {
+    "title": "실시간 음주 세션",
+    "subtitle": "지금 마시는 중이라면 세션을 시작하세요",
+    "description": "잔을 추가할 때마다 혈중알코올농도 추정치와 해독 시간이 실시간으로 갱신됩니다. 세션을 종료하면 기록이 트래커에 자동 저장됩니다.",
+    "weight": "체중",
+    "gender": "성별",
+    "male": "남성",
+    "female": "여성",
+    "start": "세션 시작",
+    "activeBadge": "진행 중",
+    "bacNow": "현재 혈중알코올농도 (추정)",
+    "standardDrinks": "표준잔",
+    "soberAt": "해독 예상 시각",
+    "addDrink": "잔 추가",
+    "logTitle": "마신 기록 ({{count}}잔)",
+    "undo": "실행 취소",
+    "empty": "아직 추가한 잔이 없습니다. 위에서 마신 잔을 탭하세요.",
+    "endSave": "세션 종료 & 트래커에 저장",
+    "discard": "기록 없이 종료",
+    "discardTitle": "세션을 삭제할까요?",
+    "discardMessage": "이 세션의 기록은 저장되지 않습니다.",
+    "levelSafe": "안전 범위",
+    "levelCaution": "주의 — 운전 금지",
+    "levelDanger": "위험 — 속도를 늦추세요",
+    "levelHigh": "매우 위험 — 음주 중단 권고",
+    "disclaimer": "이 수치는 Widmark 공식 기반의 참고용 추정치이며 실제 혈중알코올농도와 다를 수 있습니다. 음주 후에는 수치와 관계없이 운전하지 마세요.",
+    "homeCta": "지금 마시는 중",
+    "homeCtaDescription": "잔을 기록하며 실시간 BAC 추정치 확인",
+    "homeCtaActive": "세션 진행 중 — 이어서 기록하기"
   },
   "quiz": {
     "title": "술 퀴즈",
@@ -863,8 +1059,174 @@
         "d": "0.08%",
         "correct": "b",
         "explanation": "한국의 음주운전 단속 기준은 혈중알코올농도 0.03% 이상입니다."
+      },
+      "q33": {
+        "question": "증류주와 양조주의 핵심 차이는?",
+        "a": "색깔",
+        "b": "증류 과정 유무",
+        "c": "원료",
+        "d": "가격",
+        "correct": "b",
+        "explanation": "증류주는 발효 후 증류해 도수를 높인 술입니다."
+      },
+      "q34": {
+        "question": "\"프루프(proof)\" 100은 미국 기준 도수 몇 %인가?",
+        "a": "25%",
+        "b": "40%",
+        "c": "50%",
+        "d": "100%",
+        "correct": "c",
+        "explanation": "미국 프루프는 도수의 2배라서 100 proof = 50%입니다."
+      },
+      "q35": {
+        "question": "와인의 주된 발효 원료는?",
+        "a": "보리",
+        "b": "포도",
+        "c": "쌀",
+        "d": "감자",
+        "correct": "b",
+        "explanation": "와인은 포도를 발효시켜 만듭니다."
+      },
+      "q36": {
+        "question": "다음 중 도수가 보통 가장 높은 술은?",
+        "a": "맥주",
+        "b": "막걸리",
+        "c": "위스키",
+        "d": "와인",
+        "correct": "c",
+        "explanation": "위스키는 보통 40% 이상으로 가장 높습니다."
+      },
+      "q37": {
+        "question": "청주와 탁주(막걸리)의 차이는?",
+        "a": "원료",
+        "b": "맑게 거르는지 여부",
+        "c": "도수만",
+        "d": "색소",
+        "correct": "b",
+        "explanation": "맑게 거르면 청주, 거르지 않아 탁하면 탁주(막걸리)입니다."
+      },
+      "q38": {
+        "question": "복분자주의 원료는?",
+        "a": "산딸기(블랙라즈베리)",
+        "b": "매실",
+        "c": "유자",
+        "d": "포도",
+        "correct": "a",
+        "explanation": "복분자주는 한국산 산딸기로 담급니다."
+      },
+      "q39": {
+        "question": "소맥을 만들 때 일반적으로 섞는 두 가지는?",
+        "a": "소주와 와인",
+        "b": "소주와 맥주",
+        "c": "막걸리와 맥주",
+        "d": "위스키와 맥주",
+        "correct": "b",
+        "explanation": "소맥은 소주와 맥주를 섞은 술입니다."
+      },
+      "q40": {
+        "question": "전통 약주를 데워 마실 때 적당한 온도대는?",
+        "a": "0°C 이하",
+        "b": "5°C",
+        "c": "35~45°C",
+        "d": "80°C 이상",
+        "correct": "c",
+        "explanation": "데운 약주는 보통 35~45°C 정도가 적당합니다."
+      },
+      "q41": {
+        "question": "에스프레소 마티니의 베이스 스피릿은?",
+        "a": "보드카",
+        "b": "럼",
+        "c": "진",
+        "d": "데킬라",
+        "correct": "a",
+        "explanation": "에스프레소 마티니는 보드카에 커피 리큐어와 에스프레소를 섞습니다."
+      },
+      "q42": {
+        "question": "모스코 뮬에 들어가는 탄산은?",
+        "a": "토닉워터",
+        "b": "진저비어",
+        "c": "콜라",
+        "d": "사이다",
+        "correct": "b",
+        "explanation": "모스코 뮬은 보드카·라임에 진저비어를 더합니다."
+      },
+      "q43": {
+        "question": "네그로니의 세 가지 동량 재료가 아닌 것은?",
+        "a": "진",
+        "b": "캄파리",
+        "c": "콜라",
+        "d": "스위트 베르무트",
+        "correct": "c",
+        "explanation": "네그로니는 진·캄파리·스위트 베르무트를 1:1:1로 섞습니다."
+      },
+      "q44": {
+        "question": "데킬라 선라이즈의 \"노을\" 색을 내는 재료는?",
+        "a": "그레나딘 시럽",
+        "b": "우유",
+        "c": "커피",
+        "d": "민트",
+        "correct": "a",
+        "explanation": "바닥에 가라앉는 그레나딘이 그라데이션을 만듭니다."
+      },
+      "q45": {
+        "question": "카이피리냐의 베이스 술은?",
+        "a": "럼",
+        "b": "카샤사",
+        "c": "진",
+        "d": "보드카",
+        "correct": "b",
+        "explanation": "카이피리냐는 브라질 사탕수수 술 카샤사로 만듭니다."
+      },
+      "q46": {
+        "question": "압생트를 마시는 일반적인 방법은?",
+        "a": "스트레이트로 원샷",
+        "b": "우유와 섞어",
+        "c": "찬물로 희석해",
+        "d": "뜨겁게 데워",
+        "correct": "c",
+        "explanation": "압생트는 고도수라 찬물로 희석해 마십니다."
+      },
+      "q47": {
+        "question": "표준잔 1잔의 순알코올 양은 대략?",
+        "a": "5g",
+        "b": "14g",
+        "c": "30g",
+        "d": "50g",
+        "correct": "b",
+        "explanation": "표준잔 1잔은 순알코올 약 14g 기준입니다."
+      },
+      "q48": {
+        "question": "몸이 시간당 분해하는 알코올 양은 대략?",
+        "a": "표준잔 약 0.1잔",
+        "b": "약 5잔",
+        "c": "약 1잔",
+        "d": "약 3잔",
+        "correct": "c",
+        "explanation": "평균적으로 시간당 표준잔 약 1잔(BAC 약 0.015%)을 분해합니다."
+      },
+      "q49": {
+        "question": "숙취 완화에 가장 도움이 되는 것은?",
+        "a": "수분·전해질 보충과 휴식",
+        "b": "해장술",
+        "c": "진한 커피 다량",
+        "d": "담배",
+        "correct": "a",
+        "explanation": "수분과 전해질 보충, 충분한 휴식이 가장 도움이 됩니다. 해장술은 오히려 해롭습니다."
+      },
+      "q50": {
+        "question": "빈속에 술을 마시면 어떻게 되나?",
+        "a": "흡수가 느려진다",
+        "b": "흡수가 빨라져 더 빨리 취한다",
+        "c": "도수가 낮아진다",
+        "d": "칼로리가 줄어든다",
+        "correct": "b",
+        "explanation": "빈속에는 알코올 흡수가 빨라져 더 빨리 취합니다."
       }
-    }
+    },
+    "pickTopicSubtitle": "관심 있는 주제를 골라 10문제 퀴즈로 가볍게 확인해보세요.",
+    "dailyTitle": "오늘의 짧은 퀴즈",
+    "dailyStreak": "{{count}}일 연속 완료",
+    "dailyStart": "5문제 풀기"
   },
   "settings": {
     "language": "언어",
@@ -876,7 +1238,19 @@
     "reminderTime": "알림 시간",
     "about": "앱 정보",
     "version": "버전",
-    "appInfo": "음주 관련 다양한 계산과 정보를 제공하는 앱입니다."
+    "appInfo": "음주 관련 다양한 계산과 정보를 제공하는 앱입니다.",
+    "dataSection": "데이터",
+    "dataDescription": "모든 기록(음주 기록, 계산 기록, 챌린지, 퀴즈 진행도 등)을 텍스트로 내보내 보관하고, 새 기기에서 붙여넣어 복원할 수 있습니다.",
+    "exportData": "데이터 내보내기",
+    "importData": "데이터 가져오기",
+    "importDescription": "이전에 내보낸 백업 텍스트를 아래에 붙여넣으세요.",
+    "importConfirmTitle": "데이터를 복원할까요?",
+    "importConfirmMessage": "백업에 포함된 항목이 현재 데이터를 덮어씁니다.",
+    "importSuccess": "데이터가 복원되었습니다.",
+    "importError": "올바른 백업 형식이 아닙니다.",
+    "restore": "복원하기",
+    "trackingHabitTitle": "꾸준히 기록하고 다시 확인하기",
+    "trackingHabitDescription": "하루 기록 알림과 주간 리포트로 음주량, 칼로리, 평균 잔 수를 놓치지 않고 확인할 수 있습니다."
   },
   "notifications": {
     "dailyTitle": "오늘의 음주 기록",
@@ -893,7 +1267,77 @@
     "historyDescription": "이전 계산 결과를 확인하세요",
     "quizDescription": "술에 대한 지식을 테스트해보세요",
     "settingsDescription": "언어, 알림 등을 설정하세요",
-    "subtitle": "추가 기능 및 설정"
+    "subtitle": "추가 기능 및 설정",
+    "recovery": "숙취 예측 & 회복",
+    "recoveryDescription": "마신 양으로 BAC 추이와 회복 팁 확인"
+  },
+  "recovery": {
+    "back": "뒤로",
+    "title": "숙취 예측 & 회복 가이드",
+    "yourDetails": "정보 입력",
+    "weight": "체중 (kg)",
+    "gender": "성별",
+    "male": "남",
+    "female": "여",
+    "standardDrinks": "표준잔 수",
+    "bacTimeline": "BAC 추이",
+    "peakBac": "예상 최고 BAC",
+    "timeToSober": "완전히 깨는 데 걸리는 시간",
+    "hoursUnit": "시간",
+    "emptyState": "체중과 표준잔 수를 0보다 큰 값으로 입력하면 BAC 추이가 표시됩니다.",
+    "tipsTitle": "회복 팁",
+    "tip1": "물이나 이온음료로 충분히 수분을 보충하세요.",
+    "tip2": "음주 전·중에 음식을 함께 섭취하면 흡수가 느려집니다.",
+    "tip3": "비타민과 전해질을 보충하면 컨디션 회복에 도움이 됩니다.",
+    "tip4": "충분한 수면으로 몸이 회복할 시간을 주세요.",
+    "tip5": "카페인 과다와 해장술은 피하고, 다음 음주까지 최소 48시간 휴식을 권장합니다.",
+    "disclaimer": "의학적 조언이 아니며 개인차가 있습니다."
+  },
+  "challenge": {
+    "title": "절주 챌린지",
+    "subtitle": "목표 일수 동안 음주 없이 도전해 보세요.",
+    "startA11y": "{{count}}일 챌린지 시작",
+    "dayOption": "{{count}}일",
+    "stopA11y": "챌린지 중단",
+    "stop": "중단",
+    "streakLabel": "연속 절주 일수",
+    "moneySaved": "💰 아낀 술값 약 {{amount}}원",
+    "shareSucceeded": "🏆 절주 챌린지 {{target}}일 달성!{{savedLine}}\n#절주챌린지 #주류계산기",
+    "shareInProgress": "🔥 절주 챌린지 {{streak}}일째 진행 중! (목표 {{target}}일){{savedLine}}\n#절주챌린지 #주류계산기",
+    "goalReached": "목표 달성! 🎉",
+    "shareA11y": "챌린지 공유하기",
+    "share": "📣 공유하기"
+  },
+  "insights": {
+    "title": "이번 주 인사이트",
+    "comparisonSame": "지난주와 같은 잔 수",
+    "comparisonUp": "지난주보다 {{count}}잔 많음",
+    "comparisonDown": "지난주보다 {{count}}잔 적음",
+    "statDrinks": "총 잔 수",
+    "statCalories": "총 칼로리",
+    "statAvgAbv": "평균 도수",
+    "mostCommon": "이번 주 가장 자주 기록한 항목은 {{name}}입니다.",
+    "empty": "기록을 추가하면 주간 패턴과 자주 마신 항목이 표시됩니다.",
+    "openGuide": "표준잔/안전 가이드 보기"
+  },
+  "recommender": {
+    "title": "맞춤 레시피 추천",
+    "subtitle": "재료와 도수 조건으로 좁혀보세요.",
+    "style": "스타일",
+    "all": "전체",
+    "maxAbv": "최대 도수",
+    "maxCalories": "최대 칼로리",
+    "openDetails": "상세 보기",
+    "emptyTitle": "조건에 맞는 레시피가 없습니다",
+    "emptySubtitle": "도수나 칼로리 조건을 완화해보세요."
+  },
+  "culture": {
+    "cultureTitle": "나라별 음주 문화",
+    "pairingTitle": "술 · 안주 페어링",
+    "customs": "문화 특징",
+    "etiquette": "예절",
+    "pairings": "잘 어울리는 안주",
+    "tip": "팁"
   },
   "errors": {
     "positiveValues": "모든 값은 0보다 커야 합니다",

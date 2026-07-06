@@ -33,6 +33,9 @@ const PresetPicker = ({ presets, onSelect }: PresetPickerProps) => {
                 isSelected ? "bg-green-600" : "bg-gray-700"
               }`}
               onPress={() => handleSelect(preset)}
+              accessibilityRole="button"
+              accessibilityLabel={t(preset.nameKey)}
+              accessibilityState={{ selected: isSelected }}
             >
               <Text className="text-base mr-1">{preset.emoji}</Text>
               <Text

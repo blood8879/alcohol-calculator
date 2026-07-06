@@ -13,6 +13,8 @@ expo-env.d.ts
 .kotlin/
 *.orig.*
 *.jks
+credentials.json
+credentials/
 *.p8
 *.p12
 *.key
@@ -40,3 +42,7 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# AI tool artifacts
+.omo/
+.sisyphus/

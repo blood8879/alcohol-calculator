@@ -84,14 +84,24 @@ export default function HistoryScreen() {
     <SafeAreaView className="flex-1 bg-gray-900">
       <View className="flex-row items-center justify-between px-4 py-3">
         <View className="flex-row items-center">
-          <TouchableOpacity onPress={() => router.back()} className="mr-3">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            className="mr-3"
+            accessibilityRole="button"
+            accessibilityLabel={t("common.back")}
+          >
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </TouchableOpacity>
           <Text className="text-xl font-bold text-white">{t("history.title")}</Text>
         </View>
 
         {history.length > 0 && (
-          <TouchableOpacity onPress={handleClearAll} activeOpacity={0.7}>
+          <TouchableOpacity
+            onPress={handleClearAll}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={t("history.clearAll")}
+          >
             <Text className="text-red-400 text-sm font-medium">{t("history.clearAll")}</Text>
           </TouchableOpacity>
         )}

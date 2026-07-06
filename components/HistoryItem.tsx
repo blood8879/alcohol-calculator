@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { CalculationHistory } from "../utils/historyStorage";
+import Card from "./ui/Card";
 
 interface HistoryItemProps {
   item: CalculationHistory;
@@ -35,11 +36,12 @@ function useFormatTimestamp() {
 }
 
 const HistoryItem = ({ item, onDelete, onToggleFavorite }: HistoryItemProps) => {
+  const { t } = useTranslation();
   const formatTimestamp = useFormatTimestamp();
   const firstResult = item.results.length > 0 ? item.results[0].value : "";
 
   return (
-    <View className="bg-gray-800 rounded-xl p-4 mb-3 flex-row items-center">
+    <Card className="mb-3 flex-row items-center">
       <Text className="text-2xl mr-3">{item.calculatorIcon}</Text>
 
       <View className="flex-1 mr-2">
@@ -60,6 +62,8 @@ const HistoryItem = ({ item, onDelete, onToggleFavorite }: HistoryItemProps) => 
         onPress={() => onToggleFavorite(item.id)}
         className="p-2"
         activeOpacity={0.6}
+        accessibilityRole="button"
+        accessibilityLabel={item.isFavorite ? t("history.unfavorite") : t("history.favorite")}
       >
         <Ionicons
           name={item.isFavorite ? "star" : "star-outline"}
@@ -72,10 +76,12 @@ const HistoryItem = ({ item, onDelete, onToggleFavorite }: HistoryItemProps) => 
         onPress={() => onDelete(item.id)}
         className="p-2"
         activeOpacity={0.6}
+        accessibilityRole="button"
+        accessibilityLabel={`${t("history.delete")} - ${item.calculatorType}`}
       >
         <Ionicons name="trash-outline" size={18} color="#EF4444" />
       </TouchableOpacity>
-    </View>
+    </Card>
   );
 };
 

@@ -1,8 +1,16 @@
+import groovy.json.JsonSlurper
+
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
+def credentialsFile = file("$projectRoot/credentials.json")
+def androidKeystoreCredentials = null
+
+if (credentialsFile.exists()) {
+    androidKeystoreCredentials = new JsonSlurper().parse(credentialsFile).android?.keystore
+}
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -36,7 +44,7 @@ react {
 
     /* Bundling */
     //   A list containing the node command and its flags. Default is just 'node'.
-    // nodeExecutableAndArgs = ["node"]
+    nodeExecutableAndArgs = [System.getenv("NODE_BINARY") ?: "node"]
 
     //
     //   The path to the CLI configuration file. Default is empty.
@@ -92,8 +100,8 @@ android {
         applicationId 'com.jiamyun.alcoholcalculator'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 19
+        versionName "1.1.0"
     }
     signingConfigs {
         debug {
@@ -102,15 +110,24 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (androidKeystoreCredentials != null) {
+                storeFile file("$projectRoot/${androidKeystoreCredentials.keystorePath}")
+                storePassword androidKeystoreCredentials.keystorePassword
+                keyAlias androidKeystoreCredentials.keyAlias
+                keyPassword androidKeystoreCredentials.keyPassword
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            if (androidKeystoreCredentials == null) {
+                throw new GradleException("Missing credentials.json. Run `npx eas-cli credentials -p android` and download credentials before building release.")
+            }
+            signingConfig signingConfigs.release
             shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

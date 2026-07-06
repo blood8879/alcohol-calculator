@@ -2,10 +2,22 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { pickLocalizedText } from "./localizedText";
 
 const PREFS_KEY = "@notification_prefs";
 const DAILY_REMINDER_ID = "daily-reminder";
 const WEEKLY_SUMMARY_ID = "weekly-summary";
+
+type ReminderRoute = "/(tabs)" | "/(tabs)/tracker";
+
+type ReminderContent = {
+  readonly title: string;
+  readonly body: string;
+  readonly sound: true;
+  readonly data: {
+    readonly route: ReminderRoute;
+  };
+};
 
 export interface NotificationPrefs {
   dailyEnabled: boolean;
@@ -16,6 +28,40 @@ const DEFAULT_PREFS: NotificationPrefs = {
   dailyEnabled: false,
   weeklyEnabled: false,
 };
+
+export function buildDailyReminderContent(language = "en"): ReminderContent {
+  return {
+    title: pickLocalizedText({
+      ko: "오늘의 술 가이드",
+      en: "Today's alcohol guide",
+      es: "Guía de alcohol de hoy",
+    }, language),
+    body: pickLocalizedText({
+      ko: "오늘의 퀴즈, 가이드, 기록 요약을 확인하세요.",
+      en: "Open today's quiz, guide, and tracker summary.",
+      es: "Abre el quiz, la guía y el resumen de hoy.",
+    }, language),
+    sound: true,
+    data: { route: "/(tabs)" },
+  };
+}
+
+export function buildWeeklySummaryContent(language = "en"): ReminderContent {
+  return {
+    title: pickLocalizedText({
+      ko: "주간 요약",
+      en: "Weekly Summary",
+      es: "Resumen semanal",
+    }, language),
+    body: pickLocalizedText({
+      ko: "주간 음주 기록과 중립적인 인사이트를 확인하세요.",
+      en: "Review your weekly drinking stats and neutral insights.",
+      es: "Revisa tus estadísticas e ideas semanales.",
+    }, language),
+    sound: true,
+    data: { route: "/(tabs)/tracker" },
+  };
+}
 
 export async function requestPermissions(): Promise<boolean> {
   if (!Device.isDevice) {
@@ -55,11 +101,7 @@ export async function scheduleDailyReminder(
 
   await Notifications.scheduleNotificationAsync({
     identifier: DAILY_REMINDER_ID,
-    content: {
-      title: "Time to log your drinks!",
-      body: "Don't forget to track today's drinks",
-      sound: true,
-    },
+    content: buildDailyReminderContent(),
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,
       hour,
@@ -73,11 +115,7 @@ export async function scheduleWeeklySummary(): Promise<void> {
 
   await Notifications.scheduleNotificationAsync({
     identifier: WEEKLY_SUMMARY_ID,
-    content: {
-      title: "Weekly Summary",
-      body: "Check your weekly drinking stats",
-      sound: true,
-    },
+    content: buildWeeklySummaryContent(),
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
       weekday: 1, // Sunday

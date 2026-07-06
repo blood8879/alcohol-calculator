@@ -1,12 +1,13 @@
-import React, { useState, useMemo } from "react";
-import { ScrollView, StatusBar, Text, View } from "react-native";
+import React, { useCallback, useState, useMemo } from "react";
+import { ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Modal from "react-native-modal";
+import Card from "../../components/ui/Card";
 import CalculationCard, { CalculationField } from "../../components/CalculationCard";
-import CalculatorIcon from "../../components/CalculatorIcon";
-import LanguageSelector from "../../components/LanguageSelector";
 import {
   calculateDilution,
   calculateAlcoholContent,
@@ -18,7 +19,13 @@ import {
 } from "../../utils/calculatorUtils";
 import { calculateBAC } from "../../utils/bacCalculator";
 import { drinkPresets } from "../../data/drinkPresets";
+import { getDailyCard, DailyContentCard } from "../../data/dailyContent";
+import { CuratedContentItem } from "../../data/contentCollections";
+import { getDailyTip } from "../../data/dailyTips";
 import { DrinkPreset } from "../../data/types";
+import { ContentRef, getFavorites, getRecentContent } from "../../utils/contentStorage";
+import { getActiveSession } from "../../utils/engagement/drinkingSessionStorage";
+import { pickLocalizedText } from "../../utils/localizedText";
 
 type CalculatorKey =
   | "dilution"
@@ -44,12 +51,80 @@ type CalculatorConfig = {
   presetFieldMapping?: { volumeIndex: number; abvIndex: number };
 };
 
+type DailyCardProps = {
+  card: DailyContentCard;
+  language: string;
+  compact?: boolean;
+  onPress: () => void;
+};
+
+function DailyCard({ card, language, compact = false, onPress }: DailyCardProps) {
+  return (
+    <Card className={compact ? "flex-1" : ""} onPress={onPress}>
+      <View className="flex-row items-center justify-between mb-3">
+        <View className="bg-green-500/15 rounded-full px-3 py-1">
+          <Text className="text-green-400 text-xs font-bold">
+            {pickLocalizedText(card.label, language)}
+          </Text>
+        </View>
+        <Text className={compact ? "text-3xl" : "text-4xl"}>{card.emoji}</Text>
+      </View>
+      <Text className="text-white text-lg font-bold mb-2" numberOfLines={compact ? 2 : undefined}>
+        {pickLocalizedText(card.title, language)}
+      </Text>
+      <Text className="text-gray-400 text-sm leading-5 mb-4" numberOfLines={compact ? 3 : undefined}>
+        {pickLocalizedText(card.description, language)}
+      </Text>
+      <Text className="text-green-400 text-sm font-semibold">
+        {pickLocalizedText(card.action, language)} ›
+      </Text>
+    </Card>
+  );
+}
+
+type ContentShortcutProps = {
+  item: ContentRef | CuratedContentItem;
+  language: string;
+  description?: string;
+  onPress: () => void;
+};
+
+function ContentShortcut({ item, language, description: descriptionOverride, onPress }: ContentShortcutProps) {
+  const title = "label" in item ? item.label : pickLocalizedText(item.title, language);
+  const description = "description" in item
+    ? pickLocalizedText(item.description, language)
+    : descriptionOverride;
+
+  return (
+    <Card className="mr-3 w-56" onPress={onPress}>
+      <View className="flex-row items-center mb-3">
+        <Text className="text-3xl mr-3">{item.emoji}</Text>
+        <View className="bg-gray-700 rounded-full px-2 py-1">
+          <Text className="text-gray-300 text-xs font-semibold">
+            {item.kind === "recipe" ? "Recipe" : "Guide"}
+          </Text>
+        </View>
+      </View>
+      <Text className="text-white text-base font-bold mb-2" numberOfLines={1}>
+        {title}
+      </Text>
+      <Text className="text-gray-400 text-sm leading-5" numberOfLines={2}>
+        {description}
+      </Text>
+    </Card>
+  );
+}
+
 // 메인 화면
 export default function HomeScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
   const [selectedCalculatorKey, setSelectedCalculatorKey] =
     useState<CalculatorKey | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [favoriteContent, setFavoriteContent] = useState<ContentRef[]>([]);
+  const [recentContent, setRecentContent] = useState<ContentRef[]>([]);
+  const [hasActiveSession, setHasActiveSession] = useState(false);
 
   // 계산기 설정을 useMemo로 메모이제이션하여 언어 변경 시 자동으로 업데이트
   const calculatorConfigs: Record<CalculatorKey, CalculatorConfig> = useMemo(
@@ -241,6 +316,34 @@ export default function HomeScreen() {
   const selectedCalculator = selectedCalculatorKey
     ? calculatorConfigs[selectedCalculatorKey]
     : null;
+  const featuredDailyCard = useMemo(() => getDailyCard(), []);
+  const dailyTip = useMemo(() => getDailyTip(), []);
+
+  // 즐겨찾기 우선, 최근 본 콘텐츠로 채운 단일 레일 (중복 제거, 최대 8개)
+  const contentRail = useMemo(() => {
+    const seen = new Set<string>();
+    const merged: ContentRef[] = [];
+    for (const item of [...favoriteContent, ...recentContent]) {
+      const key = `${item.kind}-${item.id}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(item);
+      }
+    }
+    return merged.slice(0, 8);
+  }, [favoriteContent, recentContent]);
+
+  useFocusEffect(
+    useCallback(() => {
+      Promise.all([getFavorites(), getRecentContent(), getActiveSession()]).then(
+        ([favorites, recent, activeSession]) => {
+          setFavoriteContent(favorites);
+          setRecentContent(recent);
+          setHasActiveSession(activeSession !== null);
+        }
+      );
+    }, [])
+  );
 
   const handleBack = () => {
     setModalVisible(false);
@@ -250,6 +353,32 @@ export default function HomeScreen() {
   const openCalculator = (key: CalculatorKey) => {
     setSelectedCalculatorKey(key);
     setModalVisible(true);
+  };
+
+  const targetRoute = (target: DailyContentCard["target"]) => {
+    if (target === "quiz") return "/(tabs)/quiz" as const;
+    if (target === "tracker") return "/(tabs)/tracker" as const;
+    if (target === "recipes") return "/(tabs)/explore?section=recipes" as const;
+    return "/(tabs)/explore?section=encyclopedia" as const;
+  };
+
+  const openDailyTarget = (target: DailyContentCard["target"]) => {
+    router.push(targetRoute(target));
+  };
+
+  const handleRecommendationPress = (target: "recipes" | "encyclopedia" | "tracker") => {
+    setModalVisible(false);
+    setTimeout(() => {
+      router.push(targetRoute(target));
+    }, 300);
+  };
+
+  const openContentKind = (kind: "recipe" | "encyclopedia") => {
+    router.push(
+      kind === "recipe"
+        ? "/(tabs)/explore?section=recipes"
+        : "/(tabs)/explore?section=encyclopedia"
+    );
   };
 
   return (
@@ -264,27 +393,127 @@ export default function HomeScreen() {
         <Text className="text-2xl font-bold text-white mb-1">
           {t("common.appTitle")}
         </Text>
-        <Text className="text-sm text-gray-400 mb-6">
+        <Text className="text-sm text-gray-400 mb-5">
           {t("common.appSubtitle")}
         </Text>
 
-        <LanguageSelector />
+        {/* 실시간 음주 세션 진입 CTA */}
+        <TouchableOpacity
+          className={`rounded-2xl p-4 mb-6 flex-row items-center ${
+            hasActiveSession ? "bg-green-600" : "bg-gray-800 border border-green-700"
+          }`}
+          onPress={() => router.push("/session")}
+          activeOpacity={0.75}
+          accessibilityRole="button"
+          accessibilityLabel={hasActiveSession ? t("session.homeCtaActive") : t("session.homeCta")}
+        >
+          <Text className="text-3xl mr-3">🍻</Text>
+          <View className="flex-1">
+            <Text className="text-white text-base font-bold">
+              {hasActiveSession ? t("session.homeCtaActive") : t("session.homeCta")}
+            </Text>
+            <Text
+              className={`text-sm mt-1 leading-5 ${
+                hasActiveSession ? "text-green-100" : "text-gray-400"
+              }`}
+            >
+              {t("session.homeCtaDescription")}
+            </Text>
+          </View>
+          <Text className="text-white text-2xl ml-2">›</Text>
+        </TouchableOpacity>
 
-        <View className="flex-col space-y-4">
+        {/* 핵심 기능인 계산기를 첫 화면 최상단에 그리드로 배치 */}
+        <Text className="text-lg font-bold text-white mb-3">
+          {t("home.calculatorsTitle")}
+        </Text>
+        <View className="flex-row flex-wrap justify-between mb-6">
           {(Object.keys(calculatorConfigs) as CalculatorKey[]).map((key) => {
             const config = calculatorConfigs[key];
             return (
-              <CalculatorIcon
+              <TouchableOpacity
                 key={key}
-                icon={config.icon}
-                label={config.navLabel}
-                description={config.navDescription}
-                iconColor={config.iconColor}
+                className="bg-gray-800 rounded-xl p-3 mb-3 items-center w-[31%]"
                 onPress={() => openCalculator(key)}
-              />
+                activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel={config.navLabel}
+                accessibilityHint={config.navDescription}
+              >
+                <View
+                  className={`${config.iconColor} rounded-full w-11 h-11 items-center justify-center mb-2`}
+                >
+                  <Text className="text-xl">{config.icon}</Text>
+                </View>
+                <Text
+                  className="text-white text-xs font-semibold text-center"
+                  numberOfLines={1}
+                >
+                  {config.navLabel}
+                </Text>
+              </TouchableOpacity>
             );
           })}
         </View>
+
+        {/* 오늘 블록: 팁 + 추천 카드 하나로 통합 */}
+        <Text className="text-lg font-bold text-white mb-3">
+          {t("home.todayTitle")}
+        </Text>
+        <Card className="mb-3 flex-row items-start">
+          <Text className="text-3xl mr-3">{dailyTip.emoji}</Text>
+          <View className="flex-1">
+            <Text className="text-green-400 text-xs font-bold mb-1">
+              {t("home.todayTipLabel")}
+            </Text>
+            <Text className="text-white text-sm leading-5">
+              {pickLocalizedText(dailyTip.text, i18n.language)}
+            </Text>
+          </View>
+        </Card>
+        <DailyCard
+          card={featuredDailyCard}
+          language={i18n.language}
+          onPress={() => openDailyTarget(featuredDailyCard.target)}
+        />
+
+        <TouchableOpacity
+          className="bg-emerald-600 rounded-2xl p-4 mt-3 mb-6 flex-row items-center"
+          onPress={() => router.push("/(tabs)/quiz")}
+          activeOpacity={0.75}
+          accessibilityRole="button"
+          accessibilityLabel={t("home.quizBannerTitle")}
+        >
+          <Text className="text-3xl mr-3">🧠</Text>
+          <View className="flex-1">
+            <Text className="text-white text-base font-bold">
+              {t("home.quizBannerTitle")}
+            </Text>
+            <Text className="text-emerald-100 text-sm mt-1 leading-5">
+              {t("home.quizBannerDescription")}
+            </Text>
+          </View>
+          <Text className="text-white text-2xl ml-2">›</Text>
+        </TouchableOpacity>
+
+        {contentRail.length > 0 && (
+          <View className="mb-6">
+            <Text className="text-lg font-bold text-white mb-3">
+              {t("home.contentRailTitle")}
+            </Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {contentRail.map((item) => (
+                <ContentShortcut
+                  key={`${item.kind}-${item.id}`}
+                  item={item}
+                  language={i18n.language}
+                  description={item.kind === "recipe" ? t("home.openRecipe") : t("home.openGuide")}
+                  onPress={() => openContentKind(item.kind)}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </ScrollView>
 
       <Modal
@@ -309,6 +538,7 @@ export default function HomeScreen() {
               presetFieldMapping={selectedCalculator.presetFieldMapping}
               calculatorType={selectedCalculatorKey || undefined}
               calculatorIcon={selectedCalculator.icon}
+              onRecommendationPress={handleRecommendationPress}
             />
           </View>
         )}

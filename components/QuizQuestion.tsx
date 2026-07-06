@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, ScrollView } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { QuizQuestion as QuizQuestionType } from "../data/types";
+import Card from "./ui/Card";
 
 type QuizQuestionProps = {
   question: QuizQuestionType;
@@ -100,6 +101,12 @@ const QuizQuestionCard = ({
           onPress={() => handleSelect(index)}
           activeOpacity={showFeedback ? 1 : 0.7}
           disabled={showFeedback}
+          accessibilityRole="radio"
+          accessibilityLabel={`${optionLabels[index]}. ${t(optionKey)}`}
+          accessibilityState={{
+            selected: selectedIndex === index,
+            disabled: showFeedback,
+          }}
         >
           <View
             className={`${getLabelColor(index)} w-8 h-8 rounded-lg items-center justify-center mr-3`}
@@ -121,7 +128,7 @@ const QuizQuestionCard = ({
       ))}
 
       {showFeedback && (
-        <View className="bg-gray-800 rounded-xl p-4 mt-4 border-l-4 border-blue-500">
+        <Card className="mt-4 border-l-4 border-blue-500">
           <View className="flex-row items-center mb-2">
             <Ionicons name="information-circle" size={20} color="#60A5FA" />
             <Text className="text-blue-400 text-sm font-bold ml-2">
@@ -131,7 +138,7 @@ const QuizQuestionCard = ({
           <Text className="text-gray-300 text-sm leading-5">
             {t(question.explanationKey)}
           </Text>
-        </View>
+        </Card>
       )}
 
       {showFeedback && (
@@ -139,6 +146,12 @@ const QuizQuestionCard = ({
           className="bg-green-600 rounded-xl py-4 mt-6 items-center"
           onPress={handleNext}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={
+            questionNumber === totalQuestions
+              ? t("quiz.seeResults")
+              : t("quiz.next")
+          }
         >
           <Text className="text-white text-base font-bold">
             {questionNumber === totalQuestions

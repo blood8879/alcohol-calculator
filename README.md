@@ -1,52 +1,59 @@
-# Welcome to your Expo app 👋
+# Alcohol Calculator
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Alcohol Calculator is an Expo/React Native mobile app for alcohol-related calculations, drink knowledge, cocktail recipes, quizzes, and personal drink tracking.
 
-## Get started
+## Main Features
 
-1. Install dependencies
+- Alcohol calculators: dilution, blending, calories, BAC estimate, freezing point, Proof conversion, unit conversion, pure alcohol amount
+- Home content hub with daily recommendations, popular content, seasonal collections, favorites, and recently viewed content
+- Cocktail recipes with Korean and global drink ideas
+- Drink encyclopedia with ABV, calories, serving temperature, pairing, and safety-oriented knowledge entries
+- Category-based alcohol quiz
+- Drink tracker with weekly stats and optional local notifications
+- Local-only favorites and recent content storage using AsyncStorage
+- Ad-supported layout with non-blocking banner and quiz completion ad placements
 
-   ```bash
-   npm install
-   ```
+## Development
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install dependencies:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Start Metro for a development client:
 
-## Learn more
+```bash
+npx expo start --dev-client
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Run on Android:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo run:android
+```
 
-## Join the community
+Run on iOS:
 
-Join our community of developers creating universal apps.
+```bash
+npx expo run:ios
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# alcohol-calculator
-# alcohol-calculator
+## Verification
+
+```bash
+npx tsc --noEmit
+npm run lint
+npx expo export --platform android --output-dir .expo-export-test
+npx expo export --platform ios --output-dir .expo-export-test
+```
+
+Remove the temporary export directory after export checks:
+
+```bash
+rm -rf .expo-export-test
+```
+
+## Content Model
+
+The current app does not require a backend. Recipes, encyclopedia entries, quiz categories, popular content, and seasonal collections are local static data. Favorites and recently viewed content are stored on-device with AsyncStorage.

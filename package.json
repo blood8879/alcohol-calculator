@@ -1,6 +1,6 @@
 {
   "name": "alcohol-calculator",
-  "main": "expo-router/entry",
+  "main": "./index.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
@@ -8,7 +8,9 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
@@ -43,6 +45,7 @@
     "react-dom": "19.0.0",
     "react-i18next": "^16.0.0",
     "react-native": "0.79.6",
+    "react-native-android-widget": "^0.17.1",
     "react-native-css-interop": "^0.1.22",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-gifted-charts": "^1.4.74",
@@ -60,10 +63,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.0.10",
     "@types/react-native": "^0.72.8",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
+    "jest-expo": "~53.0.0",
+    "react-test-renderer": "^19.0.0",
     "typescript": "~5.8.3"
   },
   "private": true

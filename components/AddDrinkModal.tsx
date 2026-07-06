@@ -28,6 +28,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
   const [selectedPreset, setSelectedPreset] = useState<DrinkPreset | null>(null);
   const [volume, setVolume] = useState("");
   const [abv, setAbv] = useState("");
+  const [price, setPrice] = useState("");
   const [manualName, setManualName] = useState("");
   const [manualEmoji, setManualEmoji] = useState("\uD83C\uDF7A");
 
@@ -35,6 +36,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
     setSelectedPreset(null);
     setVolume("");
     setAbv("");
+    setPrice("");
     setManualName("");
     setManualEmoji("\uD83C\uDF7A");
     setMode("preset");
@@ -70,18 +72,21 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
         ? selectedPreset.emoji
         : manualEmoji;
 
+    const parsedPrice = parseFloat(price);
+
     await addDrinkLog({
       name,
       emoji,
       volume: parsedVolume,
       abv: parsedAbv,
+      price: !isNaN(parsedPrice) && parsedPrice > 0 ? parsedPrice : undefined,
       presetId: mode === "preset" ? selectedPreset?.id : undefined,
     });
 
     resetForm();
     onAdd();
     onClose();
-  }, [volume, abv, mode, manualName, manualEmoji, selectedPreset, t, resetForm, onAdd, onClose]);
+  }, [volume, abv, price, mode, manualName, manualEmoji, selectedPreset, t, resetForm, onAdd, onClose]);
 
   const handleClose = useCallback(() => {
     resetForm();
@@ -196,6 +201,18 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                     keyboardType="numeric"
                     placeholderTextColor="#6b7280"
                   />
+
+                  <Text className="text-gray-400 text-sm mb-2">
+                    {t("tracker.price")}
+                  </Text>
+                  <TextInput
+                    className="bg-gray-800 text-white rounded-xl px-4 py-3 mb-3 text-base"
+                    value={price}
+                    onChangeText={setPrice}
+                    keyboardType="numeric"
+                    placeholder="0"
+                    placeholderTextColor="#6b7280"
+                  />
                 </View>
               )}
             </View>
@@ -239,6 +256,18 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                 value={abv}
                 onChangeText={setAbv}
                 keyboardType="numeric"
+                placeholderTextColor="#6b7280"
+              />
+
+              <Text className="text-gray-400 text-sm mb-2">
+                {t("tracker.price")}
+              </Text>
+              <TextInput
+                className="bg-gray-800 text-white rounded-xl px-4 py-3 mb-3 text-base"
+                value={price}
+                onChangeText={setPrice}
+                keyboardType="numeric"
+                placeholder="0"
                 placeholderTextColor="#6b7280"
               />
             </View>
