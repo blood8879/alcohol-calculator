@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Alert,
   ScrollView,
@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { drinkPresets } from "../data/drinkPresets";
 import { DrinkPreset } from "../data/types";
 import { addDrinkLog } from "../utils/trackerStorage";
+import { CustomDrink, getCustomDrinks } from "../utils/customDrinks";
 
 interface AddDrinkModalProps {
   visible: boolean;
@@ -31,6 +32,23 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
   const [price, setPrice] = useState("");
   const [manualName, setManualName] = useState("");
   const [manualEmoji, setManualEmoji] = useState("\uD83C\uDF7A");
+  const [customDrinks, setCustomDrinks] = useState<CustomDrink[]>([]);
+
+  useEffect(() => {
+    if (visible) {
+      getCustomDrinks().then(setCustomDrinks);
+    }
+  }, [visible]);
+
+  // \uCEE4\uC2A4\uD140 \uC220\uC744 \uD504\uB9AC\uC14B\uACFC \uB3D9\uC77C\uD55C \uD615\uD0DC\uB85C \uB178\uCD9C\uD55C\uB2E4.
+  const customPresets: DrinkPreset[] = customDrinks.map((c) => ({
+    id: c.id,
+    nameKey: c.name,
+    emoji: "\uD83C\uDF78",
+    volume: c.volumeMl,
+    abv: c.abv,
+  }));
+  const allPresets = [...drinkPresets, ...customPresets];
 
   const resetForm = useCallback(() => {
     setSelectedPreset(null);
@@ -42,11 +60,16 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
     setMode("preset");
   }, []);
 
-  const handleSelectPreset = useCallback((preset: DrinkPreset) => {
-    setSelectedPreset(preset);
-    setVolume(String(preset.volume));
-    setAbv(String(preset.abv));
-  }, []);
+  const handleSelectPreset = useCallback(
+    (preset: DrinkPreset) => {
+      setSelectedPreset(preset);
+      setVolume(String(preset.volume));
+      setAbv(String(preset.abv));
+      const custom = customDrinks.find((c) => c.id === preset.id);
+      setPrice(custom?.price != null ? String(custom.price) : "");
+    },
+    [customDrinks]
+  );
 
   const handleAdd = useCallback(async () => {
     const parsedVolume = parseFloat(volume);
@@ -152,7 +175,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
           {mode === "preset" ? (
             <View>
               <View className="flex-row flex-wrap mb-4">
-                {drinkPresets.map((preset) => {
+                {allPresets.map((preset) => {
                   const isSelected = selectedPreset?.id === preset.id;
                   return (
                     <TouchableOpacity

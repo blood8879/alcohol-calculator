@@ -52,6 +52,12 @@ export default function MoreScreen() {
           onPress={() => router.push("/(tabs)/more/history")}
         />
         <MenuCard
+          emoji="🍻"
+          title={t("sessionHistory.menuTitle")}
+          description={t("sessionHistory.menuDescription")}
+          onPress={() => router.push("/(tabs)/more/sessions")}
+        />
+        <MenuCard
           emoji="🤕"
           title={t("more.recovery")}
           description={t("more.recoveryDescription")}

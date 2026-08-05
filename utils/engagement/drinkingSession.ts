@@ -94,6 +94,34 @@ export const estimateSession = (
   };
 };
 
+// 세션 종료 시점의 피크 BAC(관측 최대치)을 잔 타임라인에서 재구성한다.
+// 각 잔은 마신 시각에 즉시 흡수된다고 가정하므로, 누적 알코올이 가장 큰 잔 시각들에서
+// 대사분을 차감한 값 중 최댓값이 곧 피크가 된다.
+export const peakBacOf = (session: DrinkingSession): number => {
+  const drinks = [...session.drinks].sort((a, b) => a.timestamp - b.timestamp);
+  if (drinks.length === 0 || session.weightKg <= 0) {
+    return 0;
+  }
+  const firstAt = drinks[0].timestamp;
+  const volumeOfDistribution =
+    session.weightKg * 1000 * distributionRatio(session.gender);
+  let cumulativeGrams = 0;
+  let peak = 0;
+  for (const d of drinks) {
+    cumulativeGrams += alcoholGrams(d.volume, d.abv);
+    const hoursElapsed = Math.max(0, (d.timestamp - firstAt) / 3_600_000);
+    const bac = Math.max(
+      0,
+      (cumulativeGrams / volumeOfDistribution) * 100 -
+        ELIMINATION_RATE * hoursElapsed
+    );
+    if (bac > peak) {
+      peak = bac;
+    }
+  }
+  return Math.round(peak * 10000) / 10000;
+};
+
 // 세션 중 빠른 추가용 잔 단위 (트래커 프리셋은 병 단위라 별도 정의)
 export type QuickDrinkUnit = {
   readonly id: string;

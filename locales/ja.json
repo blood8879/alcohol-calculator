@@ -1,0 +1,1416 @@
+{
+  "common": {
+    "appTitle": "酒類計算機",
+    "appSubtitle": "計算したい項目をタップしてください！",
+    "calculate": "計算する",
+    "reset": "閉じる",
+    "error": "エラー",
+    "reference": "参考",
+    "referenceNote": "備考",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "back": "戻る",
+    "share": "結果を共有"
+  },
+  "time": {
+    "justNow": "たった今",
+    "minutesAgo": "{{count}}分前",
+    "hoursAgo": "{{count}}時間前",
+    "daysAgo": "{{count}}日前",
+    "sun": "日",
+    "mon": "月",
+    "tue": "火",
+    "wed": "水",
+    "thu": "木",
+    "fri": "金",
+    "sat": "土"
+  },
+  "tabs": {
+    "home": "ホーム",
+    "explore": "探索",
+    "encyclopedia": "事典",
+    "recipes": "レシピ",
+    "culture": "文化",
+    "quiz": "クイズ",
+    "tracker": "記録",
+    "more": "もっと見る"
+  },
+  "home": {
+    "calculatorsTitle": "計算機",
+    "todayTitle": "今日",
+    "todayTipLabel": "今日のお酒の豆知識",
+    "quizBannerTitle": "お酒の豆知識クイズに挑戦",
+    "quizBannerDescription": "10問で度数・カロリー・お酒の常識をチェックしましょう。",
+    "contentRailTitle": "お気に入り & 最近見たコンテンツ",
+    "openRecipe": "レシピをもう一度見る",
+    "openGuide": "事典をもう一度見る"
+  },
+  "calculators": {
+    "dilution": {
+      "navLabel": "度数調整",
+      "navDescription": "現在の度数と容量から目標の度数にするために必要な水の量を計算",
+      "title": "度数調整の計算",
+      "description": "現在の度数と容量から目標の度数にするために必要な水の量を計算",
+      "currentVolume": "現在の容量",
+      "currentABV": "現在の度数",
+      "targetABV": "目標度数",
+      "waterToAdd": "追加する水の量",
+      "finalVolume": "最終容量",
+      "errorHigher": "現在の度数は目標度数より高くなければなりません"
+    },
+    "blending": {
+      "navLabel": "ブレンド計算",
+      "navDescription": "度数の異なるお酒を混ぜて目標の度数を作る",
+      "title": "ブレンド計算",
+      "description": "度数の異なるお酒を混ぜて目標の度数を作る",
+      "firstABV": "1つ目のお酒の度数",
+      "firstVolume": "1つ目のお酒の容量",
+      "secondABV": "2つ目のお酒の度数",
+      "targetABV": "目標度数",
+      "targetVolume": "目標容量",
+      "secondVolumeNeeded": "必要な2つ目のお酒の量",
+      "actualABV": "実際に達成される度数",
+      "totalVolume": "総容量",
+      "errorTargetRange": "目標度数は{{min}}%から{{max}}%の間でなければなりません",
+      "errorTargetLarger": "目標容量は1つ目のお酒の容量より大きくなければなりません"
+    },
+    "calorie": {
+      "navLabel": "カロリー計算",
+      "navDescription": "アルコール飲料のカロリーを計算",
+      "title": "カロリー計算",
+      "description": "アルコール飲料のカロリーを計算",
+      "volume": "容量",
+      "abv": "アルコール度数",
+      "alcoholCalories": "アルコールカロリー",
+      "additionalNote": "ビールやワインなどは糖分などによる追加のカロリーがあります"
+    },
+    "temperature": {
+      "navLabel": "度数確認",
+      "navDescription": "測定温度とアルコール分%に応じた実際のアルコール度数を換算",
+      "title": "実際の度数確認",
+      "description": "測定温度とアルコール分%に応じた実際のアルコール度数を換算",
+      "measuredTemp": "測定温度",
+      "measuredABV": "アルコール分",
+      "actualABV": "実際のアルコール度数（{{temp}}°C、{{abv}}%基準）",
+      "errorNoData": "該当する温度のデータが見つかりません。",
+      "errorNoABVData": "該当する測定度数のデータが見つかりません。"
+    },
+    "alcoholContent": {
+      "navLabel": "アルコール量",
+      "navDescription": "与えられた容量と度数による純アルコール量を計算",
+      "title": "純アルコール量の計算",
+      "description": "与えられた容量と度数による純アルコール量を計算",
+      "volume": "容量",
+      "abv": "度数",
+      "pureAlcohol": "純アルコール量"
+    },
+    "freezingPoint": {
+      "navLabel": "氷点計算",
+      "navDescription": "アルコール度数による予想氷点を計算",
+      "title": "氷点計算",
+      "description": "アルコール度数による予想氷点を計算",
+      "abv": "アルコール度数",
+      "expectedFreezing": "予想氷点",
+      "note": "実際の氷点は他の成分によって変わることがあります",
+      "errorTooHigh": "アルコール度数は100%未満でなければなりません"
+    },
+    "proof": {
+      "navLabel": "Proof変換",
+      "navDescription": "ABV ↔ Proof の双方向変換",
+      "title": "Proof変換",
+      "description": "ABV ↔ Proof の双方向変換（どちらか一方だけ入力してください）",
+      "abv": "ABV",
+      "proof": "Proof",
+      "usProof": "米国基準Proof",
+      "ukProof": "英国基準Proof（参考用）",
+      "abvUS": "ABV（米国基準）",
+      "abvUK": "ABV（英国基準）（参考用）",
+      "errorBoth": "ABVまたはProofのどちらか一方だけ入力してください",
+      "errorNone": "ABVまたはProofのどちらかを入力してください",
+      "errorABVHigh": "ABVは100%以下でなければなりません",
+      "errorProofHigh": "Proofは200以下でなければなりません"
+    },
+    "bac": {
+      "navLabel": "血中アルコール濃度",
+      "navDescription": "飲酒後の血中アルコール濃度を計算します",
+      "title": "BAC計算機",
+      "description": "体重・性別・飲酒量から血中アルコール濃度を推定します",
+      "weight": "体重",
+      "gender": "性別",
+      "male": "男性",
+      "female": "女性",
+      "numberOfDrinks": "飲酒量（標準ドリンク）",
+      "timeSinceFirst": "経過時間",
+      "bacLevel": "血中アルコール濃度",
+      "soberTime": "分解予想時間",
+      "hours": "時間",
+      "bacWarningHigh": "運転は絶対禁止！非常に危険なレベルです。",
+      "bacWarningMedium": "運転は控えてください。判断力が低下する可能性があります。",
+      "bacWarningLow": "軽い飲酒状態です。",
+      "bacSafe": "正常範囲です。",
+      "errorWeight": "体重を入力してください",
+      "errorDrinks": "飲酒量を入力してください"
+    },
+    "unitConverter": {
+      "navLabel": "単位変換",
+      "navDescription": "容量・温度・韓国の単位を変換します",
+      "title": "単位変換機",
+      "description": "さまざまな単位を相互に変換します",
+      "inputValue": "変換する値",
+      "volumeMode": "容量",
+      "tempMode": "温度",
+      "koreanMode": "韓国の単位",
+      "ml": "ミリリットル (ml)",
+      "oz": "オンス (oz)",
+      "cups": "カップ",
+      "bottles": "ボトル (750ml)",
+      "celsius": "摂氏 (°C)",
+      "fahrenheit": "華氏 (°F)",
+      "sojuGlass": "焼酎グラス (50ml)",
+      "beerGlass": "ビールグラス (355ml)",
+      "doe": "トェ／升 (1800ml)",
+      "sojuBottle": "焼酎ボトル (360ml)",
+      "result": "変換結果"
+    }
+  },
+  "presets": {
+    "title": "プリセット選択",
+    "selectPreset": "人気の酒類を選択",
+    "clear": "リセット",
+    "drinks": {
+      "soju": "焼酎（ソジュ）",
+      "beer": "ビール",
+      "makgeolli": "マッコリ",
+      "redWine": "赤ワイン",
+      "whiteWine": "白ワイン",
+      "sparklingWine": "スパークリングワイン",
+      "whiskey": "ウイスキー",
+      "vodka": "ウォッカ",
+      "rum": "ラム",
+      "gin": "ジン",
+      "tequila": "テキーラ",
+      "sake": "日本酒",
+      "beerCan": "缶ビール",
+      "somaek": "ソメク（焼酎ビール）",
+      "draftBeer": "生ビール",
+      "highball": "ハイボール"
+    }
+  },
+  "share": {
+    "button": "結果を共有",
+    "resultTitle": "計算結果",
+    "calculatedWith": "Alcohol Calculatorで計算",
+    "appName": "Alcohol Calculator"
+  },
+  "history": {
+    "title": "計算履歴",
+    "empty": "まだ計算履歴がありません",
+    "favorite": "お気に入りに追加",
+    "unfavorite": "お気に入りを解除",
+    "rerun": "もう一度計算",
+    "delete": "削除",
+    "clearAll": "すべて削除",
+    "confirmClear": "すべての履歴を削除しますか？",
+    "confirmDelete": "この履歴を削除しますか？",
+    "ago": "前",
+    "justNow": "たった今"
+  },
+  "encyclopedia": {
+    "title": "お酒の事典",
+    "search": "検索",
+    "searchPlaceholder": "お酒の名前で検索...",
+    "abvRange": "度数の範囲",
+    "calories": "カロリー（100mlあたり）",
+    "origin": "原産地",
+    "servingTemp": "適温",
+    "pairing": "相性の良い料理",
+    "description": "説明",
+    "items": {
+      "soju": {
+        "name": "焼酎（ソジュ）",
+        "origin": "韓国",
+        "servingTemp": "冷やして (4-8°C)",
+        "pairing": "サムギョプサル、チキン、キムチチゲ",
+        "description": "韓国を代表する蒸留酒で、米やその他の穀物から造られます。すっきりとまろやかな味わいが特徴です。"
+      },
+      "beer": {
+        "name": "ビール",
+        "origin": "ドイツ／ベルギー",
+        "servingTemp": "冷やして (3-7°C)",
+        "pairing": "チキン、ピザ、ソーセージ",
+        "description": "大麦を発酵させて造る、世界で最も広く飲まれているアルコール飲料です。"
+      },
+      "redWine": {
+        "name": "赤ワイン",
+        "origin": "フランス／イタリア",
+        "servingTemp": "常温 (16-18°C)",
+        "pairing": "ステーキ、チーズ、パスタ",
+        "description": "黒ブドウを皮ごと発酵させて造るワインで、豊かなタンニンの味わいが特徴です。"
+      },
+      "whiteWine": {
+        "name": "白ワイン",
+        "origin": "フランス／ドイツ",
+        "servingTemp": "冷やして (8-12°C)",
+        "pairing": "シーフード、サラダ、軽めのチーズ",
+        "description": "白ブドウを発酵させて造るワインで、爽やかで軽やかな味わいが特徴です。"
+      },
+      "sparklingWine": {
+        "name": "スパークリングワイン",
+        "origin": "フランス",
+        "servingTemp": "よく冷やして (6-8°C)",
+        "pairing": "デザート、フルーツ、カナッペ",
+        "description": "炭酸を含んだワインで、お祝いの場でよく楽しまれます。"
+      },
+      "whiskey": {
+        "name": "ウイスキー",
+        "origin": "スコットランド／アイルランド",
+        "servingTemp": "常温またはオンザロック (15-20°C)",
+        "pairing": "ダークチョコレート、チーズ、スモークサーモン",
+        "description": "穀物を発酵・蒸留した後、オーク樽で熟成させた蒸留酒です。"
+      },
+      "vodka": {
+        "name": "ウォッカ",
+        "origin": "ロシア／ポーランド",
+        "servingTemp": "よく冷やして (-18〜0°C)",
+        "pairing": "キャビア、ピクルス、おつまみ類",
+        "description": "ジャガイモや穀物から造る無色透明の蒸留酒で、カクテルの基本材料です。"
+      },
+      "rum": {
+        "name": "ラム",
+        "origin": "カリブ海",
+        "servingTemp": "常温またはオンザロック",
+        "pairing": "トロピカルフルーツ、デザート、シーフード",
+        "description": "サトウキビを発酵・蒸留して造る蒸留酒です。"
+      },
+      "gin": {
+        "name": "ジン",
+        "origin": "オランダ／イギリス",
+        "servingTemp": "冷やして",
+        "pairing": "トニックウォーター、オリーブ、シーフード",
+        "description": "ジュニパーベリーで香りをつけた蒸留酒で、ジントニックの基本です。"
+      },
+      "tequila": {
+        "name": "テキーラ",
+        "origin": "メキシコ",
+        "servingTemp": "常温",
+        "pairing": "ライム、塩、メキシコ料理",
+        "description": "ブルーアガベから造るメキシコを代表する蒸留酒です。"
+      },
+      "sake": {
+        "name": "日本酒",
+        "origin": "日本",
+        "servingTemp": "冷やしても温めても (5-55°C)",
+        "pairing": "寿司、刺身、和食",
+        "description": "米を発酵させて造る日本の伝統的な醸造酒です。"
+      },
+      "makgeolli": {
+        "name": "マッコリ",
+        "origin": "韓国",
+        "servingTemp": "冷やして (4-8°C)",
+        "pairing": "チヂミ、キムチチヂミ、豆腐キムチ",
+        "description": "米から造る韓国の伝統的な濁り酒で、乳酸菌が豊富です。"
+      },
+      "brandy": {
+        "name": "ブランデー",
+        "origin": "フランス",
+        "servingTemp": "常温 (18-20°C)",
+        "pairing": "葉巻、ダークチョコレート、チーズ",
+        "description": "ワインやフルーツ酒を蒸留して造る高級な蒸留酒です。"
+      },
+      "liqueur": {
+        "name": "リキュール",
+        "origin": "ヨーロッパ全域",
+        "servingTemp": "冷やしても常温でも",
+        "pairing": "デザート、アイスクリーム、ケーキ",
+        "description": "砂糖やフルーツ、ハーブなどで香りを加えた甘い蒸留酒です。"
+      },
+      "champagne": {
+        "name": "シャンパン",
+        "origin": "フランス・シャンパーニュ地方",
+        "servingTemp": "よく冷やして (6-8°C)",
+        "pairing": "キャビア、牡蠣、デザート",
+        "description": "フランスのシャンパーニュ地方でのみ造られるプレミアムなスパークリングワインです。"
+      },
+      "cheongju": {
+        "name": "清酒（チョンジュ）",
+        "origin": "韓国",
+        "servingTemp": "冷やしても温めても 10〜45°C",
+        "pairing": "チヂミ、焼き魚、ナムル",
+        "description": "澄んだ米で仕込む韓国の伝統的な薬酒で、祭祀や法事に用いられます。"
+      },
+      "bokbunjaWine": {
+        "name": "ポクプンジャ酒（覆盆子酒）",
+        "origin": "韓国",
+        "servingTemp": "冷やして 8〜12°C",
+        "pairing": "フルーツ、チーズ、デザート",
+        "description": "韓国産のポクプンジャ（クロイチゴ）で仕込む甘い果実酒です。"
+      },
+      "baijiu": {
+        "name": "白酒（バイジュウ）",
+        "origin": "中国",
+        "servingTemp": "常温または少し温めて",
+        "pairing": "脂っこい中華、ピーナッツ",
+        "description": "コーリャンや穀物から蒸留した高度数の中国の白酒で、香りが強烈です。"
+      },
+      "absinthe": {
+        "name": "アブサン",
+        "origin": "スイス／フランス",
+        "servingTemp": "冷水で希釈 4〜8°C",
+        "pairing": "希釈して単独で",
+        "description": "ニガヨモギやハーブから造る高度数のリキュールで、必ず希釈して飲みます。"
+      },
+      "cognac": {
+        "name": "コニャック",
+        "origin": "フランス・コニャック地方",
+        "servingTemp": "常温 16〜18°C",
+        "pairing": "チョコレート、葉巻、デザート",
+        "description": "フランスのコニャック地方で認定された高級なブドウのブランデーです。"
+      },
+      "mezcal": {
+        "name": "メスカル",
+        "origin": "メキシコ",
+        "servingTemp": "常温、ストレート",
+        "pairing": "オレンジ、塩、タコス",
+        "description": "アガベを焼いて燻製したメキシコの蒸留酒で、スモーキーな香りが特徴です。"
+      },
+      "portWine": {
+        "name": "ポートワイン",
+        "origin": "ポルトガル",
+        "servingTemp": "やや冷やして 12〜16°C",
+        "pairing": "ブルーチーズ、チョコレート",
+        "description": "発酵中にブランデーを加えた甘いポルトガルの酒精強化ワインです。"
+      },
+      "vermouth": {
+        "name": "ベルモット",
+        "origin": "イタリア／フランス",
+        "servingTemp": "冷やして 6〜10°C",
+        "pairing": "オリーブ、カナッペ、カクテルの材料",
+        "description": "ハーブで風味を加えた香味付き酒精強化ワインで、カクテルによく使われます。"
+      },
+      "fruitSoju": {
+        "name": "フルーツ焼酎",
+        "origin": "韓国",
+        "servingTemp": "冷やして 4〜8°C",
+        "pairing": "おつまみ全般、フルーツ",
+        "description": "グレープフルーツや桃などの果実の香りを加えた低度数の焼酎で、初心者に人気です。"
+      },
+      "stout": {
+        "name": "スタウトビール",
+        "origin": "アイルランド",
+        "servingTemp": "やや涼しく 7〜10°C",
+        "pairing": "牡蠣、ステーキ、チョコレート",
+        "description": "焙煎した大麦から造る濃厚でクリーミーな黒ビールです。"
+      }
+    }
+  },
+  "recipes": {
+    "title": "カクテルレシピ",
+    "search": "検索",
+    "searchPlaceholder": "カクテルを検索...",
+    "ingredientsTitle": "材料",
+    "instructions": "作り方",
+    "difficulty": "難易度",
+    "easy": "やさしい",
+    "medium": "普通",
+    "hard": "難しい",
+    "totalVolume": "総容量",
+    "totalAbv": "総度数",
+    "totalCalories": "総カロリー",
+    "openCalculator": "計算機で開く",
+    "filter": {
+      "all": "すべて",
+      "korean": "韓国",
+      "global": "グローバル"
+    },
+    "ingredients": {
+      "soju": "焼酎",
+      "beer": "ビール",
+      "bokbunjaWine": "ポクプンジャ酒",
+      "sparklingWater": "炭酸水",
+      "lemonJuice": "レモン汁",
+      "maesilju": "梅酒",
+      "soda": "炭酸水",
+      "lemonSlice": "レモンスライス",
+      "yuzaSyrup": "ゆず茶（シロップ）",
+      "tequila": "テキーラ",
+      "tripleSec": "トリプルセック",
+      "limeJuice": "ライム汁",
+      "whiteRum": "ホワイトラム",
+      "sugar": "砂糖",
+      "mintLeaves": "ミントの葉",
+      "bourbonWhiskey": "バーボンウイスキー",
+      "angosturaBitters": "アンゴスチュラビターズ",
+      "sugarCube": "角砂糖",
+      "water": "水",
+      "gin": "ジン",
+      "dryVermouth": "ドライベルモット",
+      "campari": "カンパリ",
+      "sweetVermouth": "スイートベルモット",
+      "simpleSyrup": "シュガーシロップ",
+      "ryeWhiskey": "ライウイスキー",
+      "citrusVodka": "シトラスウォッカ",
+      "cranberryJuice": "クランベリージュース",
+      "tonicWater": "トニックウォーター",
+      "limeWedge": "ライムのくし切り",
+      "coconutCream": "ココナッツクリーム",
+      "pineappleJuice": "パイナップルジュース",
+      "kahlua": "カルーア",
+      "milk": "牛乳",
+      "vodka": "ウォッカ",
+      "cola": "コーラ",
+      "eggWhite": "卵白",
+      "tomatoJuice": "トマトジュース",
+      "worcestershireSauce": "ウスターソース",
+      "tabasco": "タバスコ",
+      "aperol": "アペロール",
+      "prosecco": "プロセッコ",
+      "makgeolli": "マッコリ",
+      "cider": "サイダー",
+      "hongcho": "ホンチョ（果実酢）",
+      "cheongju": "清酒",
+      "honey": "はちみつ",
+      "greenGrape": "マスカット",
+      "scotchWhisky": "スコッチウイスキー",
+      "drambuie": "ドランブイ",
+      "coffeeLiqueur": "コーヒーリキュール",
+      "espresso": "エスプレッソ",
+      "vodkaPlain": "ウォッカ",
+      "gingerBeer": "ジンジャービア",
+      "grenadine": "グレナデンシロップ",
+      "orangeJuice": "オレンジジュース",
+      "peachLiqueur": "ピーチリキュール",
+      "amaretto": "アマレット",
+      "cachaca": "カシャッサ",
+      "brownSugar": "黒砂糖",
+      "appleJuice": "リンゴジュース",
+      "cinnamon": "シナモン",
+      "redWineGeneric": "赤ワイン"
+    },
+    "items": {
+      "somaek": {
+        "name": "ソメク",
+        "ing1": "焼酎",
+        "ing2": "ビール",
+        "instructions": "ビールグラスにビールを2/3ほど注ぎ、焼酎を1/3の割合で入れて軽く混ぜます。"
+      },
+      "poktanju": {
+        "name": "爆弾酒",
+        "ing1": "焼酎",
+        "ing2": "ビール",
+        "instructions": "ビールグラスにビールを満たし、焼酎グラスをビールグラスに落として一気に飲みます。"
+      },
+      "bokbunja": {
+        "name": "ポクプンジャカクテル",
+        "ing1": "ポクプンジャ酒",
+        "ing2": "炭酸水",
+        "ing3": "ライム",
+        "instructions": "ポクプンジャ酒に炭酸水を加え、ライムを添えます。"
+      },
+      "maesil": {
+        "name": "梅酒ハイボール",
+        "ing1": "梅酒",
+        "ing2": "炭酸水",
+        "ing3": "氷",
+        "instructions": "グラスに氷を満たし、梅酒と炭酸水を1:2の割合で混ぜます。"
+      },
+      "yuja": {
+        "name": "ゆずサワー",
+        "ing1": "ゆず茶（シロップ）",
+        "ing2": "焼酎またはウォッカ",
+        "ing3": "レモン汁",
+        "ing4": "炭酸水",
+        "instructions": "ゆず茶、焼酎、レモン汁を混ぜ、炭酸水で満たします。"
+      },
+      "margarita": {
+        "name": "マルガリータ",
+        "ing1": "テキーラ",
+        "ing2": "トリプルセック",
+        "ing3": "ライム汁",
+        "instructions": "テキーラ、トリプルセック、ライム汁をシェイカーに入れ、氷と一緒に振ってグラスに注ぎます。"
+      },
+      "mojito": {
+        "name": "モヒート",
+        "ing1": "ホワイトラム",
+        "ing2": "ライム汁",
+        "ing3": "シュガーシロップ",
+        "ing4": "炭酸水",
+        "ing5": "ミントの葉",
+        "instructions": "ミントの葉をマドラーで潰し、ラム、ライム汁、シロップを入れて炭酸水で満たします。"
+      },
+      "oldFashioned": {
+        "name": "オールドファッションド",
+        "ing1": "バーボンウイスキー",
+        "ing2": "砂糖",
+        "ing3": "アンゴスチュラビターズ",
+        "ing4": "オレンジの皮",
+        "instructions": "砂糖にビターズを染み込ませ、バーボンを加えてゆっくりと混ぜます。オレンジの皮で飾ります。"
+      },
+      "martini": {
+        "name": "マティーニ",
+        "ing1": "ジン",
+        "ing2": "ドライベルモット",
+        "ing3": "オリーブ",
+        "instructions": "ジンとベルモットをミキシンググラスで混ぜて冷やし、カクテルグラスに注ぎます。"
+      },
+      "negroni": {
+        "name": "ネグローニ",
+        "ing1": "ジン",
+        "ing2": "カンパリ",
+        "ing3": "スイートベルモット",
+        "instructions": "ジン、カンパリ、スイートベルモットを同じ割合で入れて混ぜます。"
+      },
+      "daiquiri": {
+        "name": "ダイキリ",
+        "ing1": "ホワイトラム",
+        "ing2": "ライム汁",
+        "ing3": "シュガーシロップ",
+        "instructions": "すべての材料をシェイカーに入れ、氷と一緒に振ってカクテルグラスに注ぎます。"
+      },
+      "manhattan": {
+        "name": "マンハッタン",
+        "ing1": "ライウイスキー",
+        "ing2": "スイートベルモット",
+        "ing3": "アンゴスチュラビターズ",
+        "instructions": "ウイスキー、ベルモット、ビターズを混ぜてカクテルグラスに注ぎます。"
+      },
+      "cosmopolitan": {
+        "name": "コスモポリタン",
+        "ing1": "ウォッカ",
+        "ing2": "トリプルセック",
+        "ing3": "クランベリージュース",
+        "ing4": "ライム汁",
+        "instructions": "すべての材料をシェイカーに入れ、氷と一緒に振ってマティーニグラスに注ぎます。"
+      },
+      "ginTonic": {
+        "name": "ジントニック",
+        "ing1": "ジン",
+        "ing2": "トニックウォーター",
+        "ing3": "ライム",
+        "instructions": "グラスに氷とジンを入れ、トニックウォーターで満たしてライムを添えます。"
+      },
+      "pinaColada": {
+        "name": "ピニャコラーダ",
+        "ing1": "ホワイトラム",
+        "ing2": "ココナッツクリーム",
+        "ing3": "パイナップルジュース",
+        "instructions": "すべての材料をブレンダーに入れて混ぜ、グラスに注ぎます。"
+      },
+      "kahluaMilk": {
+        "name": "カルーアミルク",
+        "ing1": "カルーア",
+        "ing2": "牛乳",
+        "instructions": "グラスに氷を入れ、カルーアと牛乳を1:3の割合で入れて混ぜます。"
+      },
+      "longIsland": {
+        "name": "ロングアイランドアイスティー",
+        "ing1": "ウォッカ",
+        "ing2": "ラム",
+        "ing3": "ジン",
+        "ing4": "テキーラ",
+        "ing5": "トリプルセック",
+        "ing6": "レモン汁",
+        "ing7": "コーラ",
+        "instructions": "すべての蒸留酒とレモン汁を入れ、コーラで満たします。"
+      },
+      "whiskeySour": {
+        "name": "ウイスキーサワー",
+        "ing1": "バーボンウイスキー",
+        "ing2": "レモン汁",
+        "ing3": "シュガーシロップ",
+        "instructions": "すべての材料をシェイカーに入れ、氷と一緒に振って注ぎます。"
+      },
+      "bloodyMary": {
+        "name": "ブラッディメアリー",
+        "ing1": "ウォッカ",
+        "ing2": "トマトジュース",
+        "ing3": "レモン汁",
+        "ing4": "タバスコ",
+        "ing5": "ウスターソース",
+        "instructions": "ウォッカとトマトジュースを混ぜ、レモン汁、タバスコ、ウスターソースで味を調えます。"
+      },
+      "aperolSpritz": {
+        "name": "アペロールスプリッツ",
+        "ing1": "アペロール",
+        "ing2": "プロセッコ",
+        "ing3": "炭酸水",
+        "instructions": "グラスに氷を入れ、アペロール、プロセッコ、炭酸水を3:3:1の割合で入れます。"
+      },
+      "makgeolliCider": {
+        "name": "マッコリサイダー",
+        "instructions": "冷たいマッコリを軽く混ぜた後、サイダーを注いで甘く楽しみます。"
+      },
+      "hongchoHighball": {
+        "name": "ホンチョハイボール",
+        "instructions": "氷を満たしたグラスに焼酎とホンチョを入れ、ソーダで満たして軽く混ぜます。"
+      },
+      "cheongjuHoney": {
+        "name": "はちみつ清酒",
+        "instructions": "はちみつを温かい湯で溶かした後、清酒と混ぜて温かくして飲みます。"
+      },
+      "greenGrapeSoju": {
+        "name": "マスカット焼酎",
+        "instructions": "マスカットを軽く潰してグラスに入れ、焼酎とサイダーを注いで楽しみます。"
+      },
+      "maesilMakgeolli": {
+        "name": "梅マッコリ",
+        "instructions": "マッコリに梅酒を混ぜて、爽やかな甘みを加えます。"
+      },
+      "espressoMartini": {
+        "name": "エスプレッソマティーニ",
+        "instructions": "ウォッカ、コーヒーリキュール、エスプレッソを氷と強くシェイクしてグラスに注ぎます。"
+      },
+      "moscowMule": {
+        "name": "モスコミュール",
+        "instructions": "氷を満たしたグラスにウォッカとライムを入れ、ジンジャービアで満たします。"
+      },
+      "tequilaSunrise": {
+        "name": "テキーラサンライズ",
+        "instructions": "テキーラとオレンジジュースを混ぜ、グレナデンをゆっくり注いでグラデーションを作ります。"
+      },
+      "rustyNail": {
+        "name": "ラスティネイル",
+        "instructions": "氷の上にスコッチとドランブイを注いで軽く混ぜます。"
+      },
+      "caipirinha": {
+        "name": "カイピリーニャ",
+        "instructions": "ライムと黒砂糖をグラスで潰し、カシャッサと氷を満たします。"
+      },
+      "amarettoSour": {
+        "name": "アマレットサワー",
+        "instructions": "アマレット、レモン汁、シロップをシェイクして氷入りのグラスに注ぎます。"
+      },
+      "seaBreeze": {
+        "name": "シーブリーズ",
+        "instructions": "氷入りのグラスにウォッカとクランベリージュースを入れ、グレナデンで仕上げます。"
+      },
+      "fuzzyNavel": {
+        "name": "ファジーネーブル",
+        "instructions": "ピーチリキュールとオレンジジュースを氷入りのグラスで混ぜて楽しみます。"
+      },
+      "kalimotxo": {
+        "name": "カリモチョ",
+        "instructions": "赤ワインとコーラを1:1で氷入りのグラスに混ぜます。"
+      },
+      "hotToddy": {
+        "name": "ホットtoddy",
+        "instructions": "温かい湯にはちみつ・レモン・ウイスキーを混ぜ、シナモンをのせて温かくして飲みます。"
+      }
+    }
+  },
+  "tracker": {
+    "title": "飲酒記録",
+    "addDrink": "飲酒を追加",
+    "todayLog": "今日の記録",
+    "empty": "今日の記録がありません",
+    "weeklyStats": "週間統計",
+    "monthlyStats": "月間統計",
+    "totalDrinks": "総飲酒回数",
+    "totalCalories": "総カロリー",
+    "averageDrinks": "1日平均の飲酒量",
+    "selectDate": "日付を選択",
+    "delete": "削除",
+    "manual": "手動入力",
+    "preset": "プリセット選択",
+    "volume": "容量",
+    "abv": "度数",
+    "drinkName": "飲み物の名前",
+    "drinks": "杯",
+    "kcal": "kcal",
+    "emoji": "絵文字",
+    "price": "金額（任意）",
+    "spend": "支出"
+  },
+  "session": {
+    "title": "リアルタイム飲酒セッション",
+    "subtitle": "今飲んでいるなら、セッションを始めましょう",
+    "description": "杯を追加するたびに、血中アルコール濃度の推定値と分解時間がリアルタイムで更新されます。セッションを終了すると、記録がトラッカーに自動保存されます。",
+    "weight": "体重",
+    "gender": "性別",
+    "male": "男性",
+    "female": "女性",
+    "start": "セッション開始",
+    "activeBadge": "進行中",
+    "bacNow": "現在の血中アルコール濃度（推定）",
+    "standardDrinks": "標準ドリンク",
+    "soberAt": "分解予想時刻",
+    "addDrink": "杯を追加",
+    "logTitle": "飲んだ記録（{{count}}杯）",
+    "undo": "元に戻す",
+    "empty": "まだ追加した杯がありません。上から飲んだ杯をタップしてください。",
+    "endSave": "セッション終了 & トラッカーに保存",
+    "discard": "記録せずに終了",
+    "discardTitle": "セッションを削除しますか？",
+    "discardMessage": "このセッションの記録は保存されません。",
+    "levelSafe": "安全範囲",
+    "levelCaution": "注意 — 運転禁止",
+    "levelDanger": "危険 — ペースを落としてください",
+    "levelHigh": "非常に危険 — 飲酒の中止を推奨",
+    "disclaimer": "この数値はWidmark公式に基づく参考用の推定値であり、実際の血中アルコール濃度とは異なる場合があります。飲酒後は数値に関わらず運転しないでください。",
+    "homeCta": "今飲んでいます",
+    "homeCtaDescription": "杯を記録しながらリアルタイムのBAC推定値を確認",
+    "homeCtaActive": "セッション進行中 — 続けて記録する",
+    "dangerBannerTitle": "危険なレベルです",
+    "dangerBannerBody": "血中アルコール濃度が危険な範囲に入りました。水を飲んでペースを落としてください。絶対に運転しないでください。"
+  },
+  "quiz": {
+    "title": "お酒クイズ",
+    "subtitle": "あなたのお酒の知識をテストしてみましょう！",
+    "description": "ランダムな10問であなたの知識をテストしてみましょう",
+    "start": "始める",
+    "next": "次へ",
+    "nextQuestion": "次の問題",
+    "seeResults": "結果を見る",
+    "finish": "結果を見る",
+    "score": "スコア",
+    "yourScore": "あなたのスコア",
+    "correct": "正解！",
+    "incorrect": "不正解！",
+    "explanation": "解説",
+    "shareScore": "スコアを共有",
+    "tryAgain": "もう一度挑戦",
+    "resultExcellent": "素晴らしい！あなたは専門家です！",
+    "resultGood": "よくできました！もう少しです！",
+    "resultAverage": "悪くないですよ！学び続けましょう！",
+    "resultKeepTrying": "あきらめないで！もう一度挑戦しましょう！",
+    "questionOf": "問題",
+    "questions": {
+      "q1": {
+        "question": "焼酎の一般的な度数は？",
+        "a": "8-12%",
+        "b": "16-20%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "韓国の焼酎の一般的な度数は16-20%の範囲です。"
+      },
+      "q2": {
+        "question": "一般的なビールの度数の範囲は？",
+        "a": "1-2%",
+        "b": "4-6%",
+        "c": "10-14%",
+        "d": "18-22%",
+        "correct": "b",
+        "explanation": "ほとんどの一般的なビールは4-6%の範囲の度数を持ちます。"
+      },
+      "q3": {
+        "question": "赤ワインの一般的な度数は？",
+        "a": "5-8%",
+        "b": "12-15%",
+        "c": "20-25%",
+        "d": "30-35%",
+        "correct": "b",
+        "explanation": "赤ワインは通常12-15%の間の度数を持ちます。"
+      },
+      "q4": {
+        "question": "ウイスキーの一般的な度数は？",
+        "a": "15-20%",
+        "b": "25-30%",
+        "c": "40-46%",
+        "d": "60-70%",
+        "correct": "c",
+        "explanation": "ほとんどのウイスキーは40-46%の度数で瓶詰めされます。"
+      },
+      "q5": {
+        "question": "ウォッカの最低度数は一般的にどのくらいですか？",
+        "a": "20%",
+        "b": "30%",
+        "c": "37.5%",
+        "d": "50%",
+        "correct": "c",
+        "explanation": "EU基準でウォッカの最低度数は37.5%で、アメリカでは40%です。"
+      },
+      "q6": {
+        "question": "日本酒の一般的な度数は？",
+        "a": "5-8%",
+        "b": "15-17%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "日本酒は通常15-17%程度の度数を持ちます。"
+      },
+      "q7": {
+        "question": "世界で最も度数の高い酒類は？",
+        "a": "アブサン (72%)",
+        "b": "エバークリア (95%)",
+        "c": "スピリタス (96%)",
+        "d": "バカルディ151 (75.5%)",
+        "correct": "c",
+        "explanation": "ポーランド産のスピリタスは96%で、市販されている酒類の中で最も度数が高いです。"
+      },
+      "q8": {
+        "question": "「標準ドリンク」に相当する純アルコール量は？",
+        "a": "5g",
+        "b": "8g",
+        "c": "14g",
+        "d": "20g",
+        "correct": "c",
+        "explanation": "米国の標準ドリンク基準で純アルコール14gであり、これはビール355ml（5%）または焼酎約1.5杯に相当します。"
+      },
+      "q9": {
+        "question": "ウイスキーの発祥地はどこですか？",
+        "a": "アメリカ",
+        "b": "スコットランド／アイルランド",
+        "c": "フランス",
+        "d": "日本",
+        "correct": "b",
+        "explanation": "ウイスキーはスコットランドとアイルランドで初めて造られたと言われています。"
+      },
+      "q10": {
+        "question": "焼酎（ソジュ）はどの国で生まれましたか？",
+        "a": "日本",
+        "b": "中国",
+        "c": "韓国",
+        "d": "タイ",
+        "correct": "c",
+        "explanation": "ソジュは韓国の伝統的な蒸留酒で、高麗時代に元を通じて蒸留技術が伝わったと言われています。"
+      },
+      "q11": {
+        "question": "テキーラはどの国の酒ですか？",
+        "a": "スペイン",
+        "b": "メキシコ",
+        "c": "ブラジル",
+        "d": "アルゼンチン",
+        "correct": "b",
+        "explanation": "テキーラはメキシコを代表する蒸留酒で、ブルーアガベから造られます。"
+      },
+      "q12": {
+        "question": "ラムの主な生産地は？",
+        "a": "北ヨーロッパ",
+        "b": "カリブ海地域",
+        "c": "東南アジア",
+        "d": "アフリカ",
+        "correct": "b",
+        "explanation": "ラムはサトウキビを原料とし、カリブ海地域が主な生産地です。"
+      },
+      "q13": {
+        "question": "シャンパンはどの地域でのみ生産できますか？",
+        "a": "ボルドー",
+        "b": "ブルゴーニュ",
+        "c": "シャンパーニュ",
+        "d": "プロヴァンス",
+        "correct": "c",
+        "explanation": "シャンパンという名前は、フランスのシャンパーニュ地方で生産されたスパークリングワインにのみ使用できます。"
+      },
+      "q14": {
+        "question": "日本酒の原産地は？",
+        "a": "中国",
+        "b": "韓国",
+        "c": "日本",
+        "d": "ベトナム",
+        "correct": "c",
+        "explanation": "日本酒は日本の伝統的な醸造酒で、米を発酵させて造ります。"
+      },
+      "q15": {
+        "question": "日本酒を造る主な原料は？",
+        "a": "小麦",
+        "b": "米",
+        "c": "大麦",
+        "d": "トウモロコシ",
+        "correct": "b",
+        "explanation": "日本酒は米を主原料とし、麹（こうじ）で発酵させて造ります。"
+      },
+      "q16": {
+        "question": "バーボンウイスキーの主原料は最低何%のトウモロコシでなければなりませんか？",
+        "a": "30%",
+        "b": "41%",
+        "c": "51%",
+        "d": "75%",
+        "correct": "c",
+        "explanation": "アメリカの法律上、バーボンは最低51%のトウモロコシを穀物原料として使用しなければなりません。"
+      },
+      "q17": {
+        "question": "ビールに苦味を与える材料は？",
+        "a": "麦芽",
+        "b": "酵母",
+        "c": "ホップ",
+        "d": "水",
+        "correct": "c",
+        "explanation": "ホップはビールに苦味と香りを与える重要な材料です。"
+      },
+      "q18": {
+        "question": "ワインの発酵に不可欠な微生物は？",
+        "a": "乳酸菌",
+        "b": "酵母",
+        "c": "カビ",
+        "d": "細菌",
+        "correct": "b",
+        "explanation": "ワインは酵母がブドウの糖分をアルコールに変換する発酵過程を通じて造られます。"
+      },
+      "q19": {
+        "question": "マッコリはどのような種類の酒ですか？",
+        "a": "蒸留酒",
+        "b": "醸造酒（濁り酒）",
+        "c": "混成酒",
+        "d": "果実酒",
+        "correct": "b",
+        "explanation": "マッコリは米を発酵させて造る韓国の伝統的な濁り酒（醸造酒）です。"
+      },
+      "q20": {
+        "question": "ProofはABVとどのような関係ですか？",
+        "a": "Proof = ABV",
+        "b": "Proof = ABV × 2",
+        "c": "Proof = ABV ÷ 2",
+        "d": "Proof = ABV + 10",
+        "correct": "b",
+        "explanation": "米国基準でProofはABVの2倍です。例：40% ABV = 80 Proof"
+      },
+      "q21": {
+        "question": "ABVは何の略ですか？",
+        "a": "Alcohol By Value",
+        "b": "Alcohol By Volume",
+        "c": "Alcohol Beverage Verification",
+        "d": "Alcohol Brewing Volume",
+        "correct": "b",
+        "explanation": "ABVはAlcohol By Volumeの略で、全体の容量に対するアルコールの割合を表します。"
+      },
+      "q22": {
+        "question": "ワインにおける「ヴィンテージ（Vintage）」とは？",
+        "a": "ワインの製造方法",
+        "b": "ブドウの収穫年",
+        "c": "ワインの等級",
+        "d": "ワインの熟成期間",
+        "correct": "b",
+        "explanation": "ヴィンテージはブドウが収穫された年を意味し、ワインのラベルに表示されます。"
+      },
+      "q23": {
+        "question": "「カスクストレングス（Cask Strength）」とはどういう意味ですか？",
+        "a": "オーク樽の強度",
+        "b": "水を加えていない原液そのままの度数",
+        "c": "最も高い等級",
+        "d": "最低熟成期間",
+        "correct": "b",
+        "explanation": "カスクストレングスは水で希釈せず、樽からそのまま瓶詰めした原液の度数を意味します。"
+      },
+      "q24": {
+        "question": "「爆弾酒（ポクタンジュ）」はどうやって作りますか？",
+        "a": "焼酎にビールを混ぜる",
+        "b": "焼酎グラスをビールグラスに落とす",
+        "c": "ビールにウイスキーを入れる",
+        "d": "焼酎にサイダーを混ぜる",
+        "correct": "b",
+        "explanation": "爆弾酒はビールグラスに焼酎グラスを丸ごと落として作る、韓国独特の飲酒文化です。"
+      },
+      "q25": {
+        "question": "韓国の飲酒マナーでは、目上の人にお酒を注ぐときどうすべきですか？",
+        "a": "片手で注ぐ",
+        "b": "両手で注ぐ",
+        "c": "座って注ぐ",
+        "d": "顔を背けて注ぐ",
+        "correct": "b",
+        "explanation": "韓国では、目上の人にお酒を注ぐとき、両手で持って注ぐのが礼儀です。"
+      },
+      "q26": {
+        "question": "「ソメク」とは何ですか？",
+        "a": "焼酎とマッコリの混合",
+        "b": "焼酎とビールの混合",
+        "c": "焼酎と梅酒の混合",
+        "d": "焼酎とサイダーの混合",
+        "correct": "b",
+        "explanation": "ソメクは「焼酎＋ビール」の略で、焼酎とビールを適切な割合で混ぜた飲み物です。"
+      },
+      "q27": {
+        "question": "マッコリに豊富に含まれる成分は？",
+        "a": "カフェイン",
+        "b": "タウリン",
+        "c": "乳酸菌",
+        "d": "ビタミンC",
+        "correct": "c",
+        "explanation": "マッコリには発酵過程で生成された乳酸菌が豊富に含まれています。"
+      },
+      "q28": {
+        "question": "体内でアルコールを分解するのに標準ドリンク1杯あたり約どのくらいかかりますか？",
+        "a": "約30分",
+        "b": "約1時間",
+        "c": "約2時間",
+        "d": "約4時間",
+        "correct": "b",
+        "explanation": "通常、健康な成人は標準ドリンク1杯のアルコールを分解するのに約1時間かかります。"
+      },
+      "q29": {
+        "question": "アルコールを主に分解する臓器は？",
+        "a": "胃",
+        "b": "腎臓",
+        "c": "肝臓",
+        "d": "肺",
+        "correct": "c",
+        "explanation": "肝臓は体内のアルコールの約90%を分解する主要な臓器です。"
+      },
+      "q30": {
+        "question": "二日酔いの主な原因物質は？",
+        "a": "エタノール",
+        "b": "アセトアルデヒド",
+        "c": "メタノール",
+        "d": "グリセロール",
+        "correct": "b",
+        "explanation": "アセトアルデヒドはアルコール分解過程で生成される有害物質で、二日酔いの主な原因です。"
+      },
+      "q31": {
+        "question": "次のうち、同じ量を基準にカロリーが最も高いものは？",
+        "a": "ビール",
+        "b": "ワイン",
+        "c": "ウイスキー",
+        "d": "焼酎",
+        "correct": "c",
+        "explanation": "同じ容量を基準に、度数が高いウイスキーが最も高いカロリーを持ちます。アルコール1gあたり約7kcalです。"
+      },
+      "q32": {
+        "question": "韓国の法的な飲酒運転基準の血中アルコール濃度は？",
+        "a": "0.01%",
+        "b": "0.03%",
+        "c": "0.05%",
+        "d": "0.08%",
+        "correct": "b",
+        "explanation": "韓国の飲酒運転取り締まり基準は、血中アルコール濃度0.03%以上です。"
+      },
+      "q33": {
+        "question": "蒸留酒と醸造酒の重要な違いは？",
+        "a": "色",
+        "b": "蒸留過程の有無",
+        "c": "原料",
+        "d": "価格",
+        "correct": "b",
+        "explanation": "蒸留酒は発酵後に蒸留して度数を高めた酒です。"
+      },
+      "q34": {
+        "question": "「プルーフ（proof）」100は米国基準で度数何%ですか？",
+        "a": "25%",
+        "b": "40%",
+        "c": "50%",
+        "d": "100%",
+        "correct": "c",
+        "explanation": "米国のプルーフは度数の2倍なので、100 proof = 50%です。"
+      },
+      "q35": {
+        "question": "ワインの主な発酵原料は？",
+        "a": "大麦",
+        "b": "ブドウ",
+        "c": "米",
+        "d": "ジャガイモ",
+        "correct": "b",
+        "explanation": "ワインはブドウを発酵させて造ります。"
+      },
+      "q36": {
+        "question": "次のうち、度数が通常最も高い酒は？",
+        "a": "ビール",
+        "b": "マッコリ",
+        "c": "ウイスキー",
+        "d": "ワイン",
+        "correct": "c",
+        "explanation": "ウイスキーは通常40%以上で最も高いです。"
+      },
+      "q37": {
+        "question": "清酒と濁酒（マッコリ）の違いは？",
+        "a": "原料",
+        "b": "澄んでろ過するかどうか",
+        "c": "度数だけ",
+        "d": "色素",
+        "correct": "b",
+        "explanation": "澄んでろ過すれば清酒、ろ過せず濁っていれば濁酒（マッコリ）です。"
+      },
+      "q38": {
+        "question": "ポクプンジャ酒の原料は？",
+        "a": "クロイチゴ（ブラックラズベリー）",
+        "b": "梅",
+        "c": "ゆず",
+        "d": "ブドウ",
+        "correct": "a",
+        "explanation": "ポクプンジャ酒は韓国産のクロイチゴで仕込みます。"
+      },
+      "q39": {
+        "question": "ソメクを作るとき、一般的に混ぜる2つは？",
+        "a": "焼酎とワイン",
+        "b": "焼酎とビール",
+        "c": "マッコリとビール",
+        "d": "ウイスキーとビール",
+        "correct": "b",
+        "explanation": "ソメクは焼酎とビールを混ぜた酒です。"
+      },
+      "q40": {
+        "question": "伝統的な薬酒を温めて飲むとき、適切な温度帯は？",
+        "a": "0°C以下",
+        "b": "5°C",
+        "c": "35〜45°C",
+        "d": "80°C以上",
+        "correct": "c",
+        "explanation": "温めた薬酒は通常35〜45°C程度が適切です。"
+      },
+      "q41": {
+        "question": "エスプレッソマティーニのベーススピリッツは？",
+        "a": "ウォッカ",
+        "b": "ラム",
+        "c": "ジン",
+        "d": "テキーラ",
+        "correct": "a",
+        "explanation": "エスプレッソマティーニはウォッカにコーヒーリキュールとエスプレッソを混ぜます。"
+      },
+      "q42": {
+        "question": "モスコミュールに入る炭酸は？",
+        "a": "トニックウォーター",
+        "b": "ジンジャービア",
+        "c": "コーラ",
+        "d": "サイダー",
+        "correct": "b",
+        "explanation": "モスコミュールはウォッカ・ライムにジンジャービアを加えます。"
+      },
+      "q43": {
+        "question": "ネグローニの3つの同量の材料でないものは？",
+        "a": "ジン",
+        "b": "カンパリ",
+        "c": "コーラ",
+        "d": "スイートベルモット",
+        "correct": "c",
+        "explanation": "ネグローニはジン・カンパリ・スイートベルモットを1:1:1で混ぜます。"
+      },
+      "q44": {
+        "question": "テキーラサンライズの「夕焼け」の色を出す材料は？",
+        "a": "グレナデンシロップ",
+        "b": "牛乳",
+        "c": "コーヒー",
+        "d": "ミント",
+        "correct": "a",
+        "explanation": "底に沈むグレナデンがグラデーションを作ります。"
+      },
+      "q45": {
+        "question": "カイピリーニャのベースの酒は？",
+        "a": "ラム",
+        "b": "カシャッサ",
+        "c": "ジン",
+        "d": "ウォッカ",
+        "correct": "b",
+        "explanation": "カイピリーニャはブラジルのサトウキビ酒カシャッサで作ります。"
+      },
+      "q46": {
+        "question": "アブサンを飲む一般的な方法は？",
+        "a": "ストレートで一気飲み",
+        "b": "牛乳と混ぜて",
+        "c": "冷水で希釈して",
+        "d": "熱く温めて",
+        "correct": "c",
+        "explanation": "アブサンは高度数なので冷水で希釈して飲みます。"
+      },
+      "q47": {
+        "question": "標準ドリンク1杯の純アルコール量はおよそ？",
+        "a": "5g",
+        "b": "14g",
+        "c": "30g",
+        "d": "50g",
+        "correct": "b",
+        "explanation": "標準ドリンク1杯は純アルコール約14gが基準です。"
+      },
+      "q48": {
+        "question": "体が1時間に分解するアルコール量はおよそ？",
+        "a": "標準ドリンク約0.1杯",
+        "b": "約5杯",
+        "c": "約1杯",
+        "d": "約3杯",
+        "correct": "c",
+        "explanation": "平均的に1時間あたり標準ドリンク約1杯（BAC約0.015%）を分解します。"
+      },
+      "q49": {
+        "question": "二日酔いの緩和に最も役立つものは？",
+        "a": "水分・電解質の補給と休息",
+        "b": "迎え酒",
+        "c": "濃いコーヒーを大量に",
+        "d": "たばこ",
+        "correct": "a",
+        "explanation": "水分と電解質の補給、十分な休息が最も役立ちます。迎え酒はかえって有害です。"
+      },
+      "q50": {
+        "question": "空腹でお酒を飲むとどうなりますか？",
+        "a": "吸収が遅くなる",
+        "b": "吸収が速くなり、より早く酔う",
+        "c": "度数が低くなる",
+        "d": "カロリーが減る",
+        "correct": "b",
+        "explanation": "空腹ではアルコールの吸収が速くなり、より早く酔います。"
+      }
+    },
+    "pickTopicSubtitle": "興味のあるテーマを選んで、10問のクイズで気軽にチェックしてみましょう。",
+    "dailyTitle": "今日の短いクイズ",
+    "dailyStreak": "{{count}}日連続で完了",
+    "dailyStart": "5問を解く"
+  },
+  "settings": {
+    "language": "言語",
+    "selectLanguage": "言語を選択",
+    "title": "設定",
+    "notifications": "通知",
+    "dailyReminder": "毎日の飲酒記録通知",
+    "weeklyStats": "週間統計通知",
+    "reminderTime": "通知時刻",
+    "about": "アプリ情報",
+    "version": "バージョン",
+    "appInfo": "飲酒に関するさまざまな計算と情報を提供するアプリです。",
+    "dataSection": "データ",
+    "dataDescription": "すべての記録（飲酒記録、計算履歴、チャレンジ、クイズの進捗など）をテキストとして書き出して保管し、新しい端末で貼り付けて復元できます。",
+    "exportData": "データを書き出す",
+    "importData": "データを読み込む",
+    "importDescription": "以前に書き出したバックアップテキストを下に貼り付けてください。",
+    "importConfirmTitle": "データを復元しますか？",
+    "importConfirmMessage": "バックアップに含まれる項目が現在のデータを上書きします。",
+    "importSuccess": "データが復元されました。",
+    "importError": "正しいバックアップ形式ではありません。",
+    "restore": "復元する",
+    "trackingHabitTitle": "こつこつ記録して見返す",
+    "trackingHabitDescription": "毎日の記録通知と週間レポートで、飲酒量、カロリー、平均杯数を見逃さずに確認できます。",
+    "driveSafe": "運転可能時刻の通知",
+    "driveSafeDescription": "セッション終了時、アルコールが分解されたと予想される時刻に通知を受け取ります。それでも運転前には体調を確認してください。"
+  },
+  "sessionHistory": {
+    "title": "セッション記録",
+    "menuTitle": "セッション記録",
+    "menuDescription": "過去の飲酒セッションのピークBACと杯のタイムラインを見る",
+    "empty": "まだ保存されたセッションがありません。ライブセッションを終了するとここに記録されます。",
+    "peakBac": "ピークBAC",
+    "standardDrinks": "総標準ドリンク",
+    "standardDrinksCount": "標準ドリンク{{count}}杯",
+    "soberAt": "分解予想",
+    "timeline": "杯のタイムライン",
+    "share": "共有する",
+    "shareTitle": "私の飲酒セッション",
+    "shareFooter": "Widmark公式に基づく推定値 · 飲酒後の運転禁止",
+    "shareFallback": "{{date}}の飲酒セッション — ピークBAC {{peak}}%、標準ドリンク{{drinks}}杯",
+    "delete": "削除",
+    "deleteTitle": "セッションを削除しますか？",
+    "deleteMessage": "このセッション記録が永久に削除されます。"
+  },
+  "customDrinks": {
+    "title": "カスタムのお酒の管理",
+    "name": "名前",
+    "namePlaceholder": "例：マイハウスワイン",
+    "abv": "度数",
+    "volume": "容量",
+    "price": "価格（任意）",
+    "add": "追加",
+    "addShort": "追加",
+    "save": "保存",
+    "edit": "編集",
+    "delete": "削除",
+    "saved": "保存したカスタムのお酒",
+    "standardDrinksShort": "標準ドリンク{{count}}",
+    "deleteTitle": "カスタムのお酒を削除しますか？",
+    "deleteMessage": "「{{name}}」を削除します。"
+  },
+  "notifications": {
+    "dailyTitle": "今日の飲酒記録",
+    "dailyBody": "今日飲んだ飲み物を記録してみましょう！",
+    "weeklyTitle": "週間飲酒統計",
+    "weeklyBody": "今週の飲酒統計を確認してみましょう！",
+    "permissionRequired": "通知を使用するには権限が必要です"
+  },
+  "more": {
+    "title": "もっと見る",
+    "history": "計算履歴",
+    "quiz": "お酒クイズ",
+    "settings": "設定",
+    "historyDescription": "以前の計算結果を確認しましょう",
+    "quizDescription": "お酒についての知識をテストしてみましょう",
+    "settingsDescription": "言語、通知などを設定しましょう",
+    "subtitle": "追加機能と設定",
+    "recovery": "二日酔い予測 & 回復",
+    "recoveryDescription": "飲んだ量からBACの推移と回復のヒントを確認"
+  },
+  "recovery": {
+    "back": "戻る",
+    "title": "二日酔い予測 & 回復ガイド",
+    "yourDetails": "情報を入力",
+    "weight": "体重 (kg)",
+    "gender": "性別",
+    "male": "男",
+    "female": "女",
+    "standardDrinks": "標準ドリンク数",
+    "bacTimeline": "BACの推移",
+    "peakBac": "予想される最高BAC",
+    "timeToSober": "完全に醒めるまでにかかる時間",
+    "hoursUnit": "時間",
+    "emptyState": "体重と標準ドリンク数を0より大きい値で入力すると、BACの推移が表示されます。",
+    "tipsTitle": "回復のヒント",
+    "tip1": "水やスポーツドリンクで十分に水分を補給してください。",
+    "tip2": "飲酒前・中に食べ物を一緒に摂ると吸収が遅くなります。",
+    "tip3": "ビタミンと電解質を補給すると体調の回復に役立ちます。",
+    "tip4": "十分な睡眠で体が回復する時間を与えてください。",
+    "tip5": "カフェインの過剰摂取と迎え酒は避け、次の飲酒まで最低48時間の休息をおすすめします。",
+    "disclaimer": "医学的な助言ではなく、個人差があります。"
+  },
+  "challenge": {
+    "title": "節酒チャレンジ",
+    "subtitle": "目標の日数の間、飲酒なしで挑戦してみましょう。",
+    "startA11y": "{{count}}日チャレンジを開始",
+    "dayOption": "{{count}}日",
+    "stopA11y": "チャレンジを中止",
+    "stop": "中止",
+    "streakLabel": "連続節酒日数",
+    "moneySaved": "💰 節約できたお酒代 約{{amount}}",
+    "shareSucceeded": "🏆 節酒チャレンジ{{target}}日を達成！{{savedLine}}\n#節酒チャレンジ #酒類計算機",
+    "shareInProgress": "🔥 節酒チャレンジ{{streak}}日目に挑戦中！（目標{{target}}日）{{savedLine}}\n#節酒チャレンジ #酒類計算機",
+    "goalReached": "目標達成！🎉",
+    "shareA11y": "チャレンジを共有",
+    "share": "📣 共有する"
+  },
+  "weeklyGoal": {
+    "title": "週間飲酒目標",
+    "subtitle": "1週間に飲む杯数の上限を決めて守ってみましょう。",
+    "setCta": "週間目標を設定",
+    "modalTitle": "週間目標を設定",
+    "modalSubtitle": "1週間に飲む最大の杯数を入力してください。",
+    "presetA11y": "週{{count}}杯",
+    "drinksUnit": "{{count}}杯",
+    "inputPlaceholder": "例：7",
+    "inputA11y": "週間上限の杯数を入力",
+    "cancel": "キャンセル",
+    "confirm": "設定",
+    "progressLabel": "今週飲んだ杯数",
+    "remaining": "目標まであと{{count}}杯です",
+    "exceeded": "目標を{{count}}杯超えました",
+    "edit": "編集",
+    "editA11y": "週間目標を編集",
+    "clear": "解除",
+    "clearA11y": "週間目標を解除"
+  },
+  "insights": {
+    "title": "今週のインサイト",
+    "comparisonSame": "先週と同じ杯数",
+    "comparisonUp": "先週より{{count}}杯多い",
+    "comparisonDown": "先週より{{count}}杯少ない",
+    "statDrinks": "総杯数",
+    "statCalories": "総カロリー",
+    "statAvgAbv": "平均度数",
+    "mostCommon": "今週最も多く記録した項目は{{name}}です。",
+    "empty": "記録を追加すると、週間のパターンとよく飲んだ項目が表示されます。",
+    "openGuide": "標準ドリンク/安全ガイドを見る"
+  },
+  "recommender": {
+    "title": "おすすめレシピの提案",
+    "subtitle": "材料と度数の条件で絞り込んでみましょう。",
+    "style": "スタイル",
+    "all": "すべて",
+    "maxAbv": "最大度数",
+    "maxCalories": "最大カロリー",
+    "openDetails": "詳細を見る",
+    "emptyTitle": "条件に合うレシピがありません",
+    "emptySubtitle": "度数やカロリーの条件を緩めてみましょう。"
+  },
+  "culture": {
+    "cultureTitle": "国別の飲酒文化",
+    "pairingTitle": "お酒 · おつまみのペアリング",
+    "customs": "文化の特徴",
+    "etiquette": "マナー",
+    "pairings": "よく合うおつまみ",
+    "tip": "ヒント"
+  },
+  "errors": {
+    "positiveValues": "すべての値は0より大きくなければなりません",
+    "abvUnder100": "度数は100%以下でなければなりません",
+    "abvPositive": "度数は0より大きくなければなりません",
+    "abvUnder100Alcohol": "アルコール度数は100%以下でなければなりません",
+    "abvPositiveAlcohol": "アルコール度数は0より大きくなければなりません",
+    "calculationError": "計算中にエラーが発生しました"
+  },
+  "units": {
+    "ml": "ml",
+    "percent": "%",
+    "celsius": "°C",
+    "proof": "Proof",
+    "kcal": "kcal"
+  }
+}

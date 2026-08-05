@@ -17,10 +17,12 @@ import { initI18n } from "../i18n";
 import { BannerAd, BannerAdSize } from "../utils/mobileAds";
 import { adUnits } from "../utils/adUnits";
 
-type NotificationRoute = "/(tabs)" | "/(tabs)/tracker";
+type NotificationRoute = "/(tabs)" | "/(tabs)/tracker" | "/session";
 
 const isNotificationRoute = (route: unknown): route is NotificationRoute =>
-  route === "/(tabs)" || route === "/(tabs)/tracker";
+  route === "/(tabs)" ||
+  route === "/(tabs)/tracker" ||
+  route === "/session";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 

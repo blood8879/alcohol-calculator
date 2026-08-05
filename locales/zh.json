@@ -1,0 +1,1416 @@
+{
+  "common": {
+    "appTitle": "酒类计算器",
+    "appSubtitle": "请点击你想计算的项目！",
+    "calculate": "开始计算",
+    "reset": "关闭",
+    "error": "错误",
+    "reference": "参考",
+    "referenceNote": "备注",
+    "cancel": "取消",
+    "delete": "删除",
+    "back": "返回",
+    "share": "分享结果"
+  },
+  "time": {
+    "justNow": "刚刚",
+    "minutesAgo": "{{count}}分钟前",
+    "hoursAgo": "{{count}}小时前",
+    "daysAgo": "{{count}}天前",
+    "sun": "日",
+    "mon": "一",
+    "tue": "二",
+    "wed": "三",
+    "thu": "四",
+    "fri": "五",
+    "sat": "六"
+  },
+  "tabs": {
+    "home": "首页",
+    "explore": "探索",
+    "encyclopedia": "百科",
+    "recipes": "配方",
+    "culture": "文化",
+    "quiz": "测验",
+    "tracker": "记录",
+    "more": "更多"
+  },
+  "home": {
+    "calculatorsTitle": "计算器",
+    "todayTitle": "今天",
+    "todayTipLabel": "今日酒类小知识",
+    "quizBannerTitle": "挑战酒类知识测验",
+    "quizBannerDescription": "用10道题检验你的度数、热量和饮酒常识。",
+    "contentRailTitle": "收藏与最近浏览",
+    "openRecipe": "重新查看配方",
+    "openGuide": "重新查看百科"
+  },
+  "calculators": {
+    "dilution": {
+      "navLabel": "度数调整",
+      "navDescription": "根据当前度数和容量，计算稀释到目标度数所需的加水量",
+      "title": "度数调整计算",
+      "description": "根据当前度数和容量，计算稀释到目标度数所需的加水量",
+      "currentVolume": "当前容量",
+      "currentABV": "当前度数",
+      "targetABV": "目标度数",
+      "waterToAdd": "需加水量",
+      "finalVolume": "最终容量",
+      "errorHigher": "当前度数必须高于目标度数"
+    },
+    "blending": {
+      "navLabel": "调配计算",
+      "navDescription": "将不同度数的酒混合，调出想要的度数",
+      "title": "调配计算",
+      "description": "将不同度数的酒混合，调出想要的度数",
+      "firstABV": "第一种酒的度数",
+      "firstVolume": "第一种酒的容量",
+      "secondABV": "第二种酒的度数",
+      "targetABV": "目标度数",
+      "targetVolume": "目标容量",
+      "secondVolumeNeeded": "所需第二种酒的量",
+      "actualABV": "实际达到的度数",
+      "totalVolume": "总容量",
+      "errorTargetRange": "目标度数必须介于{{min}}%和{{max}}%之间",
+      "errorTargetLarger": "目标容量必须大于第一种酒的容量"
+    },
+    "calorie": {
+      "navLabel": "热量计算",
+      "navDescription": "计算酒精饮料的热量",
+      "title": "热量计算",
+      "description": "计算酒精饮料的热量",
+      "volume": "容量",
+      "abv": "酒精度数",
+      "alcoholCalories": "酒精热量",
+      "additionalNote": "啤酒、葡萄酒等因含糖等成分会有额外热量"
+    },
+    "temperature": {
+      "navLabel": "度数确认",
+      "navDescription": "根据测量温度和酒精分%换算实际酒精度数",
+      "title": "实际度数确认",
+      "description": "根据测量温度和酒精分%换算实际酒精度数",
+      "measuredTemp": "测量温度",
+      "measuredABV": "酒精分",
+      "actualABV": "实际酒精度数（以{{temp}}°C、{{abv}}%为准）",
+      "errorNoData": "找不到对应温度的数据。",
+      "errorNoABVData": "找不到该测量度数对应的数据。"
+    },
+    "alcoholContent": {
+      "navLabel": "酒精含量",
+      "navDescription": "根据给定容量和度数计算纯酒精含量",
+      "title": "纯酒精含量计算",
+      "description": "根据给定容量和度数计算纯酒精含量",
+      "volume": "容量",
+      "abv": "度数",
+      "pureAlcohol": "纯酒精含量"
+    },
+    "freezingPoint": {
+      "navLabel": "冰点计算",
+      "navDescription": "根据酒精度数计算预估冰点",
+      "title": "冰点计算",
+      "description": "根据酒精度数计算预估冰点",
+      "abv": "酒精度数",
+      "expectedFreezing": "预估冰点",
+      "note": "实际冰点会因其他成分而有所不同",
+      "errorTooHigh": "酒精度数必须低于100%"
+    },
+    "proof": {
+      "navLabel": "Proof换算",
+      "navDescription": "ABV ↔ Proof 双向换算",
+      "title": "Proof换算",
+      "description": "ABV ↔ Proof 双向换算（只需输入其中一项）",
+      "abv": "ABV",
+      "proof": "Proof",
+      "usProof": "美制Proof",
+      "ukProof": "英制Proof（参考）",
+      "abvUS": "ABV（美制）",
+      "abvUK": "ABV（英制）（参考）",
+      "errorBoth": "请只输入ABV或Proof中的一项",
+      "errorNone": "请输入ABV或Proof中的一项",
+      "errorABVHigh": "ABV必须为100%以下",
+      "errorProofHigh": "Proof必须为200以下"
+    },
+    "bac": {
+      "navLabel": "血液酒精浓度",
+      "navDescription": "计算饮酒后的血液酒精浓度",
+      "title": "BAC计算器",
+      "description": "根据体重、性别和饮酒量估算血液酒精浓度",
+      "weight": "体重",
+      "gender": "性别",
+      "male": "男",
+      "female": "女",
+      "numberOfDrinks": "饮酒量（标准杯）",
+      "timeSinceFirst": "经过时间",
+      "bacLevel": "血液酒精浓度",
+      "soberTime": "预计醒酒时间",
+      "hours": "小时",
+      "bacWarningHigh": "绝对禁止开车！浓度极其危险。",
+      "bacWarningMedium": "请勿开车。判断力可能下降。",
+      "bacWarningLow": "轻度饮酒状态。",
+      "bacSafe": "处于正常范围。",
+      "errorWeight": "请输入体重",
+      "errorDrinks": "请输入饮酒量"
+    },
+    "unitConverter": {
+      "navLabel": "单位换算",
+      "navDescription": "换算容量、温度及韩国单位",
+      "title": "单位换算器",
+      "description": "在多种单位之间相互换算",
+      "inputValue": "待换算数值",
+      "volumeMode": "容量",
+      "tempMode": "温度",
+      "koreanMode": "韩国单位",
+      "ml": "毫升（ml）",
+      "oz": "盎司（oz）",
+      "cups": "杯",
+      "bottles": "瓶（750ml）",
+      "celsius": "摄氏（°C）",
+      "fahrenheit": "华氏（°F）",
+      "sojuGlass": "烧酒杯（50ml）",
+      "beerGlass": "啤酒杯（355ml）",
+      "doe": "斗（1800ml）",
+      "sojuBottle": "烧酒瓶（360ml）",
+      "result": "换算结果"
+    }
+  },
+  "presets": {
+    "title": "选择预设",
+    "selectPreset": "热门酒类选择",
+    "clear": "清除",
+    "drinks": {
+      "soju": "烧酒",
+      "beer": "啤酒",
+      "makgeolli": "马格利酒",
+      "redWine": "红葡萄酒",
+      "whiteWine": "白葡萄酒",
+      "sparklingWine": "起泡酒",
+      "whiskey": "威士忌",
+      "vodka": "伏特加",
+      "rum": "朗姆酒",
+      "gin": "金酒",
+      "tequila": "龙舌兰酒",
+      "sake": "清酒",
+      "beerCan": "啤酒罐",
+      "somaek": "烧啤",
+      "draftBeer": "生啤",
+      "highball": "高球酒"
+    }
+  },
+  "share": {
+    "button": "分享结果",
+    "resultTitle": "计算结果",
+    "calculatedWith": "由Alcohol Calculator计算",
+    "appName": "Alcohol Calculator"
+  },
+  "history": {
+    "title": "计算记录",
+    "empty": "暂无计算记录",
+    "favorite": "加入收藏",
+    "unfavorite": "取消收藏",
+    "rerun": "重新计算",
+    "delete": "删除",
+    "clearAll": "全部删除",
+    "confirmClear": "确定删除所有记录吗？",
+    "confirmDelete": "确定删除这条记录吗？",
+    "ago": "前",
+    "justNow": "刚刚"
+  },
+  "encyclopedia": {
+    "title": "酒类百科",
+    "search": "搜索",
+    "searchPlaceholder": "按酒名搜索……",
+    "abvRange": "度数范围",
+    "calories": "热量（每100ml）",
+    "origin": "原产地",
+    "servingTemp": "适饮温度",
+    "pairing": "搭配美食",
+    "description": "说明",
+    "items": {
+      "soju": {
+        "name": "烧酒",
+        "origin": "韩国",
+        "servingTemp": "冰镇（4-8°C）",
+        "pairing": "烤五花肉、炸鸡、泡菜汤",
+        "description": "韩国代表性的蒸馏酒，以大米或其他谷物酿造。口感干净顺滑。"
+      },
+      "beer": {
+        "name": "啤酒",
+        "origin": "德国/比利时",
+        "servingTemp": "冰镇（3-7°C）",
+        "pairing": "炸鸡、披萨、香肠",
+        "description": "以大麦发酵酿造，是世界上消费最广泛的酒精饮料。"
+      },
+      "redWine": {
+        "name": "红葡萄酒",
+        "origin": "法国/意大利",
+        "servingTemp": "常温（16-18°C）",
+        "pairing": "牛排、奶酪、意面",
+        "description": "以红葡萄连皮发酵酿造的葡萄酒，以丰富的单宁口感著称。"
+      },
+      "whiteWine": {
+        "name": "白葡萄酒",
+        "origin": "法国/德国",
+        "servingTemp": "冰镇（8-12°C）",
+        "pairing": "海鲜、沙拉、清淡奶酪",
+        "description": "以青葡萄发酵酿造的葡萄酒，口感清爽轻盈。"
+      },
+      "sparklingWine": {
+        "name": "起泡酒",
+        "origin": "法国",
+        "servingTemp": "极冰（6-8°C）",
+        "pairing": "甜点、水果、法式小点",
+        "description": "含气泡的葡萄酒，常在庆祝场合享用。"
+      },
+      "whiskey": {
+        "name": "威士忌",
+        "origin": "苏格兰/爱尔兰",
+        "servingTemp": "常温或加冰（15-20°C）",
+        "pairing": "黑巧克力、奶酪、熏三文鱼",
+        "description": "将谷物发酵、蒸馏后在橡木桶中陈酿的蒸馏酒。"
+      },
+      "vodka": {
+        "name": "伏特加",
+        "origin": "俄罗斯/波兰",
+        "servingTemp": "极冰（-18~0°C）",
+        "pairing": "鱼子酱、腌菜、下酒菜",
+        "description": "以马铃薯或谷物酿造的无色透明蒸馏酒，是鸡尾酒的基酒。"
+      },
+      "rum": {
+        "name": "朗姆酒",
+        "origin": "加勒比海",
+        "servingTemp": "常温或加冰",
+        "pairing": "热带水果、甜点、海鲜",
+        "description": "以甘蔗发酵、蒸馏而成的蒸馏酒。"
+      },
+      "gin": {
+        "name": "金酒",
+        "origin": "荷兰/英国",
+        "servingTemp": "冰镇",
+        "pairing": "汤力水、橄榄、海鲜",
+        "description": "以杜松子调香的蒸馏酒，是金汤力的基酒。"
+      },
+      "tequila": {
+        "name": "龙舌兰酒",
+        "origin": "墨西哥",
+        "servingTemp": "常温",
+        "pairing": "青柠、盐、墨西哥菜",
+        "description": "以蓝色龙舌兰酿造的墨西哥代表性蒸馏酒。"
+      },
+      "sake": {
+        "name": "清酒",
+        "origin": "日本",
+        "servingTemp": "冰镇或温热（5-55°C）",
+        "pairing": "寿司、刺身、日本料理",
+        "description": "以大米发酵酿造的日本传统酿造酒。"
+      },
+      "makgeolli": {
+        "name": "马格利酒",
+        "origin": "韩国",
+        "servingTemp": "冰镇（4-8°C）",
+        "pairing": "煎饼、泡菜饼、豆腐泡菜",
+        "description": "以大米酿造的韩国传统浊酒，富含乳酸菌。"
+      },
+      "brandy": {
+        "name": "白兰地",
+        "origin": "法国",
+        "servingTemp": "常温（18-20°C）",
+        "pairing": "雪茄、黑巧克力、奶酪",
+        "description": "将葡萄酒或果酒蒸馏而成的高级蒸馏酒。"
+      },
+      "liqueur": {
+        "name": "利口酒",
+        "origin": "欧洲各地",
+        "servingTemp": "冰镇或常温",
+        "pairing": "甜点、冰淇淋、蛋糕",
+        "description": "以糖、水果、香草等调香的甜味蒸馏酒。"
+      },
+      "champagne": {
+        "name": "香槟",
+        "origin": "法国香槟区",
+        "servingTemp": "极冰（6-8°C）",
+        "pairing": "鱼子酱、生蚝、甜点",
+        "description": "仅产自法国香槟地区的高级起泡酒。"
+      },
+      "cheongju": {
+        "name": "清酒（韩式）",
+        "origin": "韩国",
+        "servingTemp": "冰镇或温热 10–45°C",
+        "pairing": "煎饼、烤鱼、凉拌菜",
+        "description": "以精米酿造的韩国传统药酒，用于祭祀与节庆。"
+      },
+      "bokbunjaWine": {
+        "name": "覆盆子酒",
+        "origin": "韩国",
+        "servingTemp": "冰镇 8–12°C",
+        "pairing": "水果、奶酪、甜点",
+        "description": "以韩国覆盆子（黑树莓）浸泡酿制的甜味果酒。"
+      },
+      "baijiu": {
+        "name": "白酒",
+        "origin": "中国",
+        "servingTemp": "常温或稍微温热",
+        "pairing": "油腻中餐、花生",
+        "description": "以高粱、谷物蒸馏的高度中国白酒，香气浓烈。"
+      },
+      "absinthe": {
+        "name": "苦艾酒",
+        "origin": "瑞士/法国",
+        "servingTemp": "冰水稀释 4–8°C",
+        "pairing": "稀释后单独饮用",
+        "description": "以苦艾、香草制成的高度利口酒，务必稀释后饮用。"
+      },
+      "cognac": {
+        "name": "干邑",
+        "origin": "法国干邑区",
+        "servingTemp": "常温 16–18°C",
+        "pairing": "巧克力、雪茄、甜点",
+        "description": "在法国干邑地区认证的高级葡萄白兰地。"
+      },
+      "mezcal": {
+        "name": "梅斯卡尔酒",
+        "origin": "墨西哥",
+        "servingTemp": "常温、纯饮",
+        "pairing": "橙子、盐、塔可",
+        "description": "将龙舌兰烘烤熏制而成的墨西哥蒸馏酒，带有烟熏香气。"
+      },
+      "portWine": {
+        "name": "波特酒",
+        "origin": "葡萄牙",
+        "servingTemp": "略冰 12–16°C",
+        "pairing": "蓝纹奶酪、巧克力",
+        "description": "在发酵过程中添加白兰地的葡萄牙甜味加强型葡萄酒。"
+      },
+      "vermouth": {
+        "name": "味美思",
+        "origin": "意大利/法国",
+        "servingTemp": "冰镇 6–10°C",
+        "pairing": "橄榄、法式小点、鸡尾酒基酒",
+        "description": "以香草调味的加香加强型葡萄酒，常用于鸡尾酒。"
+      },
+      "fruitSoju": {
+        "name": "果味烧酒",
+        "origin": "韩国",
+        "servingTemp": "冰镇 4–8°C",
+        "pairing": "各类下酒菜、水果",
+        "description": "添加葡萄柚、水蜜桃等果香的低度烧酒，深受入门者喜爱。"
+      },
+      "stout": {
+        "name": "世涛啤酒",
+        "origin": "爱尔兰",
+        "servingTemp": "略微清凉 7–10°C",
+        "pairing": "生蚝、牛排、巧克力",
+        "description": "以烘烤大麦酿造的浓郁绵密黑啤酒。"
+      }
+    }
+  },
+  "recipes": {
+    "title": "鸡尾酒配方",
+    "search": "搜索",
+    "searchPlaceholder": "搜索鸡尾酒……",
+    "ingredientsTitle": "材料",
+    "instructions": "制作方法",
+    "difficulty": "难度",
+    "easy": "简单",
+    "medium": "普通",
+    "hard": "困难",
+    "totalVolume": "总容量",
+    "totalAbv": "总度数",
+    "totalCalories": "总热量",
+    "openCalculator": "在计算器中打开",
+    "filter": {
+      "all": "全部",
+      "korean": "韩国",
+      "global": "国际"
+    },
+    "ingredients": {
+      "soju": "烧酒",
+      "beer": "啤酒",
+      "bokbunjaWine": "覆盆子酒",
+      "sparklingWater": "苏打水",
+      "lemonJuice": "柠檬汁",
+      "maesilju": "梅子酒",
+      "soda": "苏打水",
+      "lemonSlice": "柠檬片",
+      "yuzaSyrup": "柚子茶",
+      "tequila": "龙舌兰酒",
+      "tripleSec": "白橙皮利口酒",
+      "limeJuice": "青柠汁",
+      "whiteRum": "白朗姆酒",
+      "sugar": "糖",
+      "mintLeaves": "薄荷叶",
+      "bourbonWhiskey": "波本威士忌",
+      "angosturaBitters": "安高天娜苦精",
+      "sugarCube": "方糖",
+      "water": "水",
+      "gin": "金酒",
+      "dryVermouth": "干味美思",
+      "campari": "金巴利",
+      "sweetVermouth": "甜味美思",
+      "simpleSyrup": "糖浆",
+      "ryeWhiskey": "黑麦威士忌",
+      "citrusVodka": "柑橘伏特加",
+      "cranberryJuice": "蔓越莓汁",
+      "tonicWater": "汤力水",
+      "limeWedge": "青柠角",
+      "coconutCream": "椰奶油",
+      "pineappleJuice": "菠萝汁",
+      "kahlua": "甘露咖啡酒",
+      "milk": "牛奶",
+      "vodka": "伏特加",
+      "cola": "可乐",
+      "eggWhite": "蛋清",
+      "tomatoJuice": "番茄汁",
+      "worcestershireSauce": "伍斯特酱",
+      "tabasco": "塔巴斯科辣酱",
+      "aperol": "阿佩罗",
+      "prosecco": "普罗塞克起泡酒",
+      "makgeolli": "马格利酒",
+      "cider": "柠檬味汽水",
+      "hongcho": "红醋（果醋）",
+      "cheongju": "清酒（韩式）",
+      "honey": "蜂蜜",
+      "greenGrape": "青葡萄",
+      "scotchWhisky": "苏格兰威士忌",
+      "drambuie": "杜林标利口酒",
+      "coffeeLiqueur": "咖啡利口酒",
+      "espresso": "浓缩咖啡",
+      "vodkaPlain": "伏特加",
+      "gingerBeer": "姜汁啤酒",
+      "grenadine": "红石榴糖浆",
+      "orangeJuice": "橙汁",
+      "peachLiqueur": "水蜜桃利口酒",
+      "amaretto": "杏仁利口酒",
+      "cachaca": "卡莎萨",
+      "brownSugar": "红糖",
+      "appleJuice": "苹果汁",
+      "cinnamon": "肉桂",
+      "redWineGeneric": "红葡萄酒"
+    },
+    "items": {
+      "somaek": {
+        "name": "烧啤",
+        "ing1": "烧酒",
+        "ing2": "啤酒",
+        "instructions": "在啤酒杯中倒入约2/3的啤酒，再按1/3比例加入烧酒，轻轻搅拌。"
+      },
+      "poktanju": {
+        "name": "炸弹酒",
+        "ing1": "烧酒",
+        "ing2": "啤酒",
+        "instructions": "啤酒杯中倒满啤酒，将盛有烧酒的小杯投入啤酒杯中，一口喝下。"
+      },
+      "bokbunja": {
+        "name": "覆盆子鸡尾酒",
+        "ing1": "覆盆子酒",
+        "ing2": "苏打水",
+        "ing3": "青柠",
+        "instructions": "在覆盆子酒中加入苏打水，佐以青柠。"
+      },
+      "maesil": {
+        "name": "梅子酒高球",
+        "ing1": "梅子酒",
+        "ing2": "苏打水",
+        "ing3": "冰块",
+        "instructions": "杯中装满冰块，按1:2的比例混合梅子酒和苏打水。"
+      },
+      "yuja": {
+        "name": "柚子酸酒",
+        "ing1": "柚子茶",
+        "ing2": "烧酒或伏特加",
+        "ing3": "柠檬汁",
+        "ing4": "苏打水",
+        "instructions": "混合柚子茶、烧酒、柠檬汁，再用苏打水注满。"
+      },
+      "margarita": {
+        "name": "玛格丽特",
+        "ing1": "龙舌兰酒",
+        "ing2": "白橙皮利口酒",
+        "ing3": "青柠汁",
+        "instructions": "将龙舌兰、白橙皮利口酒、青柠汁与冰块一同摇匀，倒入杯中。"
+      },
+      "mojito": {
+        "name": "莫吉托",
+        "ing1": "白朗姆酒",
+        "ing2": "青柠汁",
+        "ing3": "糖浆",
+        "ing4": "苏打水",
+        "ing5": "薄荷叶",
+        "instructions": "捣压薄荷叶，加入朗姆酒、青柠汁、糖浆，再用苏打水注满。"
+      },
+      "oldFashioned": {
+        "name": "古典鸡尾酒",
+        "ing1": "波本威士忌",
+        "ing2": "糖",
+        "ing3": "安高天娜苦精",
+        "ing4": "橙皮",
+        "instructions": "用苦精浸湿糖，加入波本慢慢搅拌，最后以橙皮装饰。"
+      },
+      "martini": {
+        "name": "马天尼",
+        "ing1": "金酒",
+        "ing2": "干味美思",
+        "ing3": "橄榄",
+        "instructions": "将金酒和味美思在调酒杯中搅拌至冰凉，倒入鸡尾酒杯。"
+      },
+      "negroni": {
+        "name": "尼格罗尼",
+        "ing1": "金酒",
+        "ing2": "金巴利",
+        "ing3": "甜味美思",
+        "instructions": "将金酒、金巴利、甜味美思按等量加入并搅拌。"
+      },
+      "daiquiri": {
+        "name": "戴吉利",
+        "ing1": "白朗姆酒",
+        "ing2": "青柠汁",
+        "ing3": "糖浆",
+        "instructions": "将所有材料与冰块一同摇匀，倒入鸡尾酒杯。"
+      },
+      "manhattan": {
+        "name": "曼哈顿",
+        "ing1": "黑麦威士忌",
+        "ing2": "甜味美思",
+        "ing3": "安高天娜苦精",
+        "instructions": "将威士忌、味美思、苦精搅拌后倒入鸡尾酒杯。"
+      },
+      "cosmopolitan": {
+        "name": "大都会",
+        "ing1": "伏特加",
+        "ing2": "白橙皮利口酒",
+        "ing3": "蔓越莓汁",
+        "ing4": "青柠汁",
+        "instructions": "将所有材料与冰块一同摇匀，倒入马天尼杯。"
+      },
+      "ginTonic": {
+        "name": "金汤力",
+        "ing1": "金酒",
+        "ing2": "汤力水",
+        "ing3": "青柠",
+        "instructions": "杯中加入冰块和金酒，用汤力水注满后佐以青柠。"
+      },
+      "pinaColada": {
+        "name": "椰林飘香",
+        "ing1": "白朗姆酒",
+        "ing2": "椰奶油",
+        "ing3": "菠萝汁",
+        "instructions": "将所有材料与冰块放入搅拌机打匀，倒入玻璃杯。"
+      },
+      "kahluaMilk": {
+        "name": "甘露牛奶",
+        "ing1": "甘露咖啡酒",
+        "ing2": "牛奶",
+        "instructions": "杯中放入冰块，按1:3的比例加入甘露咖啡酒和牛奶后搅拌。"
+      },
+      "longIsland": {
+        "name": "长岛冰茶",
+        "ing1": "伏特加",
+        "ing2": "朗姆酒",
+        "ing3": "金酒",
+        "ing4": "龙舌兰酒",
+        "ing5": "白橙皮利口酒",
+        "ing6": "柠檬汁",
+        "ing7": "可乐",
+        "instructions": "加入所有烈酒和柠檬汁，再用可乐注满。"
+      },
+      "whiskeySour": {
+        "name": "威士忌酸酒",
+        "ing1": "波本威士忌",
+        "ing2": "柠檬汁",
+        "ing3": "糖浆",
+        "instructions": "将所有材料与冰块一同摇匀后倒出。"
+      },
+      "bloodyMary": {
+        "name": "血腥玛丽",
+        "ing1": "伏特加",
+        "ing2": "番茄汁",
+        "ing3": "柠檬汁",
+        "ing4": "塔巴斯科辣酱",
+        "ing5": "伍斯特酱",
+        "instructions": "将伏特加与番茄汁混合，再用柠檬汁、塔巴斯科辣酱、伍斯特酱调味。"
+      },
+      "aperolSpritz": {
+        "name": "阿佩罗气泡酒",
+        "ing1": "阿佩罗",
+        "ing2": "普罗塞克起泡酒",
+        "ing3": "苏打水",
+        "instructions": "杯中放入冰块，按3:3:1的比例加入阿佩罗、普罗塞克和苏打水。"
+      },
+      "makgeolliCider": {
+        "name": "马格利汽水",
+        "instructions": "将冰镇的马格利酒轻轻搅拌后倒入汽水，享用甜爽口感。"
+      },
+      "hongchoHighball": {
+        "name": "红醋高球",
+        "instructions": "在装满冰块的杯中加入烧酒和红醋，用苏打注满后轻轻搅拌。"
+      },
+      "cheongjuHoney": {
+        "name": "蜂蜜清酒",
+        "instructions": "将蜂蜜用温水化开，与清酒混合后温热饮用。"
+      },
+      "greenGrapeSoju": {
+        "name": "青葡萄烧酒",
+        "instructions": "将青葡萄稍加捣碎放入杯中，倒入烧酒和汽水享用。"
+      },
+      "maesilMakgeolli": {
+        "name": "梅子马格利",
+        "instructions": "在马格利酒中加入梅子酒，增添清爽的甜味。"
+      },
+      "espressoMartini": {
+        "name": "浓缩咖啡马天尼",
+        "instructions": "将伏特加、咖啡利口酒和浓缩咖啡与冰块用力摇匀，倒入杯中。"
+      },
+      "moscowMule": {
+        "name": "莫斯科骡子",
+        "instructions": "在装满冰块的杯中加入伏特加和青柠，用姜汁啤酒注满。"
+      },
+      "tequilaSunrise": {
+        "name": "龙舌兰日出",
+        "instructions": "将龙舌兰与橙汁混合，再慢慢倒入红石榴糖浆形成渐变。"
+      },
+      "rustyNail": {
+        "name": "锈钉",
+        "instructions": "在冰块上倒入苏格兰威士忌和杜林标利口酒，轻轻搅拌。"
+      },
+      "caipirinha": {
+        "name": "卡琵莉亚",
+        "instructions": "在杯中捣压青柠和红糖，再加入卡莎萨和冰块。"
+      },
+      "amarettoSour": {
+        "name": "杏仁酸酒",
+        "instructions": "将杏仁利口酒、柠檬汁、糖浆摇匀后倒入冰杯。"
+      },
+      "seaBreeze": {
+        "name": "海风",
+        "instructions": "在冰杯中加入伏特加和蔓越莓汁，最后用红石榴糖浆点缀。"
+      },
+      "fuzzyNavel": {
+        "name": "禁果",
+        "instructions": "在冰杯中混合水蜜桃利口酒和橙汁享用。"
+      },
+      "kalimotxo": {
+        "name": "卡利莫乔",
+        "instructions": "在冰杯中将红葡萄酒和可乐按1:1混合。"
+      },
+      "hotToddy": {
+        "name": "热托蒂",
+        "instructions": "在热水中混合蜂蜜、柠檬和威士忌，撒上肉桂温热饮用。"
+      }
+    }
+  },
+  "tracker": {
+    "title": "饮酒记录",
+    "addDrink": "添加饮酒",
+    "todayLog": "今日记录",
+    "empty": "今天没有记录",
+    "weeklyStats": "每周统计",
+    "monthlyStats": "每月统计",
+    "totalDrinks": "总饮酒次数",
+    "totalCalories": "总热量",
+    "averageDrinks": "日均饮酒量",
+    "selectDate": "选择日期",
+    "delete": "删除",
+    "manual": "手动输入",
+    "preset": "选择预设",
+    "volume": "容量",
+    "abv": "度数",
+    "drinkName": "饮品名称",
+    "drinks": "杯",
+    "kcal": "kcal",
+    "emoji": "表情符号",
+    "price": "金额（可选）",
+    "spend": "支出"
+  },
+  "session": {
+    "title": "实时饮酒会话",
+    "subtitle": "正在畅饮？开启一个会话吧",
+    "description": "每添加一杯，血液酒精浓度估算值和醒酒时间都会实时更新。结束会话后，记录将自动保存到记录页。",
+    "weight": "体重",
+    "gender": "性别",
+    "male": "男",
+    "female": "女",
+    "start": "开始会话",
+    "activeBadge": "进行中",
+    "bacNow": "当前血液酒精浓度（估算）",
+    "standardDrinks": "标准杯",
+    "soberAt": "预计醒酒时刻",
+    "addDrink": "添加一杯",
+    "logTitle": "已喝记录（{{count}}杯）",
+    "undo": "撤销",
+    "empty": "还没有添加任何杯数。请点击上方喝过的酒。",
+    "endSave": "结束会话并保存到记录",
+    "discard": "不保存直接结束",
+    "discardTitle": "要删除此会话吗？",
+    "discardMessage": "此会话的记录将不会被保存。",
+    "levelSafe": "安全范围",
+    "levelCaution": "注意——请勿开车",
+    "levelDanger": "危险——请放慢速度",
+    "levelHigh": "极其危险——建议停止饮酒",
+    "disclaimer": "此数值为基于Widmark公式的参考估算值，可能与实际血液酒精浓度不同。饮酒后无论数值如何，都请勿开车。",
+    "homeCta": "正在畅饮",
+    "homeCtaDescription": "记录每杯酒，实时查看BAC估算值",
+    "homeCtaActive": "会话进行中——继续记录",
+    "dangerBannerTitle": "已达到危险水平",
+    "dangerBannerBody": "你的血液酒精浓度已进入危险区间。请喝水、放慢速度，绝对不要开车。"
+  },
+  "quiz": {
+    "title": "酒类测验",
+    "subtitle": "测试你的酒类知识！",
+    "description": "用随机10道题测试你的知识",
+    "start": "开始",
+    "next": "下一步",
+    "nextQuestion": "下一题",
+    "seeResults": "查看结果",
+    "finish": "查看结果",
+    "score": "得分",
+    "yourScore": "你的得分",
+    "correct": "答对了！",
+    "incorrect": "答错了！",
+    "explanation": "解析",
+    "shareScore": "分享得分",
+    "tryAgain": "再挑战",
+    "resultExcellent": "太棒了！你是专家！",
+    "resultGood": "做得好！就快满分了！",
+    "resultAverage": "还不错！继续学习吧！",
+    "resultKeepTrying": "别放弃！再来一次吧！",
+    "questionOf": "题",
+    "questions": {
+      "q1": {
+        "question": "烧酒的一般度数是多少？",
+        "a": "8-12%",
+        "b": "16-20%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "韩国烧酒的一般度数在16-20%范围内。"
+      },
+      "q2": {
+        "question": "普通啤酒的度数范围是多少？",
+        "a": "1-2%",
+        "b": "4-6%",
+        "c": "10-14%",
+        "d": "18-22%",
+        "correct": "b",
+        "explanation": "大多数普通啤酒的度数在4-6%范围内。"
+      },
+      "q3": {
+        "question": "红葡萄酒的一般度数是多少？",
+        "a": "5-8%",
+        "b": "12-15%",
+        "c": "20-25%",
+        "d": "30-35%",
+        "correct": "b",
+        "explanation": "红葡萄酒的度数通常在12-15%之间。"
+      },
+      "q4": {
+        "question": "威士忌的一般度数是多少？",
+        "a": "15-20%",
+        "b": "25-30%",
+        "c": "40-46%",
+        "d": "60-70%",
+        "correct": "c",
+        "explanation": "大多数威士忌以40-46%的度数装瓶。"
+      },
+      "q5": {
+        "question": "伏特加的最低度数一般是多少？",
+        "a": "20%",
+        "b": "30%",
+        "c": "37.5%",
+        "d": "50%",
+        "correct": "c",
+        "explanation": "欧盟标准下伏特加的最低度数为37.5%，在美国则为40%。"
+      },
+      "q6": {
+        "question": "清酒（日本清酒）的一般度数是多少？",
+        "a": "5-8%",
+        "b": "15-17%",
+        "c": "25-30%",
+        "d": "35-40%",
+        "correct": "b",
+        "explanation": "清酒的度数通常在15-17%左右。"
+      },
+      "q7": {
+        "question": "世界上度数最高的酒是哪种？",
+        "a": "苦艾酒（72%）",
+        "b": "Everclear（95%）",
+        "c": "Spirytus（96%）",
+        "d": "百加得151（75.5%）",
+        "correct": "c",
+        "explanation": "波兰产的Spirytus以96%的度数成为市售酒中度数最高的。"
+      },
+      "q8": {
+        "question": "一个「标准杯」所含的纯酒精量是多少？",
+        "a": "5g",
+        "b": "8g",
+        "c": "14g",
+        "d": "20g",
+        "correct": "c",
+        "explanation": "美国标准杯含纯酒精14g，相当于355ml啤酒（5%）或约1.5杯烧酒。"
+      },
+      "q9": {
+        "question": "威士忌的发源地是哪里？",
+        "a": "美国",
+        "b": "苏格兰/爱尔兰",
+        "c": "法国",
+        "d": "日本",
+        "correct": "b",
+        "explanation": "据说威士忌最早诞生于苏格兰和爱尔兰。"
+      },
+      "q10": {
+        "question": "烧酒起源于哪个国家？",
+        "a": "日本",
+        "b": "中国",
+        "c": "韩国",
+        "d": "泰国",
+        "correct": "c",
+        "explanation": "烧酒是韩国的传统蒸馏酒，据说蒸馏技术是在高丽时代经由元朝传入的。"
+      },
+      "q11": {
+        "question": "龙舌兰酒是哪个国家的酒？",
+        "a": "西班牙",
+        "b": "墨西哥",
+        "c": "巴西",
+        "d": "阿根廷",
+        "correct": "b",
+        "explanation": "龙舌兰酒是墨西哥代表性的蒸馏酒，以蓝色龙舌兰酿造。"
+      },
+      "q12": {
+        "question": "朗姆酒的主要产地是哪里？",
+        "a": "北欧",
+        "b": "加勒比海地区",
+        "c": "东南亚",
+        "d": "非洲",
+        "correct": "b",
+        "explanation": "朗姆酒以甘蔗为原料，加勒比海地区是其主要产地。"
+      },
+      "q13": {
+        "question": "香槟只能在哪个地区生产？",
+        "a": "波尔多",
+        "b": "勃艮第",
+        "c": "香槟区",
+        "d": "普罗旺斯",
+        "correct": "c",
+        "explanation": "「香槟」这一名称只能用于产自法国香槟地区的起泡酒。"
+      },
+      "q14": {
+        "question": "清酒（日本清酒）的原产地是哪里？",
+        "a": "中国",
+        "b": "韩国",
+        "c": "日本",
+        "d": "越南",
+        "correct": "c",
+        "explanation": "清酒是日本的传统酿造酒，以大米发酵酿造。"
+      },
+      "q15": {
+        "question": "酿造清酒的主要原料是什么？",
+        "a": "小麦",
+        "b": "大米",
+        "c": "大麦",
+        "d": "玉米",
+        "correct": "b",
+        "explanation": "清酒以大米为主要原料，用曲（麹）发酵酿造。"
+      },
+      "q16": {
+        "question": "波本威士忌的主原料至少须含多少百分比的玉米？",
+        "a": "30%",
+        "b": "41%",
+        "c": "51%",
+        "d": "75%",
+        "correct": "c",
+        "explanation": "根据美国法律，波本必须以至少51%的玉米作为谷物原料。"
+      },
+      "q17": {
+        "question": "为啤酒带来苦味的原料是什么？",
+        "a": "麦芽",
+        "b": "酵母",
+        "c": "啤酒花",
+        "d": "水",
+        "correct": "c",
+        "explanation": "啤酒花是赋予啤酒苦味和香气的核心原料。"
+      },
+      "q18": {
+        "question": "葡萄酒发酵中必不可少的微生物是什么？",
+        "a": "乳酸菌",
+        "b": "酵母",
+        "c": "霉菌",
+        "d": "细菌",
+        "correct": "b",
+        "explanation": "葡萄酒通过酵母将葡萄的糖分转化为酒精的发酵过程酿成。"
+      },
+      "q19": {
+        "question": "马格利酒是哪种类型的酒？",
+        "a": "蒸馏酒",
+        "b": "发酵酒（浊酒）",
+        "c": "混成酒",
+        "d": "果酒",
+        "correct": "b",
+        "explanation": "马格利酒是以大米发酵酿造的韩国传统浊酒（发酵酒）。"
+      },
+      "q20": {
+        "question": "Proof与ABV是什么关系？",
+        "a": "Proof = ABV",
+        "b": "Proof = ABV × 2",
+        "c": "Proof = ABV ÷ 2",
+        "d": "Proof = ABV + 10",
+        "correct": "b",
+        "explanation": "按美国标准，Proof是ABV的2倍。例如：40% ABV = 80 Proof"
+      },
+      "q21": {
+        "question": "ABV是什么的缩写？",
+        "a": "Alcohol By Value",
+        "b": "Alcohol By Volume",
+        "c": "Alcohol Beverage Verification",
+        "d": "Alcohol Brewing Volume",
+        "correct": "b",
+        "explanation": "ABV是Alcohol By Volume的缩写，表示酒精占总容量的比例。"
+      },
+      "q22": {
+        "question": "葡萄酒中的「年份（Vintage）」是指什么？",
+        "a": "葡萄酒的酿造方法",
+        "b": "葡萄采收年份",
+        "c": "葡萄酒等级",
+        "d": "葡萄酒陈酿时间",
+        "correct": "b",
+        "explanation": "年份指葡萄采收的年份，会标注在葡萄酒标签上。"
+      },
+      "q23": {
+        "question": "「原桶强度（Cask Strength）」是什么意思？",
+        "a": "橡木桶的强度",
+        "b": "未加水稀释的原液度数",
+        "c": "最高等级",
+        "d": "最短陈酿时间",
+        "correct": "b",
+        "explanation": "原桶强度指未经加水稀释、直接从桶中装瓶的原液度数。"
+      },
+      "q24": {
+        "question": "「炸弹酒」是怎么制作的？",
+        "a": "在烧酒里兑啤酒",
+        "b": "把烧酒杯投入啤酒杯",
+        "c": "在啤酒里加威士忌",
+        "d": "在烧酒里兑汽水",
+        "correct": "b",
+        "explanation": "炸弹酒是将整杯烧酒投入啤酒杯中制成，是韩国特有的饮酒文化。"
+      },
+      "q25": {
+        "question": "在韩国饮酒礼仪中，给长辈斟酒时应该怎么做？",
+        "a": "单手斟酒",
+        "b": "双手斟酒",
+        "c": "坐着斟酒",
+        "d": "转过头斟酒",
+        "correct": "b",
+        "explanation": "在韩国，给长辈斟酒时用双手持瓶斟酒才是礼貌。"
+      },
+      "q26": {
+        "question": "「烧啤」是什么？",
+        "a": "烧酒和马格利酒的混合",
+        "b": "烧酒和啤酒的混合",
+        "c": "烧酒和梅子酒的混合",
+        "d": "烧酒和汽水的混合",
+        "correct": "b",
+        "explanation": "烧啤是「烧酒+啤酒」的简称，是将烧酒和啤酒按适当比例混合的饮品。"
+      },
+      "q27": {
+        "question": "马格利酒中富含的成分是什么？",
+        "a": "咖啡因",
+        "b": "牛磺酸",
+        "c": "乳酸菌",
+        "d": "维生素C",
+        "correct": "c",
+        "explanation": "马格利酒中富含发酵过程中产生的乳酸菌。"
+      },
+      "q28": {
+        "question": "人体分解一个标准杯的酒精大约需要多久？",
+        "a": "约30分钟",
+        "b": "约1小时",
+        "c": "约2小时",
+        "d": "约4小时",
+        "correct": "b",
+        "explanation": "健康的成年人分解一个标准杯的酒精通常约需1小时。"
+      },
+      "q29": {
+        "question": "主要负责分解酒精的器官是哪个？",
+        "a": "胃",
+        "b": "肾脏",
+        "c": "肝脏",
+        "d": "肺",
+        "correct": "c",
+        "explanation": "肝脏是分解体内约90%酒精的主要器官。"
+      },
+      "q30": {
+        "question": "引起宿醉的主要物质是什么？",
+        "a": "乙醇",
+        "b": "乙醛",
+        "c": "甲醇",
+        "d": "甘油",
+        "correct": "b",
+        "explanation": "乙醛是酒精分解过程中产生的有毒物质，是宿醉的主要原因。"
+      },
+      "q31": {
+        "question": "以下哪种在等量条件下热量最高？",
+        "a": "啤酒",
+        "b": "葡萄酒",
+        "c": "威士忌",
+        "d": "烧酒",
+        "correct": "c",
+        "explanation": "在等量条件下，度数高的威士忌热量最高。每克酒精约含7kcal。"
+      },
+      "q32": {
+        "question": "韩国法定的酒驾血液酒精浓度标准是多少？",
+        "a": "0.01%",
+        "b": "0.03%",
+        "c": "0.05%",
+        "d": "0.08%",
+        "correct": "b",
+        "explanation": "韩国的酒驾查处标准为血液酒精浓度0.03%以上。"
+      },
+      "q33": {
+        "question": "蒸馏酒和酿造酒的核心区别是什么？",
+        "a": "颜色",
+        "b": "是否经过蒸馏",
+        "c": "原料",
+        "d": "价格",
+        "correct": "b",
+        "explanation": "蒸馏酒是发酵后经蒸馏以提高度数的酒。"
+      },
+      "q34": {
+        "question": "按美国标准，「Proof」100相当于多少度数？",
+        "a": "25%",
+        "b": "40%",
+        "c": "50%",
+        "d": "100%",
+        "correct": "c",
+        "explanation": "美制Proof是度数的2倍，因此100 proof = 50%。"
+      },
+      "q35": {
+        "question": "葡萄酒的主要发酵原料是什么？",
+        "a": "大麦",
+        "b": "葡萄",
+        "c": "大米",
+        "d": "马铃薯",
+        "correct": "b",
+        "explanation": "葡萄酒以葡萄发酵酿造。"
+      },
+      "q36": {
+        "question": "以下哪种酒通常度数最高？",
+        "a": "啤酒",
+        "b": "马格利酒",
+        "c": "威士忌",
+        "d": "葡萄酒",
+        "correct": "c",
+        "explanation": "威士忌通常在40%以上，是其中最高的。"
+      },
+      "q37": {
+        "question": "清酒（韩式）和浊酒（马格利酒）的区别是什么？",
+        "a": "原料",
+        "b": "是否过滤澄清",
+        "c": "仅度数不同",
+        "d": "色素",
+        "correct": "b",
+        "explanation": "过滤澄清的是清酒，未过滤而浑浊的是浊酒（马格利酒）。"
+      },
+      "q38": {
+        "question": "覆盆子酒的原料是什么？",
+        "a": "覆盆子（黑树莓）",
+        "b": "梅子",
+        "c": "柚子",
+        "d": "葡萄",
+        "correct": "a",
+        "explanation": "覆盆子酒以韩国覆盆子浸泡酿制。"
+      },
+      "q39": {
+        "question": "制作烧啤时通常混合的两种酒是什么？",
+        "a": "烧酒和葡萄酒",
+        "b": "烧酒和啤酒",
+        "c": "马格利酒和啤酒",
+        "d": "威士忌和啤酒",
+        "correct": "b",
+        "explanation": "烧啤是烧酒和啤酒混合而成的酒。"
+      },
+      "q40": {
+        "question": "温热传统药酒饮用时适宜的温度区间是多少？",
+        "a": "0°C以下",
+        "b": "5°C",
+        "c": "35~45°C",
+        "d": "80°C以上",
+        "correct": "c",
+        "explanation": "温热的药酒通常在35~45°C左右较为适宜。"
+      },
+      "q41": {
+        "question": "浓缩咖啡马天尼的基酒是什么？",
+        "a": "伏特加",
+        "b": "朗姆酒",
+        "c": "金酒",
+        "d": "龙舌兰酒",
+        "correct": "a",
+        "explanation": "浓缩咖啡马天尼是在伏特加中混合咖啡利口酒和浓缩咖啡。"
+      },
+      "q42": {
+        "question": "莫斯科骡子中加入的气泡饮料是什么？",
+        "a": "汤力水",
+        "b": "姜汁啤酒",
+        "c": "可乐",
+        "d": "汽水",
+        "correct": "b",
+        "explanation": "莫斯科骡子在伏特加和青柠中加入姜汁啤酒。"
+      },
+      "q43": {
+        "question": "以下哪个不是尼格罗尼的三种等量材料？",
+        "a": "金酒",
+        "b": "金巴利",
+        "c": "可乐",
+        "d": "甜味美思",
+        "correct": "c",
+        "explanation": "尼格罗尼是将金酒、金巴利、甜味美思按1:1:1混合。"
+      },
+      "q44": {
+        "question": "让龙舌兰日出呈现「晚霞」色彩的材料是什么？",
+        "a": "红石榴糖浆",
+        "b": "牛奶",
+        "c": "咖啡",
+        "d": "薄荷",
+        "correct": "a",
+        "explanation": "沉在杯底的红石榴糖浆形成了渐变效果。"
+      },
+      "q45": {
+        "question": "卡琵莉亚的基酒是什么？",
+        "a": "朗姆酒",
+        "b": "卡莎萨",
+        "c": "金酒",
+        "d": "伏特加",
+        "correct": "b",
+        "explanation": "卡琵莉亚以巴西甘蔗酒卡莎萨制作。"
+      },
+      "q46": {
+        "question": "饮用苦艾酒的常见方法是什么？",
+        "a": "纯饮一口闷",
+        "b": "与牛奶混合",
+        "c": "用冰水稀释",
+        "d": "加热温饮",
+        "correct": "c",
+        "explanation": "苦艾酒度数高，需用冰水稀释后饮用。"
+      },
+      "q47": {
+        "question": "一个标准杯的纯酒精量大约是多少？",
+        "a": "5g",
+        "b": "14g",
+        "c": "30g",
+        "d": "50g",
+        "correct": "b",
+        "explanation": "一个标准杯以纯酒精约14g为准。"
+      },
+      "q48": {
+        "question": "人体每小时分解的酒精量大约是多少？",
+        "a": "约0.1个标准杯",
+        "b": "约5杯",
+        "c": "约1杯",
+        "d": "约3杯",
+        "correct": "c",
+        "explanation": "平均而言，人体每小时分解约1个标准杯（BAC约0.015%）。"
+      },
+      "q49": {
+        "question": "对缓解宿醉最有帮助的是什么？",
+        "a": "补充水分、电解质并休息",
+        "b": "解酒酒（宿醉再饮）",
+        "c": "大量浓咖啡",
+        "d": "香烟",
+        "correct": "a",
+        "explanation": "补充水分、电解质和充分休息最有帮助。解酒酒反而有害。"
+      },
+      "q50": {
+        "question": "空腹饮酒会怎样？",
+        "a": "吸收变慢",
+        "b": "吸收加快，更容易醉",
+        "c": "度数降低",
+        "d": "热量减少",
+        "correct": "b",
+        "explanation": "空腹时酒精吸收加快，会更快醉。"
+      }
+    },
+    "pickTopicSubtitle": "选择你感兴趣的主题，用10道题的测验轻松检验一下。",
+    "dailyTitle": "今日小测验",
+    "dailyStreak": "连续完成{{count}}天",
+    "dailyStart": "答5道题"
+  },
+  "settings": {
+    "language": "语言",
+    "selectLanguage": "选择语言",
+    "title": "设置",
+    "notifications": "通知",
+    "dailyReminder": "每日饮酒记录提醒",
+    "weeklyStats": "每周统计通知",
+    "reminderTime": "提醒时间",
+    "about": "关于应用",
+    "version": "版本",
+    "appInfo": "提供各类饮酒相关计算与信息的应用。",
+    "dataSection": "数据",
+    "dataDescription": "可将所有记录（饮酒记录、计算记录、挑战、测验进度等）导出为文本保存，并在新设备上粘贴以恢复。",
+    "exportData": "导出数据",
+    "importData": "导入数据",
+    "importDescription": "请将之前导出的备份文本粘贴到下方。",
+    "importConfirmTitle": "要恢复数据吗？",
+    "importConfirmMessage": "备份中包含的项目将覆盖当前数据。",
+    "importSuccess": "数据已恢复。",
+    "importError": "备份格式不正确。",
+    "restore": "恢复",
+    "trackingHabitTitle": "坚持记录，随时回顾",
+    "trackingHabitDescription": "通过每日记录提醒和每周报告，你可以不遗漏地查看饮酒量、热量和平均杯数。",
+    "driveSafe": "可驾驶时刻提醒",
+    "driveSafeDescription": "会话结束时，将在酒精预计代谢完毕的时刻收到通知。即便如此，开车前请务必确认自身状态。"
+  },
+  "sessionHistory": {
+    "title": "会话记录",
+    "menuTitle": "会话记录",
+    "menuDescription": "查看过往饮酒会话的峰值BAC和杯数时间线",
+    "empty": "还没有保存的会话。结束实时会话后将记录在此。",
+    "peakBac": "峰值BAC",
+    "standardDrinks": "总标准杯",
+    "standardDrinksCount": "标准杯{{count}}杯",
+    "soberAt": "预计醒酒",
+    "timeline": "杯数时间线",
+    "share": "分享",
+    "shareTitle": "我的饮酒会话",
+    "shareFooter": "基于Widmark公式的估算值 · 饮酒后禁止开车",
+    "shareFallback": "{{date}} 饮酒会话 — 峰值BAC {{peak}}%，标准杯{{drinks}}杯",
+    "delete": "删除",
+    "deleteTitle": "要删除此会话吗？",
+    "deleteMessage": "此会话记录将被永久删除。"
+  },
+  "customDrinks": {
+    "title": "自定义酒类管理",
+    "name": "名称",
+    "namePlaceholder": "例：我的家酿葡萄酒",
+    "abv": "度数",
+    "volume": "容量",
+    "price": "价格（可选）",
+    "add": "添加",
+    "addShort": "添加",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "saved": "已保存的自定义酒类",
+    "standardDrinksShort": "标准杯{{count}}",
+    "deleteTitle": "要删除自定义酒类吗？",
+    "deleteMessage": "将删除「{{name}}」。"
+  },
+  "notifications": {
+    "dailyTitle": "今日饮酒记录",
+    "dailyBody": "记录一下今天喝的饮品吧！",
+    "weeklyTitle": "每周饮酒统计",
+    "weeklyBody": "查看本周的饮酒统计吧！",
+    "permissionRequired": "使用通知需要授予权限"
+  },
+  "more": {
+    "title": "更多",
+    "history": "计算记录",
+    "quiz": "酒类测验",
+    "settings": "设置",
+    "historyDescription": "查看以往的计算结果",
+    "quizDescription": "测试你的酒类知识",
+    "settingsDescription": "设置语言、通知等",
+    "subtitle": "更多功能与设置",
+    "recovery": "宿醉预测与恢复",
+    "recoveryDescription": "根据饮酒量查看BAC走势和恢复贴士"
+  },
+  "recovery": {
+    "back": "返回",
+    "title": "宿醉预测与恢复指南",
+    "yourDetails": "信息输入",
+    "weight": "体重（kg）",
+    "gender": "性别",
+    "male": "男",
+    "female": "女",
+    "standardDrinks": "标准杯数",
+    "bacTimeline": "BAC走势",
+    "peakBac": "预计最高BAC",
+    "timeToSober": "完全清醒所需时间",
+    "hoursUnit": "小时",
+    "emptyState": "将体重和标准杯数输入为大于0的值后，即可显示BAC走势。",
+    "tipsTitle": "恢复贴士",
+    "tip1": "用水或运动饮料充分补充水分。",
+    "tip2": "饮酒前和饮酒时一起进食可减缓吸收。",
+    "tip3": "补充维生素和电解质有助于恢复状态。",
+    "tip4": "充足的睡眠能给身体恢复的时间。",
+    "tip5": "避免过量咖啡因和解酒酒，建议距下次饮酒至少休息48小时。",
+    "disclaimer": "本内容并非医疗建议，因人而异。"
+  },
+  "challenge": {
+    "title": "戒酒挑战",
+    "subtitle": "尝试在目标天数内滴酒不沾吧。",
+    "startA11y": "开始{{count}}天挑战",
+    "dayOption": "{{count}}天",
+    "stopA11y": "中止挑战",
+    "stop": "中止",
+    "streakLabel": "连续戒酒天数",
+    "moneySaved": "💰 约省下酒钱{{amount}}元",
+    "shareSucceeded": "🏆 完成戒酒挑战{{target}}天！{{savedLine}}\n#戒酒挑战 #酒类计算器",
+    "shareInProgress": "🔥 戒酒挑战进行到第{{streak}}天！（目标{{target}}天）{{savedLine}}\n#戒酒挑战 #酒类计算器",
+    "goalReached": "目标达成！🎉",
+    "shareA11y": "分享挑战",
+    "share": "📣 分享"
+  },
+  "weeklyGoal": {
+    "title": "每周饮酒目标",
+    "subtitle": "设定一周饮酒杯数上限并加以坚持。",
+    "setCta": "设定每周目标",
+    "modalTitle": "设定每周目标",
+    "modalSubtitle": "请输入一周内最多饮用的杯数。",
+    "presetA11y": "每周{{count}}杯",
+    "drinksUnit": "{{count}}杯",
+    "inputPlaceholder": "例：7",
+    "inputA11y": "输入每周上限杯数",
+    "cancel": "取消",
+    "confirm": "设定",
+    "progressLabel": "本周已喝杯数",
+    "remaining": "距目标还剩{{count}}杯",
+    "exceeded": "已超出目标{{count}}杯",
+    "edit": "编辑",
+    "editA11y": "编辑每周目标",
+    "clear": "取消",
+    "clearA11y": "取消每周目标"
+  },
+  "insights": {
+    "title": "本周洞察",
+    "comparisonSame": "与上周杯数相同",
+    "comparisonUp": "比上周多{{count}}杯",
+    "comparisonDown": "比上周少{{count}}杯",
+    "statDrinks": "总杯数",
+    "statCalories": "总热量",
+    "statAvgAbv": "平均度数",
+    "mostCommon": "本周记录最频繁的项目是{{name}}。",
+    "empty": "添加记录后，将显示每周模式和最常饮用的项目。",
+    "openGuide": "查看标准杯/安全指南"
+  },
+  "recommender": {
+    "title": "定制配方推荐",
+    "subtitle": "按材料和度数条件筛选吧。",
+    "style": "风格",
+    "all": "全部",
+    "maxAbv": "最高度数",
+    "maxCalories": "最高热量",
+    "openDetails": "查看详情",
+    "emptyTitle": "没有符合条件的配方",
+    "emptySubtitle": "尝试放宽度数或热量条件。"
+  },
+  "culture": {
+    "cultureTitle": "各国饮酒文化",
+    "pairingTitle": "酒 · 下酒菜搭配",
+    "customs": "文化特色",
+    "etiquette": "礼仪",
+    "pairings": "绝配下酒菜",
+    "tip": "贴士"
+  },
+  "errors": {
+    "positiveValues": "所有数值必须大于0",
+    "abvUnder100": "度数必须为100%以下",
+    "abvPositive": "度数必须大于0",
+    "abvUnder100Alcohol": "酒精度数必须为100%以下",
+    "abvPositiveAlcohol": "酒精度数必须大于0",
+    "calculationError": "计算过程中发生错误"
+  },
+  "units": {
+    "ml": "ml",
+    "percent": "%",
+    "celsius": "°C",
+    "proof": "Proof",
+    "kcal": "kcal"
+  }
+}

@@ -6,18 +6,24 @@ import {
   getChallenge,
   toLocalDateString,
 } from "../utils/engagement/sobrietyChallenge";
+import {
+  computeWeeklyProgress,
+  getWeeklyGoal,
+} from "../utils/engagement/weeklyGoal";
 import { getDrinkLogs, getWeeklyStats } from "../utils/trackerStorage";
 import type { SobrietyWidgetContent } from "./SobrietyWidget";
 
 const SAVINGS_BASELINE_DAYS = 28;
 
-type WidgetLanguage = "ko" | "en" | "es";
+type WidgetLanguage = "ko" | "en" | "es" | "ja" | "zh";
 
 const getLanguage = async (): Promise<WidgetLanguage> => {
   try {
     const stored = await AsyncStorage.getItem("@app_language");
     if (stored?.startsWith("en")) return "en";
     if (stored?.startsWith("es")) return "es";
+    if (stored?.startsWith("ja")) return "ja";
+    if (stored?.startsWith("zh")) return "zh";
     return "ko";
   } catch {
     return "ko";
@@ -33,6 +39,8 @@ const STRINGS: Record<WidgetLanguage, {
   drinksUnit: (count: number) => string;
   weeklySubtitle: (kcal: number) => string;
   emptyFooter: string;
+  goalRemaining: (count: number) => string;
+  goalExceeded: (count: number) => string;
 }> = {
   ko: {
     challengeTitle: "절주 챌린지",
@@ -43,6 +51,8 @@ const STRINGS: Record<WidgetLanguage, {
     drinksUnit: (count) => `${count}잔`,
     weeklySubtitle: (kcal) => `${kcal} kcal`,
     emptyFooter: "탭해서 기록 시작하기",
+    goalRemaining: (count) => `🎯 목표까지 ${count}잔 남음`,
+    goalExceeded: (count) => `⚠️ 목표 ${count}잔 초과`,
   },
   en: {
     challengeTitle: "Sobriety Challenge",
@@ -53,6 +63,8 @@ const STRINGS: Record<WidgetLanguage, {
     drinksUnit: (count) => `${count} drinks`,
     weeklySubtitle: (kcal) => `${kcal} kcal`,
     emptyFooter: "Tap to start tracking",
+    goalRemaining: (count) => `🎯 ${count} left to goal`,
+    goalExceeded: (count) => `⚠️ ${count} over goal`,
   },
   es: {
     challengeTitle: "Reto sin alcohol",
@@ -63,6 +75,32 @@ const STRINGS: Record<WidgetLanguage, {
     drinksUnit: (count) => `${count} bebidas`,
     weeklySubtitle: (kcal) => `${kcal} kcal`,
     emptyFooter: "Toca para registrar",
+    goalRemaining: (count) => `🎯 Faltan ${count} para la meta`,
+    goalExceeded: (count) => `⚠️ ${count} sobre la meta`,
+  },
+  ja: {
+    challengeTitle: "節酒チャレンジ",
+    dayUnit: (days) => `${days}日目`,
+    target: (days) => `目標 ${days}日`,
+    saved: (amount) => `💰 節約したお酒代 約${amount}`,
+    weeklyTitle: "今週の飲酒",
+    drinksUnit: (count) => `${count}杯`,
+    weeklySubtitle: (kcal) => `${kcal} kcal`,
+    emptyFooter: "タップして記録を開始",
+    goalRemaining: (count) => `🎯 目標まであと${count}杯`,
+    goalExceeded: (count) => `⚠️ 目標を${count}杯超過`,
+  },
+  zh: {
+    challengeTitle: "戒酒挑战",
+    dayUnit: (days) => `第${days}天`,
+    target: (days) => `目标 ${days}天`,
+    saved: (amount) => `💰 已省酒钱约${amount}`,
+    weeklyTitle: "本周饮酒",
+    drinksUnit: (count) => `${count}杯`,
+    weeklySubtitle: (kcal) => `${kcal} kcal`,
+    emptyFooter: "点按开始记录",
+    goalRemaining: (count) => `🎯 距目标还差${count}杯`,
+    goalExceeded: (count) => `⚠️ 超出目标${count}杯`,
   },
 };
 
@@ -114,11 +152,21 @@ export const buildSobrietyWidgetContent =
       };
     }
 
-    const weekly = await getWeeklyStats(today);
+    const [weekly, goal] = await Promise.all([
+      getWeeklyStats(today),
+      getWeeklyGoal(),
+    ]);
+    const goalProgress = computeWeeklyProgress(goal, weekly.totalDrinks);
+    let footer = weekly.totalDrinks === 0 ? strings.emptyFooter : "";
+    if (goalProgress) {
+      footer = goalProgress.exceeded
+        ? strings.goalExceeded(goalProgress.overBy)
+        : strings.goalRemaining(goalProgress.remainingDrinks);
+    }
     return {
       title: strings.weeklyTitle,
       mainValue: strings.drinksUnit(weekly.totalDrinks),
       subtitle: strings.weeklySubtitle(weekly.totalCalories),
-      footer: weekly.totalDrinks === 0 ? strings.emptyFooter : "",
+      footer,
     };
   };

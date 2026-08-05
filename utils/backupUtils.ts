@@ -7,9 +7,12 @@ export const BACKUP_KEYS = [
   "@content_favorites",
   "@recent_content",
   "@sobriety_challenge",
+  "@weekly_goal",
   "@notification_prefs",
   "@quiz_progress",
   "@session_profile",
+  "@session_history",
+  "@custom_drinks",
 ] as const;
 
 export const BACKUP_VERSION = 1;

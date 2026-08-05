@@ -7,8 +7,6 @@ import { TestIds } from "./mobileAds";
  * and reporting for each location independently. In development every slot
  * falls back to Google's official test unit IDs.
  *
- * To create the production rewarded unit and the dedicated banner units,
- * add them in the AdMob console and replace the placeholder IDs below.
  */
 
 const PUBLISHER = "ca-app-pub-7612314432840835";
@@ -20,23 +18,25 @@ type AdUnitMap = {
   readonly inlineBanner: string;
   /** Interstitial shown after quiz completion. */
   readonly quizInterstitial: string;
+  /** Interstitial shown after a live session ends and is saved. */
+  readonly sessionInterstitial: string;
   /** Rewarded video; opt-in unlocks (extra quiz attempt, etc.). */
   readonly rewarded: string;
 };
 
 const PROD_AD_UNITS: AdUnitMap = {
   anchoredBanner: `${PUBLISHER}/5764066171`,
-  // TODO: replace with dedicated inline banner unit created in AdMob console.
-  inlineBanner: `${PUBLISHER}/5764066171`,
+  inlineBanner: `${PUBLISHER}/3826487912`,
   quizInterstitial: `${PUBLISHER}/3082062514`,
-  // TODO: replace with the rewarded unit created in AdMob console.
-  rewarded: `${PUBLISHER}/3082062514`,
+  sessionInterstitial: `${PUBLISHER}/8446711044`,
+  rewarded: `${PUBLISHER}/3634916227`,
 };
 
 const TEST_AD_UNITS: AdUnitMap = {
   anchoredBanner: TestIds.BANNER,
   inlineBanner: TestIds.BANNER,
   quizInterstitial: TestIds.INTERSTITIAL,
+  sessionInterstitial: TestIds.INTERSTITIAL,
   rewarded: TestIds.REWARDED,
 };
 

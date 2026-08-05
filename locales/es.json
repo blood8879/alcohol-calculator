@@ -748,7 +748,9 @@
     "disclaimer": "Estimación aproximada basada en la fórmula de Widmark; puede diferir de tu BAC real. Nunca conduzcas después de beber.",
     "homeCta": "Bebiendo ahora",
     "homeCtaDescription": "Registra bebidas y mira tu BAC estimado en vivo",
-    "homeCtaActive": "Sesión en curso — sigue registrando"
+    "homeCtaActive": "Sesión en curso — sigue registrando",
+    "dangerBannerTitle": "Has alcanzado un nivel de riesgo",
+    "dangerBannerBody": "Tu TAS estimada está en zona de peligro. Bebe agua, baja el ritmo y nunca conduzcas."
   },
   "quiz": {
     "title": "Quiz de Alcohol",
@@ -1250,7 +1252,44 @@
     "importError": "No parece una copia de seguridad válida.",
     "restore": "Restaurar",
     "trackingHabitTitle": "Mantén tu hábito de registro",
-    "trackingHabitDescription": "Los recordatorios diarios y semanales te ayudan a revisar bebidas, calorías y promedios semanales."
+    "trackingHabitDescription": "Los recordatorios diarios y semanales te ayudan a revisar bebidas, calorías y promedios semanales.",
+    "driveSafe": "Aviso de cuándo puedes conducir",
+    "driveSafeDescription": "Recibe una notificación a la hora estimada en que tu alcohol debería haberse metabolizado tras una sesión. Aun así, revisa cómo te sientes antes de conducir."
+  },
+  "sessionHistory": {
+    "title": "Historial de sesiones",
+    "menuTitle": "Historial de sesiones",
+    "menuDescription": "Revisa la TAS máxima y la cronología de bebidas de sesiones pasadas",
+    "empty": "Aún no hay sesiones guardadas. Finaliza una sesión en vivo para registrarla aquí.",
+    "peakBac": "TAS máxima",
+    "standardDrinks": "Bebidas estándar totales",
+    "standardDrinksCount": "{{count}} bebidas estándar",
+    "soberAt": "Sobrio a las",
+    "timeline": "Cronología de bebidas",
+    "share": "Compartir",
+    "shareTitle": "Mi sesión de consumo",
+    "shareFooter": "Estimación según Widmark · Nunca conduzcas tras beber",
+    "shareFallback": "Sesión del {{date}} — TAS máxima {{peak}}%, {{drinks}} bebidas estándar",
+    "delete": "Eliminar",
+    "deleteTitle": "¿Eliminar esta sesión?",
+    "deleteMessage": "Este registro de sesión se eliminará permanentemente."
+  },
+  "customDrinks": {
+    "title": "Gestionar bebidas personalizadas",
+    "name": "Nombre",
+    "namePlaceholder": "p. ej. Mi vino de la casa",
+    "abv": "Graduación",
+    "volume": "Volumen",
+    "price": "Precio (opcional)",
+    "add": "Añadir",
+    "addShort": "Añadir",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "saved": "Bebidas personalizadas guardadas",
+    "standardDrinksShort": "{{count}} est.",
+    "deleteTitle": "¿Eliminar bebida personalizada?",
+    "deleteMessage": "Se eliminará '{{name}}'."
   },
   "notifications": {
     "dailyTitle": "Registro de Bebidas de Hoy",
@@ -1307,6 +1346,26 @@
     "goalReached": "¡Meta alcanzada! 🎉",
     "shareA11y": "Compartir reto",
     "share": "📣 Compartir"
+  },
+  "weeklyGoal": {
+    "title": "Meta semanal de bebidas",
+    "subtitle": "Fija un límite de bebidas por semana y controla tu progreso.",
+    "setCta": "Fijar meta semanal",
+    "modalTitle": "Fijar meta semanal",
+    "modalSubtitle": "Introduce el máximo de bebidas que quieres esta semana.",
+    "presetA11y": "{{count}} bebidas por semana",
+    "drinksUnit": "{{count}} bebidas",
+    "inputPlaceholder": "ej. 7",
+    "inputA11y": "Introducir límite semanal de bebidas",
+    "cancel": "Cancelar",
+    "confirm": "Fijar",
+    "progressLabel": "Bebidas esta semana",
+    "remaining": "Te quedan {{count}} bebidas para tu meta",
+    "exceeded": "{{count}} bebidas por encima de tu meta",
+    "edit": "Editar",
+    "editA11y": "Editar meta semanal",
+    "clear": "Quitar",
+    "clearA11y": "Quitar meta semanal"
   },
   "insights": {
     "title": "Resumen semanal",

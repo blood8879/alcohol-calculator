@@ -22,6 +22,7 @@ import {
   cancelDailyReminder,
   scheduleWeeklySummary,
   cancelWeeklySummary,
+  cancelDriveSafeReminder,
   getNotificationPrefs,
   setNotificationPrefs,
 } from "../../../utils/notificationUtils";
@@ -32,6 +33,7 @@ export default function SettingsScreen() {
   const { t } = useTranslation();
   const [dailyReminder, setDailyReminder] = useState(false);
   const [weeklySummary, setWeeklySummary] = useState(false);
+  const [driveSafe, setDriveSafe] = useState(true);
   const [importVisible, setImportVisible] = useState(false);
   const [importText, setImportText] = useState("");
 
@@ -39,6 +41,7 @@ export default function SettingsScreen() {
     getNotificationPrefs().then((prefs) => {
       setDailyReminder(prefs.dailyEnabled);
       setWeeklySummary(prefs.weeklyEnabled);
+      setDriveSafe(prefs.driveSafeEnabled);
     });
   }, []);
 
@@ -51,7 +54,26 @@ export default function SettingsScreen() {
       await cancelDailyReminder();
     }
     setDailyReminder(enabled);
-    await setNotificationPrefs({ dailyEnabled: enabled, weeklyEnabled: weeklySummary });
+    await setNotificationPrefs({
+      dailyEnabled: enabled,
+      weeklyEnabled: weeklySummary,
+      driveSafeEnabled: driveSafe,
+    });
+  };
+
+  const handleDriveSafeToggle = async (enabled: boolean) => {
+    if (enabled) {
+      const granted = await requestPermissions();
+      if (!granted) return;
+    } else {
+      await cancelDriveSafeReminder();
+    }
+    setDriveSafe(enabled);
+    await setNotificationPrefs({
+      dailyEnabled: dailyReminder,
+      weeklyEnabled: weeklySummary,
+      driveSafeEnabled: enabled,
+    });
   };
 
   const handleExport = async () => {
@@ -95,7 +117,11 @@ export default function SettingsScreen() {
       await cancelWeeklySummary();
     }
     setWeeklySummary(enabled);
-    await setNotificationPrefs({ dailyEnabled: dailyReminder, weeklyEnabled: enabled });
+    await setNotificationPrefs({
+      dailyEnabled: dailyReminder,
+      weeklyEnabled: enabled,
+      driveSafeEnabled: driveSafe,
+    });
   };
 
   return (
@@ -136,13 +162,29 @@ export default function SettingsScreen() {
                 thumbColor="#ffffff"
               />
             </View>
-            <View className="flex-row items-center justify-between py-3">
+            <View className="flex-row items-center justify-between py-3 border-b border-gray-700">
               <Text className="text-white text-base">
                 {t("settings.weeklyStats")}
               </Text>
               <Switch
                 value={weeklySummary}
                 onValueChange={handleWeeklySummaryToggle}
+                trackColor={{ false: "#374151", true: "#22c55e" }}
+                thumbColor="#ffffff"
+              />
+            </View>
+            <View className="flex-row items-center justify-between py-3">
+              <View className="flex-1 mr-3">
+                <Text className="text-white text-base">
+                  {t("settings.driveSafe")}
+                </Text>
+                <Text className="text-gray-400 text-xs mt-0.5 leading-4">
+                  {t("settings.driveSafeDescription")}
+                </Text>
+              </View>
+              <Switch
+                value={driveSafe}
+                onValueChange={handleDriveSafeToggle}
                 trackColor={{ false: "#374151", true: "#22c55e" }}
                 thumbColor="#ffffff"
               />

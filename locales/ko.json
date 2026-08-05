@@ -748,7 +748,9 @@
     "disclaimer": "이 수치는 Widmark 공식 기반의 참고용 추정치이며 실제 혈중알코올농도와 다를 수 있습니다. 음주 후에는 수치와 관계없이 운전하지 마세요.",
     "homeCta": "지금 마시는 중",
     "homeCtaDescription": "잔을 기록하며 실시간 BAC 추정치 확인",
-    "homeCtaActive": "세션 진행 중 — 이어서 기록하기"
+    "homeCtaActive": "세션 진행 중 — 이어서 기록하기",
+    "dangerBannerTitle": "위험 수준입니다",
+    "dangerBannerBody": "혈중알코올농도가 위험 범위에 들어섰어요. 물을 마시고 속도를 늦추세요. 절대 운전하지 마세요."
   },
   "quiz": {
     "title": "술 퀴즈",
@@ -1250,7 +1252,44 @@
     "importError": "올바른 백업 형식이 아닙니다.",
     "restore": "복원하기",
     "trackingHabitTitle": "꾸준히 기록하고 다시 확인하기",
-    "trackingHabitDescription": "하루 기록 알림과 주간 리포트로 음주량, 칼로리, 평균 잔 수를 놓치지 않고 확인할 수 있습니다."
+    "trackingHabitDescription": "하루 기록 알림과 주간 리포트로 음주량, 칼로리, 평균 잔 수를 놓치지 않고 확인할 수 있습니다.",
+    "driveSafe": "운전 가능 시각 알림",
+    "driveSafeDescription": "세션 종료 시 알코올이 대사되었을 예상 시각에 알림을 받습니다. 그래도 운전 전에는 컨디션을 확인하세요."
+  },
+  "sessionHistory": {
+    "title": "세션 기록",
+    "menuTitle": "세션 기록",
+    "menuDescription": "지난 음주 세션의 피크 BAC와 잔 타임라인 보기",
+    "empty": "아직 저장된 세션이 없습니다. 라이브 세션을 종료하면 여기에 기록됩니다.",
+    "peakBac": "피크 BAC",
+    "standardDrinks": "총 표준잔",
+    "standardDrinksCount": "표준잔 {{count}}잔",
+    "soberAt": "해독 예상",
+    "timeline": "잔 타임라인",
+    "share": "공유하기",
+    "shareTitle": "나의 음주 세션",
+    "shareFooter": "Widmark 공식 기반 추정치 · 음주 후 운전 금지",
+    "shareFallback": "{{date}} 음주 세션 — 피크 BAC {{peak}}%, 표준잔 {{drinks}}잔",
+    "delete": "삭제",
+    "deleteTitle": "세션을 삭제할까요?",
+    "deleteMessage": "이 세션 기록이 영구적으로 삭제됩니다."
+  },
+  "customDrinks": {
+    "title": "커스텀 술 관리",
+    "name": "이름",
+    "namePlaceholder": "예: 내 하우스 와인",
+    "abv": "도수",
+    "volume": "용량",
+    "price": "가격 (선택)",
+    "add": "추가",
+    "addShort": "추가",
+    "save": "저장",
+    "edit": "수정",
+    "delete": "삭제",
+    "saved": "저장된 커스텀 술",
+    "standardDrinksShort": "표준잔 {{count}}",
+    "deleteTitle": "커스텀 술을 삭제할까요?",
+    "deleteMessage": "'{{name}}'을(를) 삭제합니다."
   },
   "notifications": {
     "dailyTitle": "오늘의 음주 기록",
@@ -1307,6 +1346,26 @@
     "goalReached": "목표 달성! 🎉",
     "shareA11y": "챌린지 공유하기",
     "share": "📣 공유하기"
+  },
+  "weeklyGoal": {
+    "title": "주간 음주 목표",
+    "subtitle": "일주일 동안 마실 잔 수 한도를 정하고 지켜보세요.",
+    "setCta": "주간 목표 설정",
+    "modalTitle": "주간 목표 설정",
+    "modalSubtitle": "일주일에 마실 최대 잔 수를 입력하세요.",
+    "presetA11y": "주 {{count}}잔",
+    "drinksUnit": "{{count}}잔",
+    "inputPlaceholder": "예: 7",
+    "inputA11y": "주간 한도 잔 수 입력",
+    "cancel": "취소",
+    "confirm": "설정",
+    "progressLabel": "이번 주 마신 잔 수",
+    "remaining": "목표까지 {{count}}잔 남았어요",
+    "exceeded": "목표를 {{count}}잔 초과했어요",
+    "edit": "수정",
+    "editA11y": "주간 목표 수정",
+    "clear": "해제",
+    "clearA11y": "주간 목표 해제"
   },
   "insights": {
     "title": "이번 주 인사이트",

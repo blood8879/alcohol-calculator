@@ -28,14 +28,16 @@ import {
 import Card from "../../components/ui/Card";
 import QuizQuestionCard from "../../components/QuizQuestion";
 import QuizResult from "../../components/QuizResult";
-import { InterstitialAd, AdEventType } from "../../utils/mobileAds";
 import { adUnits } from "../../utils/adUnits";
+import {
+  recordInterstitialShown,
+  shouldShowInterstitial,
+} from "../../utils/adFrequency";
 import { useRewardedAd } from "../../hooks/useRewardedAd";
+import { useInterstitialAd } from "../../hooks/useInterstitialAd";
 
 type QuizState = "idle" | "playing" | "results";
 type ProgressCategory = Exclude<QuizCategory, "all">;
-
-const interstitial = InterstitialAd.createForAdRequest(adUnits.quizInterstitial);
 
 export default function QuizScreen() {
   const router = useRouter();
@@ -53,28 +55,18 @@ export default function QuizScreen() {
   const [progress, setProgress] = useState<QuizProgress>(() =>
     createEmptyQuizProgress()
   );
-  const [adLoaded, setAdLoaded] = useState(false);
+
+  // 완료 후 전면광고: 닫히면 결과 화면으로 진행한다.
+  const {
+    loaded: adLoaded,
+    show: showInterstitial,
+    reload: reloadInterstitial,
+  } = useInterstitialAd(adUnits.quizInterstitial, {
+    onClosed: () => setQuizState("results"),
+  });
 
   useEffect(() => {
     getQuizProgress().then(setProgress);
-  }, []);
-
-  useEffect(() => {
-    const loadedListener = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-      setAdLoaded(true);
-    });
-    const closedListener = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-      setAdLoaded(false);
-      setQuizState("results");
-      interstitial.load();
-    });
-
-    interstitial.load();
-
-    return () => {
-      loadedListener();
-      closedListener();
-    };
   }, []);
 
   const startQuestionSet = useCallback(
@@ -136,14 +128,16 @@ export default function QuizScreen() {
   );
 
   const handleAnswer = useCallback(
-    (selectedIndex: number) => {
+    async (selectedIndex: number) => {
       const newAnswers = [...userAnswers, selectedIndex];
       setUserAnswers(newAnswers);
 
       if (currentIndex + 1 >= questions.length) {
         void completeQuiz(newAnswers);
-        if (adLoaded) {
-          interstitial.show();
+        // 광고가 준비됐고 빈도 캡에 걸리지 않을 때만 표시. 그 외엔 바로 결과로.
+        const canShow = adLoaded && (await shouldShowInterstitial("quiz"));
+        if (canShow && showInterstitial()) {
+          void recordInterstitialShown("quiz");
         } else {
           setQuizState("results");
         }
@@ -151,14 +145,13 @@ export default function QuizScreen() {
         setCurrentIndex((prev) => prev + 1);
       }
     },
-    [userAnswers, currentIndex, questions.length, completeQuiz, adLoaded]
+    [userAnswers, currentIndex, questions.length, completeQuiz, adLoaded, showInterstitial]
   );
 
   const restartQuiz = useCallback(() => {
-    setAdLoaded(false);
-    interstitial.load();
+    reloadInterstitial();
     startQuiz();
-  }, [startQuiz]);
+  }, [startQuiz, reloadInterstitial]);
 
   // Opt-in rewarded video: watching it grants a bonus retry.
   const { show: showRewardedRetry } = useRewardedAd(restartQuiz);

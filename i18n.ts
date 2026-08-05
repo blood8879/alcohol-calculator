@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ko from './locales/ko.json';
 import en from './locales/en.json';
 import es from './locales/es.json';
+import ja from './locales/ja.json';
+import zh from './locales/zh.json';
 
 const LANGUAGE_KEY = '@app_language';
 
@@ -39,7 +41,7 @@ const getInitialLanguage = async () => {
   const deviceLanguage = Localization.getLocales()[0]?.languageCode || 'ko';
 
   // 지원하는 언어 목록
-  const supportedLanguages = ['ko', 'en', 'es'];
+  const supportedLanguages = ['ko', 'en', 'es', 'ja', 'zh'];
 
   return supportedLanguages.includes(deviceLanguage) ? deviceLanguage : 'ko';
 };
@@ -55,6 +57,8 @@ export const initI18n = async () => {
         ko: { translation: ko },
         en: { translation: en },
         es: { translation: es },
+        ja: { translation: ja },
+        zh: { translation: zh },
       },
       lng: initialLanguage,
       fallbackLng: 'ko',

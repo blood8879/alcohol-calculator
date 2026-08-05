@@ -43,6 +43,14 @@ import {
   estimateMoneySaved,
   toLocalDateString,
 } from "../../utils/engagement/sobrietyChallenge";
+import WeeklyGoalCard from "../../components/WeeklyGoalCard";
+import {
+  WeeklyProgress,
+  getWeeklyGoal,
+  setWeeklyGoal,
+  clearWeeklyGoal,
+  computeWeeklyProgress,
+} from "../../utils/engagement/weeklyGoal";
 import { updateSobrietyWidget } from "../../widgets/updateSobrietyWidget";
 
 
@@ -101,6 +109,9 @@ export default function TrackerScreen() {
   const [challengeProgress, setChallengeProgress] =
     useState<ChallengeProgress | null>(null);
   const [moneySaved, setMoneySaved] = useState(0);
+  const [weeklyProgress, setWeeklyProgress] = useState<WeeklyProgress | null>(
+    null
+  );
 
 
   const refreshData = useCallback(async () => {
@@ -109,15 +120,18 @@ export default function TrackerScreen() {
     insightStart.setHours(0, 0, 0, 0);
     const insightEnd = new Date(selectedDate);
     insightEnd.setHours(23, 59, 59, 999);
-    const [dateLogs, stats, insightLogs, storedChallenge] = await Promise.all([
-      getDrinkLogsForDate(selectedDate),
-      getWeeklyStats(selectedDate),
-      getDrinkLogs(insightStart, insightEnd),
-      getChallenge(),
-    ]);
+    const [dateLogs, stats, insightLogs, storedChallenge, storedGoal] =
+      await Promise.all([
+        getDrinkLogsForDate(selectedDate),
+        getWeeklyStats(selectedDate),
+        getDrinkLogs(insightStart, insightEnd),
+        getChallenge(),
+        getWeeklyGoal(),
+      ]);
     setLogs(dateLogs.sort((a, b) => b.timestamp - a.timestamp));
     setWeeklyStats(stats);
     setInsights(buildTrackerInsights(insightLogs, selectedDate));
+    setWeeklyProgress(computeWeeklyProgress(storedGoal, stats.totalDrinks));
 
     setChallenge(storedChallenge);
     if (storedChallenge) {
@@ -193,6 +207,19 @@ export default function TrackerScreen() {
 
   const handleStopChallenge = useCallback(async () => {
     await stopChallenge();
+    refreshData();
+  }, [refreshData]);
+
+  const handleSetWeeklyGoal = useCallback(
+    async (limitDrinks: number) => {
+      await setWeeklyGoal(limitDrinks);
+      refreshData();
+    },
+    [refreshData]
+  );
+
+  const handleClearWeeklyGoal = useCallback(async () => {
+    await clearWeeklyGoal();
     refreshData();
   }, [refreshData]);
 
@@ -274,6 +301,12 @@ export default function TrackerScreen() {
             moneySaved={moneySaved}
             onStart={handleStartChallenge}
             onStop={handleStopChallenge}
+          />
+
+          <WeeklyGoalCard
+            progress={weeklyProgress}
+            onSetGoal={handleSetWeeklyGoal}
+            onClearGoal={handleClearWeeklyGoal}
           />
 
           <Text className="text-lg font-semibold text-white mb-3">

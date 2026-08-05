@@ -748,7 +748,9 @@
     "disclaimer": "This is a rough estimate based on the Widmark formula and may differ from your actual BAC. Never drive after drinking, regardless of this number.",
     "homeCta": "Drinking now",
     "homeCtaDescription": "Log drinks and watch your estimated BAC live",
-    "homeCtaActive": "Session in progress — keep logging"
+    "homeCtaActive": "Session in progress — keep logging",
+    "dangerBannerTitle": "You've reached a risky level",
+    "dangerBannerBody": "Your estimated BAC is in the danger zone. Drink water, slow down, and never drive."
   },
   "quiz": {
     "title": "Alcohol Quiz",
@@ -1250,7 +1252,44 @@
     "importError": "That doesn't look like a valid backup.",
     "restore": "Restore",
     "trackingHabitTitle": "Keep your tracking habit",
-    "trackingHabitDescription": "Daily and weekly reminders help you review drinks, calories, and weekly averages."
+    "trackingHabitDescription": "Daily and weekly reminders help you review drinks, calories, and weekly averages.",
+    "driveSafe": "Safe-to-drive reminder",
+    "driveSafeDescription": "Get a notification at the estimated time your alcohol should be metabolized after a session. Always check how you feel before driving."
+  },
+  "sessionHistory": {
+    "title": "Session History",
+    "menuTitle": "Session History",
+    "menuDescription": "Review peak BAC and drink timeline from past sessions",
+    "empty": "No saved sessions yet. End a live session to record it here.",
+    "peakBac": "Peak BAC",
+    "standardDrinks": "Total standard drinks",
+    "standardDrinksCount": "{{count}} std drinks",
+    "soberAt": "Sober by",
+    "timeline": "Drink timeline",
+    "share": "Share",
+    "shareTitle": "My drinking session",
+    "shareFooter": "Widmark-based estimate · Never drink and drive",
+    "shareFallback": "{{date}} session — peak BAC {{peak}}%, {{drinks}} standard drinks",
+    "delete": "Delete",
+    "deleteTitle": "Delete this session?",
+    "deleteMessage": "This session record will be permanently removed."
+  },
+  "customDrinks": {
+    "title": "Manage custom drinks",
+    "name": "Name",
+    "namePlaceholder": "e.g. My house wine",
+    "abv": "ABV",
+    "volume": "Volume",
+    "price": "Price (optional)",
+    "add": "Add",
+    "addShort": "Add",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "saved": "Saved custom drinks",
+    "standardDrinksShort": "{{count}} std",
+    "deleteTitle": "Delete custom drink?",
+    "deleteMessage": "'{{name}}' will be removed."
   },
   "notifications": {
     "dailyTitle": "Today's Drink Log",
@@ -1307,6 +1346,26 @@
     "goalReached": "Goal reached! 🎉",
     "shareA11y": "Share challenge",
     "share": "📣 Share"
+  },
+  "weeklyGoal": {
+    "title": "Weekly Drink Goal",
+    "subtitle": "Set a weekly drink limit and track how you're doing.",
+    "setCta": "Set weekly goal",
+    "modalTitle": "Set weekly goal",
+    "modalSubtitle": "Enter the maximum drinks you want this week.",
+    "presetA11y": "{{count}} drinks per week",
+    "drinksUnit": "{{count}} drinks",
+    "inputPlaceholder": "e.g. 7",
+    "inputA11y": "Enter weekly drink limit",
+    "cancel": "Cancel",
+    "confirm": "Set",
+    "progressLabel": "Drinks this week",
+    "remaining": "{{count}} drinks left to your goal",
+    "exceeded": "{{count}} drinks over your goal",
+    "edit": "Edit",
+    "editA11y": "Edit weekly goal",
+    "clear": "Remove",
+    "clearA11y": "Remove weekly goal"
   },
   "insights": {
     "title": "Weekly Insights",

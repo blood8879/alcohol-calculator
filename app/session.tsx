@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   ScrollView,
@@ -32,6 +32,26 @@ import {
 import { addDrinkLogsWithTimestamps } from "../utils/trackerStorage";
 import { generateId } from "../utils/idGenerator";
 import { updateSobrietyWidget } from "../widgets/updateSobrietyWidget";
+import {
+  CustomDrink,
+  getCustomDrinks,
+} from "../utils/customDrinks";
+import CustomDrinkManagerModal from "../components/CustomDrinkManagerModal";
+import {
+  addSessionRecord,
+  buildSessionRecord,
+} from "../utils/engagement/sessionHistory";
+import {
+  getNotificationPrefs,
+  requestPermissions,
+  scheduleDriveSafeReminder,
+} from "../utils/notificationUtils";
+import { adUnits } from "../utils/adUnits";
+import {
+  recordInterstitialShown,
+  shouldShowInterstitial,
+} from "../utils/adFrequency";
+import { useInterstitialAd } from "../hooks/useInterstitialAd";
 
 const LEVEL_STYLES = {
   safe: { text: "text-green-400", bar: "bg-green-500", labelKey: "session.levelSafe" },
@@ -41,7 +61,7 @@ const LEVEL_STYLES = {
 } as const;
 
 export default function SessionScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const [loaded, setLoaded] = useState(false);
@@ -49,20 +69,31 @@ export default function SessionScreen() {
   const [weight, setWeight] = useState("");
   const [gender, setGender] = useState<SessionGender>("male");
   const [now, setNow] = useState(() => new Date());
+  const [customDrinks, setCustomDrinks] = useState<CustomDrink[]>([]);
+  const [managerVisible, setManagerVisible] = useState(false);
+  const dangerAlertedRef = useRef(false);
+
+  // 세션 종료·저장 후 전면광고. 라이브 세션 진행 중에는 표시하지 않는다.
+  const { loaded: adLoaded, show: showSessionInterstitial } = useInterstitialAd(
+    adUnits.sessionInterstitial
+  );
 
   useEffect(() => {
-    Promise.all([getActiveSession(), getSessionProfile()]).then(
-      ([storedSession, profile]) => {
-        if (storedSession) {
-          setSession(storedSession);
-        }
-        if (profile) {
-          setWeight(String(profile.weightKg));
-          setGender(profile.gender);
-        }
-        setLoaded(true);
+    Promise.all([
+      getActiveSession(),
+      getSessionProfile(),
+      getCustomDrinks(),
+    ]).then(([storedSession, profile, drinks]) => {
+      if (storedSession) {
+        setSession(storedSession);
       }
-    );
+      if (profile) {
+        setWeight(String(profile.weightKg));
+        setGender(profile.gender);
+      }
+      setCustomDrinks(drinks);
+      setLoaded(true);
+    });
   }, []);
 
   // 세션 진행 중 30초마다 BAC 갱신
@@ -76,6 +107,22 @@ export default function SessionScreen() {
     () => (session ? estimateSession(session, now) : null),
     [session, now]
   );
+
+  const isDangerLevel =
+    estimate?.level === "danger" || estimate?.level === "high";
+
+  // BAC 레벨이 danger 이상으로 처음 진입할 때만 강한 햅틱을 울린다.
+  // 다시 안전 범위로 내려가면 재무장한다.
+  useEffect(() => {
+    if (isDangerLevel && !dangerAlertedRef.current) {
+      dangerAlertedRef.current = true;
+      Haptics.notificationAsync(
+        Haptics.NotificationFeedbackType.Warning
+      ).catch(() => {});
+    } else if (!isDangerLevel) {
+      dangerAlertedRef.current = false;
+    }
+  }, [isDangerLevel]);
 
   const handleStart = useCallback(async () => {
     const parsedWeight = parseFloat(weight);
@@ -128,6 +175,28 @@ export default function SessionScreen() {
     [session, persistSession]
   );
 
+  const handleAddCustomDrink = useCallback(
+    (drink: CustomDrink) => {
+      if (!session) return;
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+      void persistSession({
+        ...session,
+        drinks: [
+          ...session.drinks,
+          {
+            id: generateId(),
+            nameKey: drink.name,
+            emoji: "🍸",
+            volume: drink.volumeMl,
+            abv: drink.abv,
+            timestamp: Date.now(),
+          },
+        ],
+      });
+    },
+    [session, persistSession]
+  );
+
   const handleUndo = useCallback(() => {
     if (!session || session.drinks.length === 0) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
@@ -149,13 +218,45 @@ export default function SessionScreen() {
           timestamp: drink.timestamp,
         }))
       );
+
+      // 세션 히스토리 저장 (폐기 시에는 저장하지 않음).
+      const record = buildSessionRecord(session, Date.now());
+      await addSessionRecord(record);
+
+      // 운전 가능 추정 시각이 미래면 그 시각에 로컬 알림 예약.
+      // 알림 예약 실패가 세션 저장을 막지 않도록 방어한다.
+      if (record.soberAt && record.soberAt > Date.now()) {
+        try {
+          const prefs = await getNotificationPrefs();
+          if (prefs.driveSafeEnabled && (await requestPermissions())) {
+            await scheduleDriveSafeReminder(record.soberAt, i18n.language);
+          }
+        } catch (error) {
+          console.warn("Failed to schedule drive-safe reminder:", error);
+        }
+      }
     }
     await clearActiveSession();
     void updateSobrietyWidget();
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     setSession(null);
+
+    // 종료·저장 성공 후 전면광고. 단, danger/high 레벨(안전 정보 확인 순간)이거나
+    // 빈도 캡에 걸리거나 광고 미로드면 건너뛰고 전환만 진행한다.
+    const isDangerLevelNow =
+      estimate?.level === "danger" || estimate?.level === "high";
+    if (
+      !isDangerLevelNow &&
+      adLoaded &&
+      (await shouldShowInterstitial("sessionEnd"))
+    ) {
+      if (showSessionInterstitial()) {
+        void recordInterstitialShown("sessionEnd");
+      }
+    }
+
     router.replace("/(tabs)/tracker");
-  }, [session, t, router]);
+  }, [session, t, router, i18n.language, estimate, adLoaded, showSessionInterstitial]);
 
   const handleDiscard = useCallback(() => {
     Alert.alert(t("session.discardTitle"), t("session.discardMessage"), [
@@ -272,6 +373,27 @@ export default function SessionScreen() {
           contentContainerStyle={{ paddingBottom: 40 }}
           showsVerticalScrollIndicator={false}
         >
+          {estimate && isDangerLevel && (
+            <View
+              className="rounded-xl p-4 mb-4 flex-row items-center"
+              style={{
+                backgroundColor:
+                  estimate.level === "high" ? "#7f1d1d" : "#7c2d12",
+              }}
+              accessibilityRole="alert"
+            >
+              <Text className="text-2xl mr-3">⚠️</Text>
+              <View className="flex-1">
+                <Text className="text-white font-bold text-sm mb-0.5">
+                  {t("session.dangerBannerTitle")}
+                </Text>
+                <Text className="text-gray-200 text-xs leading-4">
+                  {t("session.dangerBannerBody")}
+                </Text>
+              </View>
+            </View>
+          )}
+
           {estimate && (
             <Card className="mb-4 items-center">
               <Text className="text-gray-400 text-xs mb-1">
@@ -348,6 +470,35 @@ export default function SessionScreen() {
                 </Text>
               </TouchableOpacity>
             ))}
+
+            {customDrinks.map((drink) => (
+              <TouchableOpacity
+                key={drink.id}
+                className="bg-gray-800 rounded-xl px-3 py-2 mr-2 mb-2 flex-row items-center border border-green-700/50"
+                onPress={() => handleAddCustomDrink(drink)}
+                activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel={`${drink.name} ${drink.volumeMl}ml`}
+              >
+                <Text className="text-lg mr-1.5">🍸</Text>
+                <Text className="text-gray-300 text-sm">
+                  {drink.name} {drink.volumeMl}ml
+                </Text>
+              </TouchableOpacity>
+            ))}
+
+            <TouchableOpacity
+              className="bg-gray-800 rounded-xl px-3 py-2 mr-2 mb-2 flex-row items-center border border-dashed border-gray-600"
+              onPress={() => setManagerVisible(true)}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={t("customDrinks.add")}
+            >
+              <Ionicons name="add" size={16} color="#9ca3af" />
+              <Text className="text-gray-400 text-sm ml-1">
+                {t("customDrinks.addShort")}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View className="flex-row items-center justify-between mb-3">
@@ -423,6 +574,12 @@ export default function SessionScreen() {
           </Text>
         </ScrollView>
       )}
+
+      <CustomDrinkManagerModal
+        visible={managerVisible}
+        onClose={() => setManagerVisible(false)}
+        onChange={setCustomDrinks}
+      />
     </SafeAreaView>
   );
 }
