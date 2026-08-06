@@ -144,9 +144,9 @@
       "bacLevel": "BAC Level",
       "soberTime": "Estimated Time to Sober",
       "hours": "hours",
-      "bacWarningHigh": "Do NOT drive! Dangerously high level.",
-      "bacWarningMedium": "Avoid driving. Judgment may be impaired.",
-      "bacWarningLow": "Light intoxication.",
+      "bacCaution": "Caution — avoid driving. Judgment may be impaired.",
+      "bacDanger": "Danger — do not drive. Slow down and drink water.",
+      "bacHigh": "Very dangerous — never drive. Stopping is advised.",
       "bacSafe": "Within normal range.",
       "errorWeight": "Please enter your weight",
       "errorDrinks": "Please enter number of drinks"

@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import Modal from "react-native-modal";
+import Constants from "expo-constants";
 import LanguageSelector from "../../../components/LanguageSelector";
 import Card from "../../../components/ui/Card";
 import {
@@ -233,7 +234,9 @@ export default function SettingsScreen() {
             <Text className="text-white text-lg font-bold">
               {t("common.appTitle")}
             </Text>
-            <Text className="text-gray-400 text-sm mt-1">v1.0.0</Text>
+            <Text className="text-gray-400 text-sm mt-1">
+              v{Constants.expoConfig?.version ?? "—"}
+            </Text>
             <Text className="text-gray-400 text-sm mt-3">
               {t("settings.appInfo")}
             </Text>

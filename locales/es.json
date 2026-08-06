@@ -144,9 +144,9 @@
       "bacLevel": "Nivel de BAC",
       "soberTime": "Tiempo Estimado para Sobriedad",
       "hours": "horas",
-      "bacWarningHigh": "¡NO conduzca! Nivel peligrosamente alto.",
-      "bacWarningMedium": "Evite conducir. El juicio puede estar afectado.",
-      "bacWarningLow": "Intoxicación leve.",
+      "bacCaution": "Precaución — evita conducir. El juicio puede estar afectado.",
+      "bacDanger": "Peligro — no conduzcas. Baja el ritmo y bebe agua.",
+      "bacHigh": "Muy peligroso — nunca conduzcas. Se recomienda dejar de beber.",
       "bacSafe": "Dentro del rango normal.",
       "errorWeight": "Por favor ingrese su peso",
       "errorDrinks": "Por favor ingrese número de bebidas"

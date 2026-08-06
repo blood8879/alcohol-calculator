@@ -144,9 +144,9 @@
       "bacLevel": "血液酒精浓度",
       "soberTime": "预计醒酒时间",
       "hours": "小时",
-      "bacWarningHigh": "绝对禁止开车！浓度极其危险。",
-      "bacWarningMedium": "请勿开车。判断力可能下降。",
-      "bacWarningLow": "轻度饮酒状态。",
+      "bacCaution": "注意 — 请勿开车。判断力可能下降。",
+      "bacDanger": "危险 — 不要开车。请放慢速度并喝水。",
+      "bacHigh": "非常危险 — 绝对不要开车。建议停止饮酒。",
       "bacSafe": "处于正常范围。",
       "errorWeight": "请输入体重",
       "errorDrinks": "请输入饮酒量"

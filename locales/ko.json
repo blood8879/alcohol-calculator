@@ -144,9 +144,9 @@
       "bacLevel": "혈중알코올농도",
       "soberTime": "해독 예상 시간",
       "hours": "시간",
-      "bacWarningHigh": "운전 절대 금지! 매우 위험한 수준입니다.",
-      "bacWarningMedium": "운전을 삼가세요. 판단력이 저하될 수 있습니다.",
-      "bacWarningLow": "가벼운 음주 상태입니다.",
+      "bacCaution": "주의 — 운전을 삼가세요. 판단력이 저하될 수 있습니다.",
+      "bacDanger": "위험 — 운전 금지. 속도를 늦추고 물을 마시세요.",
+      "bacHigh": "매우 위험 — 운전 절대 금지. 음주 중단을 권고합니다.",
       "bacSafe": "정상 범위입니다.",
       "errorWeight": "체중을 입력하세요",
       "errorDrinks": "음주량을 입력하세요"
