@@ -28,6 +28,7 @@ import {
   setNotificationPrefs,
 } from "../../../utils/notificationUtils";
 import { createBackup, restoreBackup } from "../../../utils/backupUtils";
+import { logNotificationToggled } from "../../../utils/analytics";
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function SettingsScreen() {
       await cancelDailyReminder();
     }
     setDailyReminder(enabled);
+    logNotificationToggled("daily", enabled);
     await setNotificationPrefs({
       dailyEnabled: enabled,
       weeklyEnabled: weeklySummary,
@@ -70,6 +72,7 @@ export default function SettingsScreen() {
       await cancelDriveSafeReminder();
     }
     setDriveSafe(enabled);
+    logNotificationToggled("drive_safe", enabled);
     await setNotificationPrefs({
       dailyEnabled: dailyReminder,
       weeklyEnabled: weeklySummary,
@@ -118,6 +121,7 @@ export default function SettingsScreen() {
       await cancelWeeklySummary();
     }
     setWeeklySummary(enabled);
+    logNotificationToggled("weekly", enabled);
     await setNotificationPrefs({
       dailyEnabled: dailyReminder,
       weeklyEnabled: enabled,

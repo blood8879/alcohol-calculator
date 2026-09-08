@@ -35,6 +35,11 @@ import {
 } from "../../utils/adFrequency";
 import { useRewardedAd } from "../../hooks/useRewardedAd";
 import { useInterstitialAd } from "../../hooks/useInterstitialAd";
+import {
+  logQuizCompleted,
+  logQuizRetryAdWatched,
+  logQuizStarted,
+} from "../../utils/analytics";
 
 type QuizState = "idle" | "playing" | "results";
 type ProgressCategory = Exclude<QuizCategory, "all">;
@@ -94,6 +99,7 @@ export default function QuizScreen() {
       : quizQuestions;
     const randomQuestions = getRandomQuestions(questionPool, 10);
     const progressCategory = selectedCategory === "all" ? "basics" : selectedCategory;
+    logQuizStarted(selectedCategory, "standard");
     startQuestionSet(randomQuestions, progressCategory, `standard-${selectedCategory}`, false);
   }, [selectedCategory, startQuestionSet]);
 
@@ -106,12 +112,19 @@ export default function QuizScreen() {
     const dailyQuestions = dailyIds
       .map((id) => quizQuestions.find((question) => question.id === id))
       .filter((question): question is QuizQuestion => Boolean(question));
+    logQuizStarted("all", "daily");
     startQuestionSet(dailyQuestions, "basics", `daily-${dailyIds.join("-")}`, true);
   }, [startQuestionSet]);
 
   const completeQuiz = useCallback(
     async (answers: number[]) => {
       const { score, total } = calculateScore(answers, questions);
+      logQuizCompleted({
+        category: activeIsDaily ? "all" : selectedCategory,
+        mode: activeIsDaily ? "daily" : "standard",
+        score,
+        total,
+      });
       const nextProgress = recordQuizCompletion({
         category: activeProgressCategory,
         date: new Date(),
@@ -124,7 +137,14 @@ export default function QuizScreen() {
       setProgress(nextProgress);
       await setQuizProgress(nextProgress);
     },
-    [activeIsDaily, activeProgressCategory, activeQuizId, progress, questions]
+    [
+      activeIsDaily,
+      activeProgressCategory,
+      activeQuizId,
+      progress,
+      questions,
+      selectedCategory,
+    ]
   );
 
   const handleAnswer = useCallback(
@@ -149,6 +169,7 @@ export default function QuizScreen() {
   );
 
   const restartQuiz = useCallback(() => {
+    logQuizRetryAdWatched();
     reloadInterstitial();
     startQuiz();
   }, [startQuiz, reloadInterstitial]);

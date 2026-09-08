@@ -2,7 +2,7 @@
   "expo": {
     "name": "alcohol-calculator",
     "slug": "alcohol-calculator",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "alcoholcalculator",
@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jiamyun.alcoholcalculator"
+      "bundleIdentifier": "com.jiamyun.alcoholcalculator",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,6 +20,8 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.jiamyun.alcoholcalculator",
+      "versionCode": 24,
+      "googleServicesFile": "./google-services.json",
       "enablePageSize16KB": true
     },
     "web": {
@@ -52,6 +55,7 @@
           "widgets": [
             {
               "name": "SobrietyWidget",
+              "packageName": "com.jiamyun.alcoholcalculator",
               "label": "주류 계산기",
               "description": "절주 챌린지 D+일수와 이번 주 음주 요약",
               "minWidth": "180dp",
@@ -72,7 +76,10 @@
             "targetSdkVersion": 36
           }
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/analytics",
+      "@react-native-firebase/crashlytics"
     ],
     "experiments": {
       "typedRoutes": true

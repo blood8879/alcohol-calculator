@@ -24,6 +24,7 @@ import {
   deleteSessionRecord,
   getSessionHistory,
 } from "../../../utils/engagement/sessionHistory";
+import { logSessionShared } from "../../../utils/analytics";
 
 const formatDate = (ms: number): string =>
   new Date(ms).toLocaleDateString([], {
@@ -86,6 +87,7 @@ export default function SessionsScreen() {
       } else {
         await Share.share({ url: uri });
       }
+      logSessionShared();
     } catch (error) {
       console.warn("Failed to share session card:", error);
       // 캡처/공유 실패 시 텍스트 요약으로 폴백.
@@ -97,6 +99,7 @@ export default function SessionsScreen() {
             drinks: selected.totalStandardDrinks,
           }),
         });
+        logSessionShared();
       } catch {
         // 사용자가 공유 시트를 닫은 경우 등은 무시.
       }

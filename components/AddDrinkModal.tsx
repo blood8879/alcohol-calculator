@@ -14,6 +14,7 @@ import { drinkPresets } from "../data/drinkPresets";
 import { DrinkPreset } from "../data/types";
 import { addDrinkLog } from "../utils/trackerStorage";
 import { CustomDrink, getCustomDrinks } from "../utils/customDrinks";
+import { logDrinkLogged } from "../utils/analytics";
 
 interface AddDrinkModalProps {
   visible: boolean;
@@ -105,6 +106,8 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
       price: !isNaN(parsedPrice) && parsedPrice > 0 ? parsedPrice : undefined,
       presetId: mode === "preset" ? selectedPreset?.id : undefined,
     });
+
+    logDrinkLogged(mode);
 
     resetForm();
     onAdd();

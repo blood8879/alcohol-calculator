@@ -1,5 +1,7 @@
 export {
   AdEventType,
+  AdsConsent,
+  AdsConsentStatus,
   BannerAd,
   BannerAdSize,
   InterstitialAd,

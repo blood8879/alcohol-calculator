@@ -16,6 +16,7 @@ import { View } from "react-native";
 import { initI18n } from "../i18n";
 import { BannerAd, BannerAdSize } from "../utils/mobileAds";
 import { adUnits } from "../utils/adUnits";
+import { initConsentAndDataCollection } from "../utils/consent";
 
 type NotificationRoute = "/(tabs)" | "/(tabs)/tracker" | "/session";
 
@@ -39,6 +40,10 @@ export default function RootLayout() {
     initI18n().then(() => {
       setI18nInitialized(true);
     });
+  }, []);
+
+  useEffect(() => {
+    void initConsentAndDataCollection();
   }, []);
 
   useEffect(() => {

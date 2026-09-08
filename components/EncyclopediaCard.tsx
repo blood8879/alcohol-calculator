@@ -7,6 +7,7 @@ import type { GuideDetail } from "../data/guideDetails";
 import GuideDetailPanel from "./GuideDetailPanel";
 import { isFavorite, toggleFavorite, addRecentContent } from "../utils/contentStorage";
 import { translateWithFallback } from "../utils/localizedText";
+import { logEncyclopediaViewed } from "../utils/analytics";
 
 type EncyclopediaCardProps = {
   entry: EncyclopediaEntry;
@@ -40,6 +41,7 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
     const nextExpanded = !expanded;
     setExpanded(nextExpanded);
     if (nextExpanded) {
+      logEncyclopediaViewed(entry.id);
       addRecentContent({
         kind: "encyclopedia",
         id: entry.id,

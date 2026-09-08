@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { DrinkPreset } from "../data/types";
 import { shareResults } from "../utils/shareUtils";
 import { saveCalculation } from "../utils/historyStorage";
+import { logCalculatorUsed } from "../utils/analytics";
 import PresetPicker from "./PresetPicker";
 import { getCalculatorGuide } from "../data/calculatorGuides";
 import { pickLocalizedText } from "../utils/localizedText";
@@ -153,6 +154,10 @@ const CalculationCard = ({
   const handleCalculate = () => {
     const calculatedResults = calculateResult(values);
     setResults(calculatedResults);
+
+    if (calculatorType && calculatedResults.length > 0) {
+      logCalculatorUsed(calculatorType);
+    }
 
     if (calculatorType && calculatorIcon && calculatedResults.length > 0) {
       saveCalculation({

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   FlatList,
   ScrollView,
@@ -52,6 +52,12 @@ import {
   computeWeeklyProgress,
 } from "../../utils/engagement/weeklyGoal";
 import { updateSobrietyWidget } from "../../widgets/updateSobrietyWidget";
+import {
+  logChallengeCompleted,
+  logChallengeStarted,
+  logWeeklyGoalExceeded,
+  logWeeklyGoalSet,
+} from "../../utils/analytics";
 
 
 interface WeeklyStatsData {
@@ -112,6 +118,9 @@ export default function TrackerScreen() {
   const [weeklyProgress, setWeeklyProgress] = useState<WeeklyProgress | null>(
     null
   );
+  // 초과·달성 이벤트는 상태가 처음 뒤집힐 때만 1회 보낸다.
+  const goalExceededRef = useRef<boolean | null>(null);
+  const challengeCompletedRef = useRef<string | null>(null);
 
 
   const refreshData = useCallback(async () => {
@@ -131,7 +140,19 @@ export default function TrackerScreen() {
     setLogs(dateLogs.sort((a, b) => b.timestamp - a.timestamp));
     setWeeklyStats(stats);
     setInsights(buildTrackerInsights(insightLogs, selectedDate));
-    setWeeklyProgress(computeWeeklyProgress(storedGoal, stats.totalDrinks));
+    const nextWeeklyProgress = computeWeeklyProgress(
+      storedGoal,
+      stats.totalDrinks
+    );
+    setWeeklyProgress(nextWeeklyProgress);
+    if (nextWeeklyProgress) {
+      if (goalExceededRef.current === false && nextWeeklyProgress.exceeded) {
+        logWeeklyGoalExceeded(nextWeeklyProgress.limitDrinks);
+      }
+      goalExceededRef.current = nextWeeklyProgress.exceeded;
+    } else {
+      goalExceededRef.current = null;
+    }
 
     setChallenge(storedChallenge);
     if (storedChallenge) {
@@ -154,6 +175,11 @@ export default function TrackerScreen() {
       );
       const progress = computeChallengeProgress(storedChallenge, drinkDates, today);
       setChallengeProgress(progress);
+      const challengeKey = `${storedChallenge.startDate}-${storedChallenge.targetDays}`;
+      if (progress.succeeded && challengeCompletedRef.current !== challengeKey) {
+        challengeCompletedRef.current = challengeKey;
+        logChallengeCompleted(storedChallenge.targetDays);
+      }
       const baselineSpend = baselineLogs.reduce(
         (sum, log) => sum + (log.price ?? 0),
         0
@@ -200,6 +226,7 @@ export default function TrackerScreen() {
   const handleStartChallenge = useCallback(
     async (days: number) => {
       await startChallenge(days);
+      logChallengeStarted(days);
       refreshData();
     },
     [refreshData]
@@ -213,6 +240,7 @@ export default function TrackerScreen() {
   const handleSetWeeklyGoal = useCallback(
     async (limitDrinks: number) => {
       await setWeeklyGoal(limitDrinks);
+      logWeeklyGoalSet(limitDrinks);
       refreshData();
     },
     [refreshData]

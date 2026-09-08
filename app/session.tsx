@@ -19,9 +19,16 @@ import Card from "../components/ui/Card";
 import {
   DrinkingSession,
   SessionGender,
+  bacLevelOf,
   estimateSession,
   quickDrinkUnits,
 } from "../utils/engagement/drinkingSession";
+import {
+  logSessionDangerReached,
+  logSessionDiscarded,
+  logSessionEnded,
+  logSessionStarted,
+} from "../utils/analytics";
 import {
   clearActiveSession,
   getActiveSession,
@@ -108,21 +115,22 @@ export default function SessionScreen() {
     [session, now]
   );
 
-  const isDangerLevel =
-    estimate?.level === "danger" || estimate?.level === "high";
+  const level = estimate?.level;
+  const isDangerLevel = level === "danger" || level === "high";
 
   // BAC 레벨이 danger 이상으로 처음 진입할 때만 강한 햅틱을 울린다.
   // 다시 안전 범위로 내려가면 재무장한다.
   useEffect(() => {
-    if (isDangerLevel && !dangerAlertedRef.current) {
+    if (isDangerLevel && level && !dangerAlertedRef.current) {
       dangerAlertedRef.current = true;
+      logSessionDangerReached(level);
       Haptics.notificationAsync(
         Haptics.NotificationFeedbackType.Warning
       ).catch(() => {});
     } else if (!isDangerLevel) {
       dangerAlertedRef.current = false;
     }
-  }, [isDangerLevel]);
+  }, [isDangerLevel, level]);
 
   const handleStart = useCallback(async () => {
     const parsedWeight = parseFloat(weight);
@@ -141,6 +149,7 @@ export default function SessionScreen() {
       setSessionProfile({ weightKg: parsedWeight, gender }),
     ]);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
+    logSessionStarted();
     setSession(nextSession);
     setNow(new Date());
   }, [weight, gender, t]);
@@ -223,6 +232,12 @@ export default function SessionScreen() {
       const record = buildSessionRecord(session, Date.now());
       await addSessionRecord(record);
 
+      logSessionEnded({
+        durationSec: Math.round((record.endedAt - record.startedAt) / 1000),
+        drinkCount: record.drinks.length,
+        peakBacLevel: bacLevelOf(record.peakBac),
+      });
+
       // 운전 가능 추정 시각이 미래면 그 시각에 로컬 알림 예약.
       // 알림 예약 실패가 세션 저장을 막지 않도록 방어한다.
       if (record.soberAt && record.soberAt > Date.now()) {
@@ -266,6 +281,7 @@ export default function SessionScreen() {
         style: "destructive",
         onPress: async () => {
           await clearActiveSession();
+          logSessionDiscarded();
           setSession(null);
         },
       },

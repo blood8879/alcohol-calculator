@@ -5,11 +5,16 @@
     android:targetCellWidth="3"
     android:targetCellHeight="1"
 
+
+
     android:resizeMode="horizontal|vertical"
 
     android:description="@string/widget_sobrietywidget_description"
 
     android:initialLayout="@layout/rn_widget"
+
+
+
 
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen">

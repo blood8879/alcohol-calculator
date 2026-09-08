@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { CocktailRecipe, RecipeIngredient } from "../data/types";
 import InlineBannerAd from "./InlineBannerAd";
 import { isFavorite, toggleFavorite, addRecentContent } from "../utils/contentStorage";
+import { logRecipeViewed } from "../utils/analytics";
 import { calculateRecipeMetrics } from "../utils/engagement/recipeRecommender";
 import { translateWithFallback, pickLocalizedText } from "../utils/localizedText";
 import { getRecipeExtra } from "../data/recipeExtras";
@@ -33,6 +34,7 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
 
   useEffect(() => {
     isFavorite("recipe", recipe.id).then(setFavorite);
+    logRecipeViewed(recipe.id);
     addRecentContent({
       kind: "recipe",
       id: recipe.id,

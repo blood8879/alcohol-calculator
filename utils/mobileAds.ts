@@ -44,6 +44,33 @@ export const RewardedAdEventType = {
   EARNED_REWARD: "rewarded_earned_reward",
 } as const;
 
+export const AdsConsentStatus = {
+  UNKNOWN: "UNKNOWN",
+  REQUIRED: "REQUIRED",
+  NOT_REQUIRED: "NOT_REQUIRED",
+  OBTAINED: "OBTAINED",
+} as const;
+
+type ConsentInfo = {
+  status: string;
+  isConsentFormAvailable: boolean;
+  canRequestAds: boolean;
+};
+
+const noConsentNeeded: ConsentInfo = {
+  status: AdsConsentStatus.NOT_REQUIRED,
+  isConsentFormAvailable: false,
+  canRequestAds: true,
+};
+
+export const AdsConsent = {
+  requestInfoUpdate: async (): Promise<ConsentInfo> => noConsentNeeded,
+  showForm: async (): Promise<ConsentInfo> => noConsentNeeded,
+  getUserChoices: async (): Promise<{
+    storeAndAccessInformationOnDevice: boolean;
+  }> => ({ storeAndAccessInformationOnDevice: false }),
+};
+
 export const RewardedAd = {
   createForAdRequest: (_unitId: string) => ({
     addAdEventListener: (_eventName: string, _listener: Listener) => () => {},
