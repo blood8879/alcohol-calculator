@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { CocktailRecipe, RecipeIngredient } from "../data/types";
 import InlineBannerAd from "./InlineBannerAd";
 import { isFavorite, toggleFavorite, addRecentContent } from "../utils/contentStorage";
-import { logRecipeViewed } from "../utils/analytics";
+import { logContentViewed, logContentFavorite } from "../utils/contentAnalytics";
 import { calculateRecipeMetrics } from "../utils/engagement/recipeRecommender";
 import { translateWithFallback, pickLocalizedText } from "../utils/localizedText";
 import { getRecipeExtra } from "../data/recipeExtras";
@@ -17,9 +17,9 @@ type RecipeDetailProps = {
 };
 
 const difficultyColors: Record<CocktailRecipe["difficulty"], string> = {
-  easy: "bg-emerald-600",
-  medium: "bg-amber-500",
-  hard: "bg-red-500",
+  easy: "bg-accentButton",
+  medium: "bg-amber-700",
+  hard: "bg-red-700",
 };
 
 const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
@@ -31,10 +31,14 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
   const extra = getRecipeExtra(recipe.id);
   const isKorean = i18n.language.startsWith("ko");
   const [favorite, setFavorite] = useState(false);
+  const viewedRecipeId = useRef<string | null>(null);
 
   useEffect(() => {
     isFavorite("recipe", recipe.id).then(setFavorite);
-    logRecipeViewed(recipe.id);
+    if (viewedRecipeId.current !== recipe.id) {
+      logContentViewed("recipe", recipe.id);
+      viewedRecipeId.current = recipe.id;
+    }
     addRecentContent({
       kind: "recipe",
       id: recipe.id,
@@ -52,7 +56,10 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
       emoji: recipe.emoji,
       viewedAt: Date.now(),
     });
-    setFavorite(nextFavorite);
+    if (nextFavorite !== null) {
+      setFavorite(nextFavorite);
+      logContentFavorite("recipe", recipe.id, nextFavorite);
+    }
   };
 
   const { totalVolumeMl, estimatedAbv, estimatedCalories } = useMemo(

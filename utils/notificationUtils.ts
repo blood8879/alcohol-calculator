@@ -220,10 +220,12 @@ export async function getNotificationPrefs(): Promise<NotificationPrefs> {
 
 export async function setNotificationPrefs(
   prefs: NotificationPrefs
-): Promise<void> {
+): Promise<boolean> {
   try {
     await AsyncStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+    return true;
   } catch (e) {
     console.warn("Failed to save notification prefs:", e);
+    return false;
   }
 }

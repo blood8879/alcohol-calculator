@@ -10,7 +10,10 @@
     "cancel": "取消",
     "delete": "删除",
     "back": "返回",
-    "share": "分享结果"
+    "share": "分享结果",
+    "confirm": "确定",
+    "success": "成功",
+    "info": "提示"
   },
   "time": {
     "justNow": "刚刚",
@@ -43,7 +46,25 @@
     "quizBannerDescription": "用10道题检验你的度数、热量和饮酒常识。",
     "contentRailTitle": "收藏与最近浏览",
     "openRecipe": "重新查看配方",
-    "openGuide": "重新查看百科"
+    "openGuide": "重新查看百科",
+    "seeAll": "查看全部",
+    "sessionCard": {
+      "live": "进行中",
+      "elapsedHoursMinutes": "{{hours}}小时{{minutes}}分钟",
+      "elapsedMinutes": "{{minutes}}分钟",
+      "drinkCount": "{{count}}杯"
+    },
+    "week": {
+      "title": "本周",
+      "drinksLabel": "本周饮酒",
+      "drinkCount": "{{count}}杯",
+      "noGoal": "未设周目标",
+      "challengeCta": "开始挑战",
+      "a11yHint": "轻点前往饮酒记录"
+    },
+    "continueTitle": "继续浏览",
+    "badgeRecipe": "配方",
+    "badgeGuide": "指南"
   },
   "calculators": {
     "dilution": {
@@ -702,6 +723,12 @@
     "addDrink": "添加饮酒",
     "todayLog": "今日记录",
     "empty": "今天没有记录",
+    "emptyDate": "{{date}}没有记录",
+    "emptyHint": "可以使用上方的快速记录或下方的按钮进行记录",
+    "emptyCta": "添加记录",
+    "deleteA11y": "删除{{name}}的记录",
+    "deleted": "已删除{{name}}的记录",
+    "deleteUndoA11y": "恢复刚才删除的记录",
     "weeklyStats": "每周统计",
     "monthlyStats": "每月统计",
     "totalDrinks": "总饮酒次数",
@@ -718,7 +745,39 @@
     "kcal": "kcal",
     "emoji": "表情符号",
     "price": "金额（可选）",
-    "spend": "支出"
+    "spend": "支出",
+    "today": "今天",
+    "tiles": {
+      "challengeTarget": "目标 {{count}}天",
+      "challengeCta": "开始",
+      "goalCta": "设定目标",
+      "a11yHint": "轻点查看详情",
+      "expandedA11y": "{{title}}详情"
+    },
+    "quickLog": {
+      "title": "快速记录",
+      "addCustom": "手动添加",
+      "addCustomA11y": "输入详情记录饮品",
+      "chipA11y": "记录 {{name}} {{volume}}ml {{abv}}%",
+      "logged": "已记录{{name}}",
+      "undo": "撤销",
+      "undoA11y": "撤销刚才的记录",
+      "failed": "未能保存记录，请重试。"
+    },
+    "daySummary": {
+      "drinks": "{{count}}杯",
+      "kcal": "{{value}} kcal",
+      "standardDrinks": "{{value}} 标准杯",
+      "a11y": "所选日期摘要"
+    },
+    "stats": {
+      "segmentDrinks": "杯数",
+      "segmentCalories": "热量",
+      "segmentA11y": "显示{{label}}",
+      "dailyLimit": "日均上限",
+      "totalDrinks": "总杯数",
+      "dailyAverage": "日均"
+    }
   },
   "session": {
     "title": "实时饮酒会话",
@@ -1228,7 +1287,21 @@
     "pickTopicSubtitle": "选择你感兴趣的主题，用10道题的测验轻松检验一下。",
     "dailyTitle": "今日小测验",
     "dailyStreak": "连续完成{{count}}天",
-    "dailyStart": "答5道题"
+    "dailyStart": "答5道题",
+    "streakDaysLabel": "天连续",
+    "streakEmpty": "今天来做第一次测验吧",
+    "dailyDone": "今日已完成 ✓ · 再做一次",
+    "weekDotsA11y": "本周完成{{count}}天",
+    "chooseTopic": "选择主题",
+    "bestBadge": "最佳 {{best}}/{{total}}",
+    "watchAdRetry": "观看广告再次挑战",
+    "openGuide": "查看相关指南",
+    "openTracker": "查看记录分析",
+    "resultStreak": "连续{{count}}天完成测验",
+    "resultStreakHint": "结合饮酒记录，每周分析会更准确。",
+    "reviewTitle": "题目回顾",
+    "yourAnswer": "你的答案：{{answer}}",
+    "correctAnswer": "正确答案：{{answer}}"
   },
   "settings": {
     "language": "语言",
@@ -1262,8 +1335,10 @@
     "menuDescription": "查看过往饮酒会话的峰值BAC和杯数时间线",
     "empty": "还没有保存的会话。结束实时会话后将记录在此。",
     "peakBac": "峰值BAC",
+    "peakBacEstimated": "峰值BAC（估算）",
     "standardDrinks": "总标准杯",
     "standardDrinksCount": "标准杯{{count}}杯",
+    "standardDrinksValue": "标准杯{{value}}杯",
     "soberAt": "预计醒酒",
     "timeline": "杯数时间线",
     "share": "分享",
@@ -1287,7 +1362,7 @@
     "edit": "编辑",
     "delete": "删除",
     "saved": "已保存的自定义酒类",
-    "standardDrinksShort": "标准杯{{count}}",
+    "standardDrinksShort": "标准杯{{value}}",
     "deleteTitle": "要删除自定义酒类吗？",
     "deleteMessage": "将删除「{{name}}」。"
   },
@@ -1319,8 +1394,9 @@
     "male": "男",
     "female": "女",
     "standardDrinks": "标准杯数",
-    "bacTimeline": "BAC走势",
+    "bacTimeline": "BAC走势（估算）",
     "peakBac": "预计最高BAC",
+    "peakBacEstimated": "预计最高血液酒精浓度（估算）",
     "timeToSober": "完全清醒所需时间",
     "hoursUnit": "小时",
     "emptyState": "将体重和标准杯数输入为大于0的值后，即可显示BAC走势。",
@@ -1330,7 +1406,9 @@
     "tip3": "补充维生素和电解质有助于恢复状态。",
     "tip4": "充足的睡眠能给身体恢复的时间。",
     "tip5": "避免过量咖啡因和解酒酒，建议距下次饮酒至少休息48小时。",
-    "disclaimer": "本内容并非医疗建议，因人而异。"
+    "disclaimer": "本内容并非医疗建议，因人而异。",
+    "chartXAxis": "经过时间（小时）",
+    "chartA11y": "估算BAC走势图：从最高{{peak}}%在约{{hours}}小时内降至0"
   },
   "challenge": {
     "title": "戒酒挑战",
@@ -1388,7 +1466,20 @@
     "maxCalories": "最高热量",
     "openDetails": "查看详情",
     "emptyTitle": "没有符合条件的配方",
-    "emptySubtitle": "尝试放宽度数或热量条件。"
+    "emptySubtitle": "尝试放宽度数或热量条件。",
+    "resultCount": "为你推荐 {{count}} 个",
+    "reset": "重置",
+    "noLimit": "不限",
+    "done": "完成",
+    "pill": {
+      "style": "风格：{{value}}",
+      "abv": "度数 ≤{{value}}%",
+      "abvAny": "度数",
+      "kcal": "热量 ≤{{value}}",
+      "kcalAny": "热量",
+      "ingredients": "材料（{{count}}）",
+      "ingredientsAny": "材料"
+    }
   },
   "culture": {
     "cultureTitle": "各国饮酒文化",

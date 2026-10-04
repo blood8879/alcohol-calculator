@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import type { GuideDetail } from "../data/guideDetails";
 import { pickLocalizedText } from "../utils/localizedText";
+import { logGuideNextStep } from "../utils/contentAnalytics";
 
 type GuideDetailPanelProps = {
   readonly guide: GuideDetail;
@@ -46,8 +47,12 @@ export default function GuideDetailPanel({
       </View>
 
       <TouchableOpacity
-        className="bg-green-600 rounded-xl px-4 py-3 mt-3"
-        onPress={() => onPressTarget(guide.nextStep.target)}
+        className="bg-accentButton rounded-xl px-4 py-3 mt-3"
+        onPress={() => {
+          const target = guide.nextStep.target;
+          logGuideNextStep(guide.entryId, target === "/(tabs)/tracker" ? "tracker" : target === "/(tabs)/quiz" ? "quiz" : "recipes");
+          onPressTarget(target);
+        }}
         activeOpacity={0.75}
         accessibilityRole="button"
         accessibilityLabel={pickLocalizedText(guide.nextStep.label, language)}

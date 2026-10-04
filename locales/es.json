@@ -10,7 +10,10 @@
     "cancel": "Cancelar",
     "delete": "Eliminar",
     "back": "Atrás",
-    "share": "Compartir Resultados"
+    "share": "Compartir Resultados",
+    "confirm": "Aceptar",
+    "success": "Listo",
+    "info": "Aviso"
   },
   "time": {
     "justNow": "Ahora mismo",
@@ -43,7 +46,25 @@
     "quizBannerDescription": "10 preguntas rápidas sobre ABV, calorías y consumo.",
     "contentRailTitle": "Favoritos y vistos recientemente",
     "openRecipe": "Abrir receta",
-    "openGuide": "Abrir guía"
+    "openGuide": "Abrir guía",
+    "seeAll": "Ver todo",
+    "sessionCard": {
+      "live": "En curso",
+      "elapsedHoursMinutes": "{{hours}} h {{minutes}} min",
+      "elapsedMinutes": "{{minutes}} min",
+      "drinkCount": "{{count}} bebidas"
+    },
+    "week": {
+      "title": "Esta semana",
+      "drinksLabel": "Bebidas esta semana",
+      "drinkCount": "{{count}} bebidas",
+      "noGoal": "Sin meta semanal",
+      "challengeCta": "Iniciar reto",
+      "a11yHint": "Abre el registro de bebidas"
+    },
+    "continueTitle": "Continuar viendo",
+    "badgeRecipe": "Receta",
+    "badgeGuide": "Guía"
   },
   "calculators": {
     "dilution": {
@@ -702,6 +723,12 @@
     "addDrink": "Agregar Bebida",
     "todayLog": "Registro de Hoy",
     "empty": "Sin registros para hoy",
+    "emptyDate": "Sin registros para el {{date}}",
+    "emptyHint": "Puedes registrar con Registro rápido arriba o con el botón de abajo",
+    "emptyCta": "Añadir registro",
+    "deleteA11y": "Eliminar el registro de {{name}}",
+    "deleted": "Registro de {{name}} eliminado",
+    "deleteUndoA11y": "Restaurar el registro que acabas de eliminar",
     "weeklyStats": "Estadísticas Semanales",
     "monthlyStats": "Estadísticas Mensuales",
     "totalDrinks": "Total de Bebidas",
@@ -718,7 +745,39 @@
     "kcal": "kcal",
     "emoji": "Emoji",
     "price": "Precio (opcional)",
-    "spend": "Gasto"
+    "spend": "Gasto",
+    "today": "Hoy",
+    "tiles": {
+      "challengeTarget": "Meta {{count}} días",
+      "challengeCta": "Empezar",
+      "goalCta": "Fijar meta",
+      "a11yHint": "Toca para ver detalles",
+      "expandedA11y": "Detalles de {{title}}"
+    },
+    "quickLog": {
+      "title": "Registro rápido",
+      "addCustom": "Añadir otra",
+      "addCustomA11y": "Registrar una bebida introduciendo los datos",
+      "chipA11y": "Registrar {{name}} {{volume}}ml {{abv}}%",
+      "logged": "{{name}} registrada",
+      "undo": "Deshacer",
+      "undoA11y": "Deshacer el último registro",
+      "failed": "No se pudo guardar el registro. Inténtalo de nuevo."
+    },
+    "daySummary": {
+      "drinks": "{{count}} bebidas",
+      "kcal": "{{value}} kcal",
+      "standardDrinks": "{{value}} bebidas estándar",
+      "a11y": "Resumen del día seleccionado"
+    },
+    "stats": {
+      "segmentDrinks": "Bebidas",
+      "segmentCalories": "Calorías",
+      "segmentA11y": "Mostrar {{label}}",
+      "dailyLimit": "Límite medio diario",
+      "totalDrinks": "Total bebidas",
+      "dailyAverage": "Media diaria"
+    }
   },
   "session": {
     "title": "Sesión en vivo",
@@ -1228,7 +1287,21 @@
     "pickTopicSubtitle": "Elige un tema y ponte a prueba con un quiz rápido de 10 preguntas.",
     "dailyTitle": "Quiz rápido del día",
     "dailyStreak": "Racha de {{count}} días",
-    "dailyStart": "Responde 5 preguntas"
+    "dailyStart": "Responde 5 preguntas",
+    "streakDaysLabel": "días seguidos",
+    "streakEmpty": "Haz tu primer quiz de hoy",
+    "dailyDone": "Hecho hoy ✓ · Repetir",
+    "weekDotsA11y": "{{count}} días completados esta semana",
+    "chooseTopic": "Elige un tema",
+    "bestBadge": "Mejor {{best}}/{{total}}",
+    "watchAdRetry": "Ver anuncio para reintentar",
+    "openGuide": "Ver guía relacionada",
+    "openTracker": "Ver estadísticas del registro",
+    "resultStreak": "Racha de quiz de {{count}} días",
+    "resultStreakHint": "Combínalo con tu registro para obtener mejores estadísticas semanales.",
+    "reviewTitle": "Repaso de respuestas",
+    "yourAnswer": "Tu respuesta: {{answer}}",
+    "correctAnswer": "Respuesta correcta: {{answer}}"
   },
   "settings": {
     "language": "Idioma",
@@ -1262,8 +1335,10 @@
     "menuDescription": "Revisa la TAS máxima y la cronología de bebidas de sesiones pasadas",
     "empty": "Aún no hay sesiones guardadas. Finaliza una sesión en vivo para registrarla aquí.",
     "peakBac": "TAS máxima",
+    "peakBacEstimated": "TAS máxima (estimada)",
     "standardDrinks": "Bebidas estándar totales",
     "standardDrinksCount": "{{count}} bebidas estándar",
+    "standardDrinksValue": "{{value}} bebidas estándar",
     "soberAt": "Sobrio a las",
     "timeline": "Cronología de bebidas",
     "share": "Compartir",
@@ -1287,7 +1362,7 @@
     "edit": "Editar",
     "delete": "Eliminar",
     "saved": "Bebidas personalizadas guardadas",
-    "standardDrinksShort": "{{count}} est.",
+    "standardDrinksShort": "{{value}} est.",
     "deleteTitle": "¿Eliminar bebida personalizada?",
     "deleteMessage": "Se eliminará '{{name}}'."
   },
@@ -1319,8 +1394,9 @@
     "male": "Hombre",
     "female": "Mujer",
     "standardDrinks": "Tragos estándar",
-    "bacTimeline": "Cronología de BAC",
+    "bacTimeline": "Cronología de BAC (estimado)",
     "peakBac": "BAC máximo estimado",
+    "peakBacEstimated": "Alcohol en sangre máximo estimado (BAC)",
     "timeToSober": "Tiempo hasta estar sobrio",
     "hoursUnit": " h",
     "emptyState": "Introduce un peso y un número de tragos mayores que 0 para ver la cronología de BAC.",
@@ -1330,7 +1406,9 @@
     "tip3": "Reponer vitaminas y electrolitos puede favorecer la recuperación.",
     "tip4": "Duerme lo suficiente para que tu cuerpo tenga tiempo de recuperarse.",
     "tip5": "Evita el exceso de cafeína y beber más para \"curar\" la resaca; descansa al menos 48 horas antes de volver a beber.",
-    "disclaimer": "No es un consejo médico; los resultados varían según la persona."
+    "disclaimer": "No es un consejo médico; los resultados varían según la persona.",
+    "chartXAxis": "Horas transcurridas",
+    "chartA11y": "Gráfico de BAC estimado: baja desde un máximo de {{peak}}% hasta 0 en unas {{hours}} horas"
   },
   "challenge": {
     "title": "Reto de sobriedad",
@@ -1388,7 +1466,20 @@
     "maxCalories": "Kcal máximo",
     "openDetails": "Ver detalles",
     "emptyTitle": "No hay recetas compatibles",
-    "emptySubtitle": "Relaja los filtros de ABV o calorías."
+    "emptySubtitle": "Relaja los filtros de ABV o calorías.",
+    "resultCount": "Sugerencias para ti: {{count}}",
+    "reset": "Restablecer",
+    "noLimit": "Sin límite",
+    "done": "Listo",
+    "pill": {
+      "style": "Estilo: {{value}}",
+      "abv": "ABV ≤{{value}}%",
+      "abvAny": "ABV",
+      "kcal": "Calorías ≤{{value}}",
+      "kcalAny": "Calorías",
+      "ingredients": "Ingredientes ({{count}})",
+      "ingredientsAny": "Ingredientes"
+    }
   },
   "culture": {
     "cultureTitle": "Cultura del beber por país",

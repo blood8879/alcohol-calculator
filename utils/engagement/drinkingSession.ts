@@ -1,6 +1,12 @@
 // 실시간 음주 세션: Widmark 공식 기반의 순수 계산 로직.
 // 의학적 진단이 아닌 참고용 추정치이며, UI에서 면책 문구와 함께 노출한다.
 
+import {
+  ETHANOL_DENSITY,
+  STANDARD_DRINK_GRAMS,
+  alcoholCalories,
+} from "../alcoholConstants";
+
 export type SessionGender = "male" | "female";
 
 export type SessionDrink = {
@@ -31,10 +37,7 @@ export type SessionEstimate = {
   readonly totalCalories: number;
 };
 
-const ETHANOL_DENSITY = 0.789; // g/ml
-const STANDARD_DRINK_GRAMS = 14;
 const ELIMINATION_RATE = 0.015; // %/hour
-const CALORIES_PER_ML_ABV = 5.6 / 100; // trackerStorage와 동일 계수
 
 const distributionRatio = (gender: SessionGender): number =>
   gender === "male" ? 0.68 : 0.55;
@@ -60,7 +63,7 @@ export const estimateSession = (
   );
   const totalVolume = drinks.reduce((sum, d) => sum + d.volume, 0);
   const totalCalories = Math.round(
-    drinks.reduce((sum, d) => sum + d.volume * d.abv * CALORIES_PER_ML_ABV, 0)
+    drinks.reduce((sum, d) => sum + alcoholCalories(d.volume, d.abv), 0)
   );
 
   if (drinks.length === 0 || session.weightKg <= 0) {

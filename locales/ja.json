@@ -10,7 +10,10 @@
     "cancel": "キャンセル",
     "delete": "削除",
     "back": "戻る",
-    "share": "結果を共有"
+    "share": "結果を共有",
+    "confirm": "OK",
+    "success": "完了",
+    "info": "お知らせ"
   },
   "time": {
     "justNow": "たった今",
@@ -43,7 +46,25 @@
     "quizBannerDescription": "10問で度数・カロリー・お酒の常識をチェックしましょう。",
     "contentRailTitle": "お気に入り & 最近見たコンテンツ",
     "openRecipe": "レシピをもう一度見る",
-    "openGuide": "事典をもう一度見る"
+    "openGuide": "事典をもう一度見る",
+    "seeAll": "すべて表示",
+    "sessionCard": {
+      "live": "進行中",
+      "elapsedHoursMinutes": "{{hours}}時間{{minutes}}分",
+      "elapsedMinutes": "{{minutes}}分",
+      "drinkCount": "{{count}}杯"
+    },
+    "week": {
+      "title": "今週",
+      "drinksLabel": "今週の飲酒",
+      "drinkCount": "{{count}}杯",
+      "noGoal": "週間目標なし",
+      "challengeCta": "チャレンジを始める",
+      "a11yHint": "タップすると飲酒記録へ移動"
+    },
+    "continueTitle": "続きを見る",
+    "badgeRecipe": "レシピ",
+    "badgeGuide": "ガイド"
   },
   "calculators": {
     "dilution": {
@@ -702,6 +723,12 @@
     "addDrink": "飲酒を追加",
     "todayLog": "今日の記録",
     "empty": "今日の記録がありません",
+    "emptyDate": "{{date}}の記録がありません",
+    "emptyHint": "上のクイック記録か下のボタンで記録できます",
+    "emptyCta": "記録を追加",
+    "deleteA11y": "{{name}}の記録を削除",
+    "deleted": "{{name}}の記録を削除しました",
+    "deleteUndoA11y": "削除した記録を元に戻す",
     "weeklyStats": "週間統計",
     "monthlyStats": "月間統計",
     "totalDrinks": "総飲酒回数",
@@ -718,7 +745,39 @@
     "kcal": "kcal",
     "emoji": "絵文字",
     "price": "金額（任意）",
-    "spend": "支出"
+    "spend": "支出",
+    "today": "今日",
+    "tiles": {
+      "challengeTarget": "目標 {{count}}日",
+      "challengeCta": "始める",
+      "goalCta": "目標を設定",
+      "a11yHint": "タップして詳細を表示",
+      "expandedA11y": "{{title}}の詳細"
+    },
+    "quickLog": {
+      "title": "クイック記録",
+      "addCustom": "手動で追加",
+      "addCustomA11y": "詳細を入力して飲み物を記録",
+      "chipA11y": "{{name}} {{volume}}ml {{abv}}% を記録",
+      "logged": "{{name}}を記録しました",
+      "undo": "元に戻す",
+      "undoA11y": "直前の記録を元に戻す",
+      "failed": "記録できませんでした。もう一度お試しください。"
+    },
+    "daySummary": {
+      "drinks": "{{count}}杯",
+      "kcal": "{{value}} kcal",
+      "standardDrinks": "{{value}} 標準ドリンク",
+      "a11y": "選択した日の要約"
+    },
+    "stats": {
+      "segmentDrinks": "杯数",
+      "segmentCalories": "カロリー",
+      "segmentA11y": "{{label}}を表示",
+      "dailyLimit": "1日平均の上限",
+      "totalDrinks": "合計杯数",
+      "dailyAverage": "1日平均"
+    }
   },
   "session": {
     "title": "リアルタイム飲酒セッション",
@@ -1228,7 +1287,21 @@
     "pickTopicSubtitle": "興味のあるテーマを選んで、10問のクイズで気軽にチェックしてみましょう。",
     "dailyTitle": "今日の短いクイズ",
     "dailyStreak": "{{count}}日連続で完了",
-    "dailyStart": "5問を解く"
+    "dailyStart": "5問を解く",
+    "streakDaysLabel": "日連続",
+    "streakEmpty": "今日の最初のクイズに挑戦しましょう",
+    "dailyDone": "今日は完了 ✓ · もう一度",
+    "weekDotsA11y": "今週{{count}}日完了",
+    "chooseTopic": "テーマを選ぶ",
+    "bestBadge": "最高 {{best}}/{{total}}",
+    "watchAdRetry": "広告を見て再挑戦",
+    "openGuide": "関連ガイドを見る",
+    "openTracker": "トラッカーの分析を見る",
+    "resultStreak": "{{count}}日連続でクイズ完了",
+    "resultStreakHint": "記録と合わせると週間インサイトがより正確になります。",
+    "reviewTitle": "問題の振り返り",
+    "yourAnswer": "あなたの答え: {{answer}}",
+    "correctAnswer": "正解: {{answer}}"
   },
   "settings": {
     "language": "言語",
@@ -1262,8 +1335,10 @@
     "menuDescription": "過去の飲酒セッションのピークBACと杯のタイムラインを見る",
     "empty": "まだ保存されたセッションがありません。ライブセッションを終了するとここに記録されます。",
     "peakBac": "ピークBAC",
+    "peakBacEstimated": "ピークBAC（推定）",
     "standardDrinks": "総標準ドリンク",
     "standardDrinksCount": "標準ドリンク{{count}}杯",
+    "standardDrinksValue": "標準ドリンク{{value}}杯",
     "soberAt": "分解予想",
     "timeline": "杯のタイムライン",
     "share": "共有する",
@@ -1287,7 +1362,7 @@
     "edit": "編集",
     "delete": "削除",
     "saved": "保存したカスタムのお酒",
-    "standardDrinksShort": "標準ドリンク{{count}}",
+    "standardDrinksShort": "標準ドリンク{{value}}",
     "deleteTitle": "カスタムのお酒を削除しますか？",
     "deleteMessage": "「{{name}}」を削除します。"
   },
@@ -1319,8 +1394,9 @@
     "male": "男",
     "female": "女",
     "standardDrinks": "標準ドリンク数",
-    "bacTimeline": "BACの推移",
+    "bacTimeline": "BACの推移（推定）",
     "peakBac": "予想される最高BAC",
+    "peakBacEstimated": "予想最高血中アルコール濃度（推定）",
     "timeToSober": "完全に醒めるまでにかかる時間",
     "hoursUnit": "時間",
     "emptyState": "体重と標準ドリンク数を0より大きい値で入力すると、BACの推移が表示されます。",
@@ -1330,7 +1406,9 @@
     "tip3": "ビタミンと電解質を補給すると体調の回復に役立ちます。",
     "tip4": "十分な睡眠で体が回復する時間を与えてください。",
     "tip5": "カフェインの過剰摂取と迎え酒は避け、次の飲酒まで最低48時間の休息をおすすめします。",
-    "disclaimer": "医学的な助言ではなく、個人差があります。"
+    "disclaimer": "医学的な助言ではなく、個人差があります。",
+    "chartXAxis": "経過時間（時間）",
+    "chartA11y": "推定BAC推移グラフ：最高{{peak}}%から約{{hours}}時間で0まで低下"
   },
   "challenge": {
     "title": "節酒チャレンジ",
@@ -1388,7 +1466,20 @@
     "maxCalories": "最大カロリー",
     "openDetails": "詳細を見る",
     "emptyTitle": "条件に合うレシピがありません",
-    "emptySubtitle": "度数やカロリーの条件を緩めてみましょう。"
+    "emptySubtitle": "度数やカロリーの条件を緩めてみましょう。",
+    "resultCount": "おすすめ {{count}}件",
+    "reset": "リセット",
+    "noLimit": "制限なし",
+    "done": "完了",
+    "pill": {
+      "style": "スタイル: {{value}}",
+      "abv": "度数 ≤{{value}}%",
+      "abvAny": "度数",
+      "kcal": "カロリー ≤{{value}}",
+      "kcalAny": "カロリー",
+      "ingredients": "材料 ({{count}})",
+      "ingredientsAny": "材料"
+    }
   },
   "culture": {
     "cultureTitle": "国別の飲酒文化",

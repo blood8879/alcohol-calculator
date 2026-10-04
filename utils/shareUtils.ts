@@ -5,7 +5,7 @@ export const shareResults = async (
   title: string,
   results: { label: string; value: string }[],
   t: TFunction
-): Promise<void> => {
+): Promise<'completed' | 'dismissed' | 'failed'> => {
   const resultText = results
     .map((r) => `${r.label}: ${r.value}`)
     .join('\n');
@@ -13,11 +13,13 @@ export const shareResults = async (
   const message = `${t('share.resultTitle')}\n${title}\n\n${resultText}\n\n--- ${t('share.appName')} ---`;
 
   try {
-    await Share.share({
+    const response = await Share.share({
       message,
       title: t('share.resultTitle'),
     });
+    return response.action === Share.sharedAction ? 'completed' : 'dismissed';
   } catch (error) {
     console.error('Error sharing:', error);
+    return 'failed';
   }
 };

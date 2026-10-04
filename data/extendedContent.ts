@@ -46,7 +46,7 @@ export const extendedCocktailRecipes: CocktailRecipe[] = [
     glassType: "highball",
   },
   {
-    id: "green-grape-soju",
+    id: "green-grape-soju-ade",
     nameKey: "recipes.extended.greenGrapeSoju.name",
     displayName: { ko: "청포도 소주 에이드", en: "Green Grape Soju Ade", es: "Ade de soju y uva verde" },
     emoji: "🍇",

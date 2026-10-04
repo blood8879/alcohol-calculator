@@ -1,16 +1,54 @@
-import { AdsConsent, AdsConsentStatus } from "./mobileAds";
+import {
+  AdsConsent,
+  AdsConsentDebugGeography,
+  AdsConsentPrivacyOptionsRequirementStatus,
+  AdsConsentStatus,
+} from "./mobileAds";
+import type { ConsentInfo } from "./mobileAds";
 import { setDataCollectionEnabled } from "./firebase";
+import { setAnalyticsPermission } from "./analyticsCore";
+import { getConsentSnapshot, updateConsentState } from "./consentState";
 
-/**
- * 앱 부팅 시 UMP 동의 상태를 갱신하고, 필요하면 동의 폼을 띄운 뒤
- * 결과에 따라 Analytics/Crashlytics 수집 허용 여부를 정한다.
- * GDPR 대상이 아니면(NOT_REQUIRED) 수집을 허용하고, 대상이면 사용자가
- * "기기 정보 저장·접근"에 동의한 경우에만 허용한다.
- */
-export const initConsentAndDataCollection = async (): Promise<void> => {
+const privacyRequired = (info: ConsentInfo): boolean =>
+  info.privacyOptionsRequirementStatus ===
+  AdsConsentPrivacyOptionsRequirementStatus.REQUIRED;
+
+const applyConsent = async (info: ConsentInfo): Promise<void> => {
+  const analyticsEnabled = info.status === AdsConsentStatus.NOT_REQUIRED ||
+    (info.status === AdsConsentStatus.OBTAINED &&
+      (await AdsConsent.getUserChoices()).storeAndAccessInformationOnDevice);
+  await setDataCollectionEnabled(analyticsEnabled);
+  updateConsentState({
+    canRequestAds: info.canRequestAds,
+    privacyOptionsRequired: privacyRequired(info),
+    updating: false,
+  });
+};
+
+const closeCollection = async (): Promise<void> => {
+  setAnalyticsPermission(false);
+  updateConsentState({
+    canRequestAds: false,
+    privacyOptionsRequired: getConsentSnapshot().privacyOptionsRequired,
+    updating: false,
+  });
   try {
-    let info = await AdsConsent.requestInfoUpdate();
+    await setDataCollectionEnabled(false);
+  } catch {
+    console.warn("Failed to disable data collection after consent error");
+  }
+};
 
+const debugOptions = __DEV__ && process.env.EXPO_PUBLIC_UMP_DEBUG_GEOGRAPHY === "EEA"
+  ? { debugGeography: AdsConsentDebugGeography.EEA }
+  : undefined;
+
+export const initConsentAndDataCollection = async (): Promise<void> => {
+  setAnalyticsPermission(false);
+  updateConsentState({ canRequestAds: false, privacyOptionsRequired: false, updating: true });
+  try {
+    await setDataCollectionEnabled(false);
+    let info = await AdsConsent.requestInfoUpdate(debugOptions);
     if (
       info.isConsentFormAvailable &&
       (info.status === AdsConsentStatus.REQUIRED ||
@@ -18,16 +56,29 @@ export const initConsentAndDataCollection = async (): Promise<void> => {
     ) {
       info = await AdsConsent.showForm();
     }
+    await applyConsent(info);
+  } catch {
+    await closeCollection();
+    console.warn("Failed to initialize consent");
+  }
+};
 
-    const enabled =
-      info.status === AdsConsentStatus.NOT_REQUIRED
-        ? true
-        : (await AdsConsent.getUserChoices())
-            .storeAndAccessInformationOnDevice;
-
-    await setDataCollectionEnabled(enabled);
+export const showPrivacyOptionsAndUpdateCollection = async (): Promise<void> => {
+  const current = getConsentSnapshot();
+  if (current.updating || !current.privacyOptionsRequired) return;
+  setAnalyticsPermission(false);
+  updateConsentState({
+    canRequestAds: false,
+    privacyOptionsRequired: true,
+    updating: true,
+  });
+  try {
+    await setDataCollectionEnabled(false);
+    await AdsConsent.showPrivacyOptionsForm();
+    const info = await AdsConsent.getConsentInfo();
+    await applyConsent(info);
   } catch (error) {
-    // 동의 플로우 실패가 앱 부팅을 막지 않도록 방어한다.
-    console.warn("Failed to initialize consent:", error);
+    await closeCollection();
+    throw error;
   }
 };

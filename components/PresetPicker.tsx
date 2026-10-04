@@ -22,6 +22,7 @@ const PresetPicker = ({ presets, onSelect }: PresetPickerProps) => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 4 }}
       >
         {presets.map((preset) => {
@@ -29,8 +30,10 @@ const PresetPicker = ({ presets, onSelect }: PresetPickerProps) => {
           return (
             <TouchableOpacity
               key={preset.id}
-              className={`rounded-full px-3 py-2 mr-2 flex-row items-center ${
-                isSelected ? "bg-green-600" : "bg-gray-700"
+              className={`min-h-[44px] rounded-full px-4 mr-2 flex-row items-center border ${
+                isSelected
+                  ? "bg-accentButton border-accentButton"
+                  : "bg-surface border-surfaceDeep"
               }`}
               onPress={() => handleSelect(preset)}
               accessibilityRole="button"
@@ -40,7 +43,7 @@ const PresetPicker = ({ presets, onSelect }: PresetPickerProps) => {
               <Text className="text-base mr-1">{preset.emoji}</Text>
               <Text
                 className={`text-sm ${
-                  isSelected ? "text-white font-semibold" : "text-gray-200"
+                  isSelected ? "text-textPrimary font-semibold" : "text-gray-200"
                 }`}
               >
                 {t(preset.nameKey)}

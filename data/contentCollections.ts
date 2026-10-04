@@ -79,7 +79,7 @@ export const seasonalCollections: SeasonalCollection[] = [
     items: [
       {
         kind: "recipe",
-        id: "green-grape-soju",
+        id: "green-grape-soju-ade",
         emoji: "🍇",
         title: { ko: "청포도 소주 에이드", en: "Green Grape Soju Ade", es: "Ade de soju y uva verde" },
         description: { ko: "달콤하고 접근성 좋은 조합", en: "Sweet and approachable", es: "Dulce y fácil" },

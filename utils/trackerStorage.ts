@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { generateId } from './idGenerator';
+import { alcoholCalories } from './alcoholConstants';
 
 const TRACKER_KEY = '@drink_logs';
 
@@ -21,12 +22,13 @@ export interface DayStats {
   totalVolume: number;
 }
 
-export const addDrinkLog = async (
+// 저장된 로그(새 id 포함)를 돌려준다. 실패 시 null — 되돌리기(undo) 등 id가 필요한 호출부용.
+export const addDrinkLogReturningLog = async (
   log: Omit<DrinkLog, 'id' | 'timestamp' | 'calories'>
-): Promise<void> => {
+): Promise<DrinkLog | null> => {
   try {
     const logs = await getAllLogs();
-    const calories = log.volume * (log.abv / 100) * 5.6;
+    const calories = alcoholCalories(log.volume, log.abv);
     const newLog: DrinkLog = {
       ...log,
       id: generateId(),
@@ -35,28 +37,53 @@ export const addDrinkLog = async (
     };
     logs.push(newLog);
     await AsyncStorage.setItem(TRACKER_KEY, JSON.stringify(logs));
+    return newLog;
   } catch (error) {
     console.error('Error adding drink log:', error);
+    return null;
   }
 };
 
+export const addDrinkLog = async (
+  log: Omit<DrinkLog, 'id' | 'timestamp' | 'calories'>
+): Promise<boolean> => (await addDrinkLogReturningLog(log)) !== null;
+
 // 세션 종료 시 잔별 실제 시각을 유지한 채 일괄 기록한다.
 export const addDrinkLogsWithTimestamps = async (
-  entries: Array<Omit<DrinkLog, 'id' | 'calories'>>
-): Promise<void> => {
+  entries: Array<Omit<DrinkLog, 'calories'>>
+): Promise<boolean> => {
   try {
     const logs = await getAllLogs();
+    const existingIds = new Set(logs.map((log) => log.id));
     entries.forEach((entry) => {
-      const calories = entry.volume * (entry.abv / 100) * 5.6;
+      if (existingIds.has(entry.id)) return;
+      const calories = alcoholCalories(entry.volume, entry.abv);
       logs.push({
         ...entry,
-        id: generateId(),
         calories: Math.round(calories * 10) / 10,
       });
+      existingIds.add(entry.id);
     });
     await AsyncStorage.setItem(TRACKER_KEY, JSON.stringify(logs));
+    return true;
   } catch (error) {
     console.error('Error adding drink logs:', error);
+    return false;
+  }
+};
+
+// 삭제 되돌리기: 지운 로그를 id·시각·칼로리·금액·presetId까지 그대로 되살린다.
+// 같은 id가 이미 있으면 중복 저장하지 않고 true(이미 복원됨)를 돌려준다.
+export const restoreDrinkLog = async (log: DrinkLog): Promise<boolean> => {
+  try {
+    const logs = await getAllLogs();
+    if (logs.some((existing) => existing.id === log.id)) return true;
+    logs.push({ ...log });
+    await AsyncStorage.setItem(TRACKER_KEY, JSON.stringify(logs));
+    return true;
+  } catch (error) {
+    console.error('Error restoring drink log:', error);
+    return false;
   }
 };
 
@@ -88,13 +115,15 @@ export const getDrinkLogsForDate = async (date: Date): Promise<DrinkLog[]> => {
   return getDrinkLogs(start, end);
 };
 
-export const deleteDrinkLog = async (id: string): Promise<void> => {
+export const deleteDrinkLog = async (id: string): Promise<boolean> => {
   try {
     const logs = await getAllLogs();
     const updated = logs.filter((l) => l.id !== id);
     await AsyncStorage.setItem(TRACKER_KEY, JSON.stringify(updated));
+    return true;
   } catch (error) {
     console.error('Error deleting drink log:', error);
+    return false;
   }
 };
 

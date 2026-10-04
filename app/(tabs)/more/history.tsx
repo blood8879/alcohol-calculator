@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import {
-  Alert,
   FlatList,
   Text,
   TouchableOpacity,
@@ -19,21 +18,26 @@ import {
   toggleFavorite,
 } from "../../../utils/historyStorage";
 import HistoryItem from "../../../components/HistoryItem";
+import EmptyState from "../../../components/ui/EmptyState";
+import { useDialog } from "../../../components/ui/DialogProvider";
+import { logCalculatorHistoryOpened, logCalculatorHistoryAction } from "../../../utils/calculatorAnalytics";
 
 export default function HistoryScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { confirm } = useDialog();
   const [history, setHistory] = useState<CalculationHistory[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
   const loadHistory = useCallback(async () => {
     const data = await getHistory();
     setHistory(data);
+    return data;
   }, []);
 
   useFocusEffect(
     useCallback(() => {
-      loadHistory();
+      loadHistory().then((data) => logCalculatorHistoryOpened(data.length));
     }, [loadHistory])
   );
 
@@ -44,39 +48,34 @@ export default function HistoryScreen() {
   };
 
   const handleDelete = async (id: string) => {
+    logCalculatorHistoryAction("delete_tapped");
     await deleteCalculation(id);
     await loadHistory();
   };
 
   const handleToggleFavorite = async (id: string) => {
+    logCalculatorHistoryAction("favorite_tapped");
     await toggleFavorite(id);
     await loadHistory();
   };
 
-  const handleClearAll = () => {
-    Alert.alert(
-      t("history.clearAll"),
-      t("history.confirmClear"),
-      [
-        { text: t("common.cancel"), style: "cancel" },
-        {
-          text: t("common.delete"),
-          style: "destructive",
-          onPress: async () => {
-            await clearHistory();
-            await loadHistory();
-          },
-        },
-      ]
-    );
+  const handleClearAll = async () => {
+    const confirmed = await confirm({
+      title: t("history.clearAll"),
+      message: t("history.confirmClear"),
+      cancelLabel: t("common.cancel"),
+      confirmLabel: t("common.delete"),
+      destructive: true,
+    });
+    if (!confirmed) return;
+    logCalculatorHistoryAction("clear_confirmed");
+    await clearHistory();
+    await loadHistory();
   };
 
   const renderEmptyState = () => (
-    <View className="flex-1 items-center justify-center py-32">
-      <Ionicons name="time-outline" size={64} color="#4B5563" />
-      <Text className="text-lg font-semibold text-gray-400 mt-4">
-        {t("history.empty")}
-      </Text>
+    <View className="flex-1 justify-center py-32">
+      <EmptyState emoji="🕒" title={t("history.empty")} />
     </View>
   );
 

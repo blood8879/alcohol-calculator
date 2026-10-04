@@ -53,7 +53,7 @@ const HistoryItem = ({ item, onDelete, onToggleFavorite }: HistoryItemProps) => 
             {firstResult}
           </Text>
         ) : null}
-        <Text className="text-gray-500 text-xs mt-0.5">
+        <Text className="text-textMuted text-xs mt-0.5">
           {formatTimestamp(item.timestamp)}
         </Text>
       </View>

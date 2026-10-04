@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { trackEngagement } from "../utils/engagementAnalytics";
 import { Share, Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
@@ -47,7 +48,8 @@ const SobrietyChallengeCard = ({
           savedLine,
         });
     try {
-      await Share.share({ message });
+      const result = await Share.share({ message });
+      trackEngagement("challenge_share_outcome", { outcome: result.action === Share.sharedAction ? "shared" : "dismissed" });
     } catch {
     }
   }, [succeeded, currentStreakDays, targetDays, moneySaved, t]);
@@ -65,7 +67,7 @@ const SobrietyChallengeCard = ({
           {DAY_OPTIONS.map((days) => (
             <TouchableOpacity
               key={days}
-              className="flex-1 bg-green-600 rounded-xl py-3 mx-1 items-center"
+              className="flex-1 bg-accentButton rounded-xl py-3 mx-1 items-center"
               onPress={() => onStart(days)}
               activeOpacity={0.7}
               accessibilityRole="button"
@@ -106,7 +108,7 @@ const SobrietyChallengeCard = ({
       <View className="items-center mb-3">
         <Text className="text-green-400 text-4xl font-bold">
           {currentStreakDays}
-          <Text className="text-gray-500 text-2xl"> / {targetDays}</Text>
+          <Text className="text-textMuted text-2xl"> / {targetDays}</Text>
         </Text>
         <Text className="text-gray-400 text-xs mt-1">
           {t("challenge.streakLabel")}

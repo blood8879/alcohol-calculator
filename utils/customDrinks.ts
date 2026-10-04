@@ -1,10 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { generateId } from "./idGenerator";
+import { ETHANOL_DENSITY, STANDARD_DRINK_GRAMS } from "./alcoholConstants";
 
 const CUSTOM_DRINKS_KEY = "@custom_drinks";
-
-const ETHANOL_DENSITY = 0.789; // g/ml — drinkingSession과 동일 계수
-const STANDARD_DRINK_GRAMS = 14; // 순수알코올 14g = 1표준잔
 
 export type CustomDrink = {
   readonly id: string;

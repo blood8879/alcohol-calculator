@@ -43,7 +43,10 @@ export type TodayHubInput = {
 
 const DAY_MS = 86_400_000;
 
-const dayIndex = (date: Date): number => Math.floor(date.getTime() / DAY_MS);
+// 로컬 달력 날짜 기준 일 인덱스(퀴즈 진행도의 toLocalDateKey와 같은 경계 — 자정에 바뀜).
+// getTime()만 쓰면 UTC 자정(KST 09:00)에 "오늘의" 퀴즈·가이드가 바뀌었다.
+const dayIndex = (date: Date): number =>
+  Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / DAY_MS);
 
 export const getDailyQuizQuestionIds = (
   date: Date,

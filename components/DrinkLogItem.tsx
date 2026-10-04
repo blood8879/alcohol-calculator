@@ -7,7 +7,8 @@ import Card from "./ui/Card";
 
 interface DrinkLogItemProps {
   log: DrinkLog;
-  onDelete: (id: string) => void;
+  // 되돌리기에서 원본을 그대로 복원할 수 있도록 로그 전체를 넘긴다.
+  onDelete: (log: DrinkLog) => void;
 }
 
 const formatTime = (timestamp: number): string => {
@@ -30,17 +31,17 @@ const DrinkLogItem = ({ log, onDelete }: DrinkLogItemProps) => {
         <Text className="text-gray-400 text-sm mt-0.5">
           {log.volume}{t("units.ml")} · {log.abv}% · {Math.round(log.calories)} {t("units.kcal")}
         </Text>
-        <Text className="text-gray-500 text-xs mt-0.5">
+        <Text className="text-textMuted text-xs mt-0.5">
           {formatTime(log.timestamp)}
         </Text>
       </View>
 
       <TouchableOpacity
-        onPress={() => onDelete(log.id)}
-        className="p-2"
+        onPress={() => onDelete(log)}
+        className="min-h-[44px] min-w-[44px] items-center justify-center -mr-2"
         activeOpacity={0.6}
         accessibilityRole="button"
-        accessibilityLabel={`${t("tracker.delete")} - ${log.name}`}
+        accessibilityLabel={t("tracker.deleteA11y", { name: log.name })}
       >
         <Ionicons name="trash-outline" size={18} color="#EF4444" />
       </TouchableOpacity>

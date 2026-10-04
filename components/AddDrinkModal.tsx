@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {
-  Alert,
   ScrollView,
   Text,
   TextInput,
@@ -15,6 +14,8 @@ import { DrinkPreset } from "../data/types";
 import { addDrinkLog } from "../utils/trackerStorage";
 import { CustomDrink, getCustomDrinks } from "../utils/customDrinks";
 import { logDrinkLogged } from "../utils/analytics";
+import { trackEngagement } from "../utils/engagementAnalytics";
+import { useDialogController } from "./ui/DialogProvider";
 
 interface AddDrinkModalProps {
   visible: boolean;
@@ -26,6 +27,9 @@ type Mode = "preset" | "manual";
 
 const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
   const { t } = useTranslation();
+  // 이 컴포넌트 자체가 모달이므로 오류 토스트를 모달 안에 로컬로 렌더한다(루트 토스트는 모달 아래에 깔림).
+  const dialog = useDialogController();
+  const { toast } = dialog;
   const [mode, setMode] = useState<Mode>("preset");
   const [selectedPreset, setSelectedPreset] = useState<DrinkPreset | null>(null);
   const [volume, setVolume] = useState("");
@@ -37,6 +41,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
 
   useEffect(() => {
     if (visible) {
+      trackEngagement("tracker_add_opened");
       getCustomDrinks().then(setCustomDrinks);
     }
   }, [visible]);
@@ -67,6 +72,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
       setVolume(String(preset.volume));
       setAbv(String(preset.abv));
       const custom = customDrinks.find((c) => c.id === preset.id);
+      trackEngagement("tracker_add_mode_selected", { mode: custom ? "custom_preset" : "built_in_preset" });
       setPrice(custom?.price != null ? String(custom.price) : "");
     },
     [customDrinks]
@@ -77,12 +83,14 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
     const parsedAbv = parseFloat(abv);
 
     if (isNaN(parsedVolume) || isNaN(parsedAbv) || parsedVolume <= 0 || parsedAbv <= 0) {
-      Alert.alert(t("common.error"), t("errors.positiveValues"));
+      trackEngagement("tracker_add_validation_failed", { reason: "invalid_amount" });
+      toast({ message: t("errors.positiveValues"), variant: "error" });
       return;
     }
 
     if (mode === "manual" && !manualName.trim()) {
-      Alert.alert(t("common.error"), t("tracker.drinkName"));
+      trackEngagement("tracker_add_validation_failed", { reason: "missing_name" });
+      toast({ message: t("tracker.drinkName"), variant: "error" });
       return;
     }
 
@@ -98,7 +106,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
 
     const parsedPrice = parseFloat(price);
 
-    await addDrinkLog({
+    const saved = await addDrinkLog({
       name,
       emoji,
       volume: parsedVolume,
@@ -107,17 +115,23 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
       presetId: mode === "preset" ? selectedPreset?.id : undefined,
     });
 
+    if (!saved) {
+      trackEngagement("tracker_add_validation_failed", { reason: "storage_failed" });
+      return;
+    }
     logDrinkLogged(mode);
+    trackEngagement("tracker_add_saved", { source: mode === "manual" ? "manual" : customDrinks.some((drink) => drink.id === selectedPreset?.id) ? "custom_preset" : "built_in_preset" });
 
     resetForm();
     onAdd();
     onClose();
-  }, [volume, abv, price, mode, manualName, manualEmoji, selectedPreset, t, resetForm, onAdd, onClose]);
+  }, [volume, abv, price, mode, manualName, manualEmoji, selectedPreset, customDrinks, t, toast, resetForm, onAdd, onClose]);
 
   const handleClose = useCallback(() => {
+    trackEngagement("tracker_add_closed", { mode, outcome: "abandoned" });
     resetForm();
     onClose();
-  }, [resetForm, onClose]);
+  }, [mode, resetForm, onClose]);
 
   const canAdd =
     mode === "preset"
@@ -128,6 +142,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
     <Modal
       isVisible={visible}
       onBackdropPress={handleClose}
+      onBackButtonPress={handleClose}
       onSwipeComplete={handleClose}
       swipeDirection={["down"]}
       style={{ justifyContent: "flex-end", margin: 0 }}
@@ -146,9 +161,9 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
         <View className="flex-row mb-4">
           <TouchableOpacity
             className={`flex-1 rounded-xl py-3 mr-2 items-center ${
-              mode === "preset" ? "bg-green-500" : "bg-gray-800"
+              mode === "preset" ? "bg-accentButton" : "bg-gray-800"
             }`}
-            onPress={() => setMode("preset")}
+            onPress={() => { setMode("preset"); trackEngagement("tracker_add_mode_selected", { mode: "preset" }); }}
           >
             <Text
               className={`font-semibold ${
@@ -160,9 +175,9 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
           </TouchableOpacity>
           <TouchableOpacity
             className={`flex-1 rounded-xl py-3 items-center ${
-              mode === "manual" ? "bg-green-500" : "bg-gray-800"
+              mode === "manual" ? "bg-accentButton" : "bg-gray-800"
             }`}
-            onPress={() => setMode("manual")}
+            onPress={() => { setMode("manual"); trackEngagement("tracker_add_mode_selected", { mode: "manual" }); }}
           >
             <Text
               className={`font-semibold ${
@@ -214,7 +229,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                     value={volume}
                     onChangeText={setVolume}
                     keyboardType="numeric"
-                    placeholderTextColor="#6b7280"
+                    placeholderTextColor="#8b93a1"
                   />
 
                   <Text className="text-gray-400 text-sm mb-2">
@@ -225,7 +240,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                     value={abv}
                     onChangeText={setAbv}
                     keyboardType="numeric"
-                    placeholderTextColor="#6b7280"
+                    placeholderTextColor="#8b93a1"
                   />
 
                   <Text className="text-gray-400 text-sm mb-2">
@@ -237,7 +252,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                     onChangeText={setPrice}
                     keyboardType="numeric"
                     placeholder="0"
-                    placeholderTextColor="#6b7280"
+                    placeholderTextColor="#8b93a1"
                   />
                 </View>
               )}
@@ -252,7 +267,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                 value={manualName}
                 onChangeText={setManualName}
                 placeholder={t("tracker.drinkName")}
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
               />
 
               <Text className="text-gray-400 text-sm mb-2">{t("tracker.emoji")}</Text>
@@ -260,7 +275,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                 className="bg-gray-800 text-white rounded-xl px-4 py-3 mb-3 text-base"
                 value={manualEmoji}
                 onChangeText={setManualEmoji}
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
               />
 
               <Text className="text-gray-400 text-sm mb-2">
@@ -271,7 +286,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                 value={volume}
                 onChangeText={setVolume}
                 keyboardType="numeric"
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
               />
 
               <Text className="text-gray-400 text-sm mb-2">
@@ -282,7 +297,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                 value={abv}
                 onChangeText={setAbv}
                 keyboardType="numeric"
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
               />
 
               <Text className="text-gray-400 text-sm mb-2">
@@ -294,14 +309,14 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
                 onChangeText={setPrice}
                 keyboardType="numeric"
                 placeholder="0"
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
               />
             </View>
           )}
 
           <TouchableOpacity
             className={`rounded-xl p-4 items-center mt-2 mb-4 ${
-              canAdd ? "bg-green-500" : "bg-gray-700"
+              canAdd ? "bg-accentButton" : "bg-gray-700"
             }`}
             onPress={handleAdd}
             disabled={!canAdd}
@@ -318,6 +333,7 @@ const AddDrinkModal = ({ visible, onClose, onAdd }: AddDrinkModalProps) => {
           </TouchableOpacity>
         </ScrollView>
       </View>
+      {dialog.host}
     </Modal>
   );
 };

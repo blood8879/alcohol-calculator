@@ -7,7 +7,7 @@ import type { GuideDetail } from "../data/guideDetails";
 import GuideDetailPanel from "./GuideDetailPanel";
 import { isFavorite, toggleFavorite, addRecentContent } from "../utils/contentStorage";
 import { translateWithFallback } from "../utils/localizedText";
-import { logEncyclopediaViewed } from "../utils/analytics";
+import { logContentViewed, logGuideViewed, logContentFavorite } from "../utils/contentAnalytics";
 
 type EncyclopediaCardProps = {
   entry: EncyclopediaEntry;
@@ -34,14 +34,17 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
   useEffect(() => {
     if (initialExpanded) {
       setExpanded(true);
+      logContentViewed("encyclopedia", entry.id);
+      if (guideDetail) logGuideViewed(entry.id);
     }
-  }, [initialExpanded]);
+  }, [initialExpanded, entry.id, guideDetail]);
 
   const handlePress = () => {
     const nextExpanded = !expanded;
     setExpanded(nextExpanded);
     if (nextExpanded) {
-      logEncyclopediaViewed(entry.id);
+      logContentViewed("encyclopedia", entry.id);
+      if (guideDetail) logGuideViewed(entry.id);
       addRecentContent({
         kind: "encyclopedia",
         id: entry.id,
@@ -60,7 +63,10 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
       emoji: entry.emoji,
       viewedAt: Date.now(),
     });
-    setFavorite(nextFavorite);
+    if (nextFavorite !== null) {
+      setFavorite(nextFavorite);
+      logContentFavorite("encyclopedia", entry.id, nextFavorite);
+    }
   };
 
   return (
@@ -70,29 +76,32 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
       accessibilityRole="button"
       accessibilityLabel={name}
       accessibilityState={{ expanded }}
-      className="bg-gray-800 rounded-xl p-4 mb-3"
+      className="bg-surface rounded-xl px-4 py-1.5 mb-2"
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center flex-1 mr-3">
-          <Text className="text-2xl mr-3">{entry.emoji}</Text>
-          <Text className="text-white text-lg font-bold flex-1" numberOfLines={1}>
+      {/* 접힘 행: ~52–56pt 컴팩트(LookUp 단어장 행 패턴). 즐겨찾기는 32pt + hitSlop으로 44pt 확보 */}
+      <View className="flex-row items-center justify-between min-h-[44px]">
+        <View className="flex-row items-center flex-1 mr-2">
+          <Text className="text-xl mr-3">{entry.emoji}</Text>
+          <Text className="text-textPrimary text-base font-bold flex-1" numberOfLines={1}>
             {name}
           </Text>
         </View>
         <View className="flex-row items-center">
           <TouchableOpacity
-            className={`rounded-full px-2 py-1 mr-2 ${favorite ? "bg-yellow-500" : "bg-gray-700"}`}
+            className={`w-8 h-8 rounded-full items-center justify-center mr-2 ${favorite ? "bg-yellow-500" : "bg-surfaceDeep"}`}
             onPress={handleToggleFavorite}
             activeOpacity={0.75}
+            hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             accessibilityRole="button"
             accessibilityLabel={favorite ? t("history.unfavorite") : t("history.favorite")}
+            accessibilityState={{ selected: favorite }}
           >
-            <Text className={favorite ? "text-gray-900 text-xs font-bold" : "text-gray-300 text-xs font-bold"}>
+            <Text className={favorite ? "text-gray-900 text-sm font-bold" : "text-gray-300 text-sm font-bold"}>
               {favorite ? "★" : "☆"}
             </Text>
           </TouchableOpacity>
           <View className="bg-green-600/20 rounded-full px-2 py-1">
-            <Text className="text-green-400 text-xs font-semibold">
+            <Text className="text-accentSoft text-xs font-semibold">
               {entry.abvMin}–{entry.abvMax}%
             </Text>
           </View>
@@ -100,7 +109,7 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
       </View>
 
       {expanded && (
-        <View className="mt-4 pt-3 border-t border-gray-700">
+        <View className="mt-2.5 mb-2.5 pt-3 border-t border-surfaceDeep">
           <InfoRow
             label={`🔥  ${t("encyclopedia.calories")}`}
             value={`${entry.caloriesPer100ml} kcal / 100ml`}
@@ -119,10 +128,10 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
           />
 
           <View className="mt-3">
-            <Text className="text-gray-400 text-sm mb-1">
+            <Text className="text-textSecondary text-sm mb-1">
               📝  {t("encyclopedia.description")}
             </Text>
-            <Text className="text-white text-sm leading-5">
+            <Text className="text-textPrimary text-sm leading-5">
               {description}
             </Text>
           </View>
@@ -138,8 +147,8 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
 
 const InfoRow = ({ label, value }: { label: string; value: string }) => (
   <View className="flex-row items-start justify-between mb-2">
-    <Text className="text-gray-400 text-sm flex-shrink-0 mr-3">{label}</Text>
-    <Text className="text-white text-sm text-right flex-1 flex-shrink">
+    <Text className="text-textSecondary text-sm flex-shrink-0 mr-3">{label}</Text>
+    <Text className="text-textPrimary text-sm text-right flex-1 flex-shrink">
       {value}
     </Text>
   </View>

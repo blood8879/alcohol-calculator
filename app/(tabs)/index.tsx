@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo, useRef } from "react";
 import { ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,9 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import Modal from "react-native-modal";
 import Card from "../../components/ui/Card";
+import SectionHeader from "../../components/ui/SectionHeader";
+import SessionStatusCard from "../../components/home/SessionStatusCard";
+import WeekSummaryTiles from "../../components/home/WeekSummaryTiles";
 import CalculationCard, { CalculationField } from "../../components/CalculationCard";
 import {
   calculateDilution,
@@ -20,12 +23,16 @@ import {
 import { calculateBAC } from "../../utils/bacCalculator";
 import { drinkPresets } from "../../data/drinkPresets";
 import { getDailyCard, DailyContentCard } from "../../data/dailyContent";
-import { CuratedContentItem } from "../../data/contentCollections";
 import { getDailyTip } from "../../data/dailyTips";
 import { DrinkPreset } from "../../data/types";
 import { ContentRef, getFavorites, getRecentContent } from "../../utils/contentStorage";
 import { getActiveSession } from "../../utils/engagement/drinkingSessionStorage";
+import type { DrinkingSession } from "../../utils/engagement/drinkingSession";
+import { WeekSummary, loadWeekSummary } from "../../utils/engagement/weekSummary";
 import { pickLocalizedText } from "../../utils/localizedText";
+import { logCalculatorOpened, logCalculatorClosed } from "../../utils/calculatorAnalytics";
+import type { CalculatorCloseReason } from "../../utils/calculatorAnalytics";
+import { logHomeContentClick, logHomeCtaClick } from "../../utils/contentAnalytics";
 
 type CalculatorKey =
   | "dilution"
@@ -51,65 +58,28 @@ type CalculatorConfig = {
   presetFieldMapping?: { volumeIndex: number; abvIndex: number };
 };
 
-type DailyCardProps = {
-  card: DailyContentCard;
-  language: string;
-  compact?: boolean;
-  onPress: () => void;
-};
-
-function DailyCard({ card, language, compact = false, onPress }: DailyCardProps) {
-  return (
-    <Card className={compact ? "flex-1" : ""} onPress={onPress}>
-      <View className="flex-row items-center justify-between mb-3">
-        <View className="bg-green-500/15 rounded-full px-3 py-1">
-          <Text className="text-green-400 text-xs font-bold">
-            {pickLocalizedText(card.label, language)}
-          </Text>
-        </View>
-        <Text className={compact ? "text-3xl" : "text-4xl"}>{card.emoji}</Text>
-      </View>
-      <Text className="text-white text-lg font-bold mb-2" numberOfLines={compact ? 2 : undefined}>
-        {pickLocalizedText(card.title, language)}
-      </Text>
-      <Text className="text-gray-400 text-sm leading-5 mb-4" numberOfLines={compact ? 3 : undefined}>
-        {pickLocalizedText(card.description, language)}
-      </Text>
-      <Text className="text-green-400 text-sm font-semibold">
-        {pickLocalizedText(card.action, language)} ›
-      </Text>
-    </Card>
-  );
-}
-
 type ContentShortcutProps = {
-  item: ContentRef | CuratedContentItem;
-  language: string;
-  description?: string;
+  item: ContentRef;
+  badgeLabel: string;
   onPress: () => void;
 };
 
-function ContentShortcut({ item, language, description: descriptionOverride, onPress }: ContentShortcutProps) {
-  const title = "label" in item ? item.label : pickLocalizedText(item.title, language);
-  const description = "description" in item
-    ? pickLocalizedText(item.description, language)
-    : descriptionOverride;
-
+// Notion "Jump back in" 패턴: 이모지 상단 + 뱃지 + 제목 2줄의 작은 카드.
+function ContentShortcut({ item, badgeLabel, onPress }: ContentShortcutProps) {
   return (
-    <Card className="mr-3 w-56" onPress={onPress}>
-      <View className="flex-row items-center mb-3">
-        <Text className="text-3xl mr-3">{item.emoji}</Text>
-        <View className="bg-gray-700 rounded-full px-2 py-1">
-          <Text className="text-gray-300 text-xs font-semibold">
-            {item.kind === "recipe" ? "Recipe" : "Guide"}
-          </Text>
-        </View>
+    <Card
+      className="mr-3 w-36 min-h-[128px]"
+      onPress={onPress}
+      accessibilityLabel={`${badgeLabel}, ${item.label}`}
+    >
+      <Text className="text-3xl mb-2">{item.emoji}</Text>
+      <View className="self-start bg-surfaceDeep rounded-full px-2 py-0.5 mb-2">
+        <Text className="text-textSecondary text-xs font-semibold" numberOfLines={1}>
+          {badgeLabel}
+        </Text>
       </View>
-      <Text className="text-white text-base font-bold mb-2" numberOfLines={1}>
-        {title}
-      </Text>
-      <Text className="text-gray-400 text-sm leading-5" numberOfLines={2}>
-        {description}
+      <Text className="text-textPrimary text-sm font-bold leading-5" numberOfLines={2}>
+        {item.label}
       </Text>
     </Card>
   );
@@ -122,9 +92,19 @@ export default function HomeScreen() {
   const [selectedCalculatorKey, setSelectedCalculatorKey] =
     useState<CalculatorKey | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [calculatorOpenSequence, setCalculatorOpenSequence] = useState(0);
   const [favoriteContent, setFavoriteContent] = useState<ContentRef[]>([]);
   const [recentContent, setRecentContent] = useState<ContentRef[]>([]);
-  const [hasActiveSession, setHasActiveSession] = useState(false);
+  const calculatorOpenedAt = useRef(0);
+  const calculatorHadResult = useRef(false);
+  const calculatorIsOpen = useRef(false);
+  const [activeSession, setActiveSession] = useState<DrinkingSession | null>(null);
+  const [weekSummary, setWeekSummary] = useState<WeekSummary>({
+    weekDrinks: 0,
+    weeklyProgress: null,
+    challengeProgress: null,
+  });
+  const [today, setToday] = useState(() => new Date());
 
   // 계산기 설정을 useMemo로 메모이제이션하여 언어 변경 시 자동으로 업데이트
   const calculatorConfigs: Record<CalculatorKey, CalculatorConfig> = useMemo(
@@ -335,22 +315,37 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      Promise.all([getFavorites(), getRecentContent(), getActiveSession()]).then(
-        ([favorites, recent, activeSession]) => {
-          setFavoriteContent(favorites);
-          setRecentContent(recent);
-          setHasActiveSession(activeSession !== null);
-        }
-      );
+      const now = new Date();
+      setToday(now);
+      Promise.all([
+        getFavorites(),
+        getRecentContent(),
+        getActiveSession(),
+        loadWeekSummary(now),
+      ]).then(([favorites, recent, session, summary]) => {
+        setFavoriteContent(favorites);
+        setRecentContent(recent);
+        setActiveSession(session);
+        setWeekSummary(summary);
+      });
     }, [])
   );
 
-  const handleBack = () => {
+  const handleBack = (reason: CalculatorCloseReason = "button") => {
+    if (calculatorIsOpen.current && selectedCalculatorKey) {
+      logCalculatorClosed(selectedCalculatorKey, reason, calculatorHadResult.current, Date.now() - calculatorOpenedAt.current);
+      calculatorIsOpen.current = false;
+    }
     setModalVisible(false);
-    setTimeout(() => setSelectedCalculatorKey(null), 300);
+    setTimeout(() => { if (!calculatorIsOpen.current) setSelectedCalculatorKey(null); }, 300);
   };
 
   const openCalculator = (key: CalculatorKey) => {
+    setCalculatorOpenSequence((sequence) => sequence + 1);
+    calculatorOpenedAt.current = Date.now();
+    calculatorHadResult.current = false;
+    calculatorIsOpen.current = true;
+    logCalculatorOpened(key, "home_grid");
     setSelectedCalculatorKey(key);
     setModalVisible(true);
   };
@@ -363,15 +358,27 @@ export default function HomeScreen() {
   };
 
   const openDailyTarget = (target: DailyContentCard["target"]) => {
+    logHomeCtaClick(target, "daily_card");
     router.push(targetRoute(target));
   };
 
   const handleRecommendationPress = (target: "recipes" | "encyclopedia" | "tracker") => {
-    setModalVisible(false);
+    handleBack("recommendation");
     setTimeout(() => {
       router.push(targetRoute(target));
     }, 300);
   };
+
+  const openTrackerFromWeekSummary = () => {
+    logHomeCtaClick("tracker", "week_summary");
+    router.push("/(tabs)/tracker");
+  };
+
+  const todayLabel = today.toLocaleDateString(i18n.language, {
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
 
   const openContentKind = (kind: "recipe" | "encyclopedia") => {
     router.push(
@@ -382,7 +389,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-background">
       <StatusBar barStyle="light-content" backgroundColor="#1e1e1e" />
 
       <ScrollView
@@ -390,50 +397,26 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text className="text-2xl font-bold text-white mb-1">
+        <Text className="text-2xl font-bold text-textPrimary mb-1" accessibilityRole="header">
           {t("common.appTitle")}
         </Text>
-        <Text className="text-sm text-gray-400 mb-5">
-          {t("common.appSubtitle")}
-        </Text>
+        <Text className="text-sm text-textSecondary mb-5">{todayLabel}</Text>
 
-        {/* 실시간 음주 세션 진입 CTA */}
-        <TouchableOpacity
-          className={`rounded-2xl p-4 mb-6 flex-row items-center ${
-            hasActiveSession ? "bg-green-600" : "bg-gray-800 border border-green-700"
-          }`}
-          onPress={() => router.push("/session")}
-          activeOpacity={0.75}
-          accessibilityRole="button"
-          accessibilityLabel={hasActiveSession ? t("session.homeCtaActive") : t("session.homeCta")}
-        >
-          <Text className="text-3xl mr-3">🍻</Text>
-          <View className="flex-1">
-            <Text className="text-white text-base font-bold">
-              {hasActiveSession ? t("session.homeCtaActive") : t("session.homeCta")}
-            </Text>
-            <Text
-              className={`text-sm mt-1 leading-5 ${
-                hasActiveSession ? "text-green-100" : "text-gray-400"
-              }`}
-            >
-              {t("session.homeCtaDescription")}
-            </Text>
-          </View>
-          <Text className="text-white text-2xl ml-2">›</Text>
-        </TouchableOpacity>
+        {/* 세션 상태 카드: 비활성 = 외곽선 CTA, 진행 중 = 초록 + 펄스·경과 시간·잔 수 */}
+        <SessionStatusCard
+          session={activeSession}
+          onPress={() => { logHomeCtaClick("session", "session_banner"); router.push("/session"); }}
+        />
 
         {/* 핵심 기능인 계산기를 첫 화면 최상단에 그리드로 배치 */}
-        <Text className="text-lg font-bold text-white mb-3">
-          {t("home.calculatorsTitle")}
-        </Text>
-        <View className="flex-row flex-wrap justify-between mb-6">
+        <SectionHeader title={t("home.calculatorsTitle")} />
+        <View className="flex-row flex-wrap justify-between mb-3">
           {(Object.keys(calculatorConfigs) as CalculatorKey[]).map((key) => {
             const config = calculatorConfigs[key];
             return (
               <TouchableOpacity
                 key={key}
-                className="bg-gray-800 rounded-xl p-3 mb-3 items-center w-[31%]"
+                className="bg-surface rounded-card px-2 py-3 mb-3 items-center justify-center w-[31%] h-24 min-h-[44px]"
                 onPress={() => openCalculator(key)}
                 activeOpacity={0.7}
                 accessibilityRole="button"
@@ -446,7 +429,7 @@ export default function HomeScreen() {
                   <Text className="text-xl">{config.icon}</Text>
                 </View>
                 <Text
-                  className="text-white text-xs font-semibold text-center"
+                  className="text-textPrimary text-xs font-semibold text-center"
                   numberOfLines={1}
                 >
                   {config.navLabel}
@@ -456,59 +439,83 @@ export default function HomeScreen() {
           })}
         </View>
 
-        {/* 오늘 블록: 팁 + 추천 카드 하나로 통합 */}
-        <Text className="text-lg font-bold text-white mb-3">
-          {t("home.todayTitle")}
-        </Text>
-        <Card className="mb-3 flex-row items-start">
-          <Text className="text-3xl mr-3">{dailyTip.emoji}</Text>
-          <View className="flex-1">
-            <Text className="text-green-400 text-xs font-bold mb-1">
-              {t("home.todayTipLabel")}
-            </Text>
-            <Text className="text-white text-sm leading-5">
-              {pickLocalizedText(dailyTip.text, i18n.language)}
-            </Text>
+        {/* 오늘: 팁 + 추천을 카드 1장으로 통합 */}
+        <SectionHeader title={t("home.todayTitle")} />
+        <Card className="mb-4">
+          <View className="flex-row items-start">
+            <Text className="text-3xl mr-3">{dailyTip.emoji}</Text>
+            <View className="flex-1">
+              <Text className="text-accentSoft text-xs font-bold mb-1">
+                {t("home.todayTipLabel")}
+              </Text>
+              <Text className="text-textPrimary text-sm leading-5">
+                {pickLocalizedText(dailyTip.text, i18n.language)}
+              </Text>
+            </View>
           </View>
+          <View className="h-px bg-surfaceDeep my-3" />
+          <TouchableOpacity
+            className="flex-row items-center min-h-[44px]"
+            onPress={() => openDailyTarget(featuredDailyCard.target)}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={`${pickLocalizedText(featuredDailyCard.label, i18n.language)}, ${pickLocalizedText(featuredDailyCard.title, i18n.language)}, ${pickLocalizedText(featuredDailyCard.action, i18n.language)}`}
+          >
+            <View className="flex-1">
+              {/* 팁 라벨과 같은 문구면 같은 카드 안에서 중복되므로 뱃지를 생략한다 */}
+              {pickLocalizedText(featuredDailyCard.label, i18n.language) !== t("home.todayTipLabel") && (
+                <Text className="text-accentSoft text-xs font-bold mb-0.5" numberOfLines={1}>
+                  {pickLocalizedText(featuredDailyCard.label, i18n.language)}
+                </Text>
+              )}
+              <Text className="text-textPrimary text-sm font-semibold leading-5" numberOfLines={2}>
+                {featuredDailyCard.emoji} {pickLocalizedText(featuredDailyCard.title, i18n.language)}
+              </Text>
+            </View>
+            <Text className="text-accentSoft text-sm font-semibold ml-2" numberOfLines={1}>
+              {pickLocalizedText(featuredDailyCard.action, i18n.language)} ›
+            </Text>
+          </TouchableOpacity>
         </Card>
-        <DailyCard
-          card={featuredDailyCard}
-          language={i18n.language}
-          onPress={() => openDailyTarget(featuredDailyCard.target)}
-        />
 
-        <TouchableOpacity
-          className="bg-emerald-600 rounded-2xl p-4 mt-3 mb-6 flex-row items-center"
-          onPress={() => router.push("/(tabs)/quiz")}
-          activeOpacity={0.75}
-          accessibilityRole="button"
-          accessibilityLabel={t("home.quizBannerTitle")}
+        {/* 이번 주 요약: 탭하면 트래커로 이동 */}
+        <SectionHeader
+          title={t("home.week.title")}
+          actionLabel={t("home.seeAll")}
+          onActionPress={openTrackerFromWeekSummary}
+          className="mb-1"
+        />
+        <WeekSummaryTiles summary={weekSummary} onPress={openTrackerFromWeekSummary} />
+
+        {/* 퀴즈: 낮은 위계의 행 카드 */}
+        <Card
+          className="mb-6 flex-row items-center min-h-[44px]"
+          onPress={() => { logHomeCtaClick("quiz", "quiz_banner"); router.push("/(tabs)/quiz"); }}
+          accessibilityLabel={`${t("home.quizBannerTitle")}, ${t("home.quizBannerDescription")}`}
         >
-          <Text className="text-3xl mr-3">🧠</Text>
+          <Text className="text-2xl mr-3">🧠</Text>
           <View className="flex-1">
-            <Text className="text-white text-base font-bold">
+            <Text className="text-textPrimary text-base font-bold" numberOfLines={1}>
               {t("home.quizBannerTitle")}
             </Text>
-            <Text className="text-emerald-100 text-sm mt-1 leading-5">
+            <Text className="text-textSecondary text-sm mt-0.5" numberOfLines={1}>
               {t("home.quizBannerDescription")}
             </Text>
           </View>
-          <Text className="text-white text-2xl ml-2">›</Text>
-        </TouchableOpacity>
+          <Text className="text-textSecondary text-2xl ml-2">›</Text>
+        </Card>
 
+        {/* 이어 보기(즐겨찾기·최근 본 콘텐츠). 콘텐츠가 없으면 섹션 전체 숨김 */}
         {contentRail.length > 0 && (
           <View className="mb-6">
-            <Text className="text-lg font-bold text-white mb-3">
-              {t("home.contentRailTitle")}
-            </Text>
+            <SectionHeader title={t("home.continueTitle")} />
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {contentRail.map((item) => (
                 <ContentShortcut
                   key={`${item.kind}-${item.id}`}
                   item={item}
-                  language={i18n.language}
-                  description={item.kind === "recipe" ? t("home.openRecipe") : t("home.openGuide")}
-                  onPress={() => openContentKind(item.kind)}
+                  badgeLabel={item.kind === "recipe" ? t("home.badgeRecipe") : t("home.badgeGuide")}
+                  onPress={() => { logHomeContentClick(item.kind, item.id, favoriteContent.some((favorite) => favorite.kind === item.kind && favorite.id === item.id) ? "favorite" : "recent"); openContentKind(item.kind); }}
                 />
               ))}
             </ScrollView>
@@ -518,8 +525,9 @@ export default function HomeScreen() {
 
       <Modal
         isVisible={isModalVisible}
-        onBackdropPress={handleBack}
-        onSwipeComplete={handleBack}
+        onBackdropPress={() => handleBack("backdrop")}
+        onBackButtonPress={() => handleBack("back")}
+        onSwipeComplete={() => handleBack("swipe")}
         swipeDirection={["down"]}
         style={{ justifyContent: "flex-end", margin: 0 }}
         propagateSwipe={true}
@@ -527,13 +535,15 @@ export default function HomeScreen() {
         animationOut="slideOutDown"
       >
         {selectedCalculator && (
-          <View className="bg-white rounded-t-3xl overflow-hidden max-h-[90%]">
+          <View className="bg-background rounded-t-3xl overflow-hidden max-h-[90%]">
             <CalculationCard
+              key={`${selectedCalculatorKey}-${calculatorOpenSequence}`}
               title={selectedCalculator.title}
               description={selectedCalculator.description}
               fields={selectedCalculator.fields}
               calculateResult={selectedCalculator.calculateResult}
-              onBack={handleBack}
+              onBack={() => handleBack("button")}
+              onSuccessfulResult={() => { calculatorHadResult.current = true; }}
               presets={selectedCalculator.presets}
               presetFieldMapping={selectedCalculator.presetFieldMapping}
               calculatorType={selectedCalculatorKey || undefined}

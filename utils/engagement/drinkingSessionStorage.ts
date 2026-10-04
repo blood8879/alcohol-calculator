@@ -21,19 +21,23 @@ export const getActiveSession = async (): Promise<DrinkingSession | null> => {
 
 export const setActiveSession = async (
   session: DrinkingSession
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    return true;
   } catch (error) {
     console.error("Error saving drinking session:", error);
+    return false;
   }
 };
 
-export const clearActiveSession = async (): Promise<void> => {
+export const clearActiveSession = async (): Promise<boolean> => {
   try {
     await AsyncStorage.removeItem(SESSION_KEY);
+    return true;
   } catch (error) {
     console.error("Error clearing drinking session:", error);
+    return false;
   }
 };
 

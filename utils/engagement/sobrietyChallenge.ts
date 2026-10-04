@@ -35,7 +35,7 @@ export const getChallenge = async (): Promise<SobrietyChallenge | null> => {
 
 export const startChallenge = async (
   targetDays: number
-): Promise<SobrietyChallenge> => {
+): Promise<boolean> => {
   const challenge: SobrietyChallenge = {
     active: true,
     startDate: toLocalDateString(new Date()),
@@ -43,17 +43,20 @@ export const startChallenge = async (
   };
   try {
     await AsyncStorage.setItem(CHALLENGE_KEY, JSON.stringify(challenge));
+    return true;
   } catch (error) {
     console.error('Error starting sobriety challenge:', error);
+    return false;
   }
-  return challenge;
 };
 
-export const stopChallenge = async (): Promise<void> => {
+export const stopChallenge = async (): Promise<boolean> => {
   try {
     await AsyncStorage.removeItem(CHALLENGE_KEY);
+    return true;
   } catch (error) {
     console.error('Error stopping sobriety challenge:', error);
+    return false;
   }
 };
 

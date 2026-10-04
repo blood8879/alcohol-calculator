@@ -28,24 +28,27 @@ export const getWeeklyGoal = async (): Promise<WeeklyGoal | null> => {
 
 export const setWeeklyGoal = async (
   weeklyLimitDrinks: number
-): Promise<WeeklyGoal> => {
+): Promise<boolean> => {
   const goal: WeeklyGoal = {
     weeklyLimitDrinks,
     createdAt: new Date().toISOString(),
   };
   try {
     await AsyncStorage.setItem(WEEKLY_GOAL_KEY, JSON.stringify(goal));
+    return true;
   } catch (error) {
     console.error('Error setting weekly goal:', error);
+    return false;
   }
-  return goal;
 };
 
-export const clearWeeklyGoal = async (): Promise<void> => {
+export const clearWeeklyGoal = async (): Promise<boolean> => {
   try {
     await AsyncStorage.removeItem(WEEKLY_GOAL_KEY);
+    return true;
   } catch (error) {
     console.error('Error clearing weekly goal:', error);
+    return false;
   }
 };
 

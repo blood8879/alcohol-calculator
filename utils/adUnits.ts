@@ -27,7 +27,7 @@ type AdUnitMap = {
 const PROD_AD_UNITS: AdUnitMap = {
   anchoredBanner: `${PUBLISHER}/5764066171`,
   inlineBanner: `${PUBLISHER}/3826487912`,
-  quizInterstitial: `${PUBLISHER}/3082062514`,
+  quizInterstitial: `${PUBLISHER}/7447353245`,
   sessionInterstitial: `${PUBLISHER}/8446711044`,
   rewarded: `${PUBLISHER}/3634916227`,
 };

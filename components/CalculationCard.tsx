@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { DrinkPreset } from "../data/types";
 import { shareResults } from "../utils/shareUtils";
 import { saveCalculation } from "../utils/historyStorage";
-import { logCalculatorUsed } from "../utils/analytics";
+import type { CalculatorType } from "../utils/analytics";
+import { isSuccessfulCalculation, logCalculatorAttempt, logCalculatorFirstInput, logCalculatorGuideOpened, logCalculatorOutcome, logCalculatorPreset, logCalculatorRecommendation, logCalculatorShare } from "../utils/calculatorAnalytics";
 import PresetPicker from "./PresetPicker";
 import { getCalculatorGuide } from "../data/calculatorGuides";
 import { pickLocalizedText } from "../utils/localizedText";
+import { computeRevealScrollOffset } from "../utils/keyboardReveal";
 
 export type FieldOption = {
   label: string;
@@ -46,9 +53,10 @@ export type CalculationCardProps = {
   onBack: () => void;
   presets?: DrinkPreset[];
   presetFieldMapping?: { volumeIndex: number; abvIndex: number };
-  calculatorType?: string;
+  calculatorType?: CalculatorType;
   calculatorIcon?: string;
   onRecommendationPress?: (target: RecommendationTarget) => void;
+  onSuccessfulResult?: () => void;
 };
 
 const getRecommendation = (
@@ -105,6 +113,7 @@ const CalculationCard = ({
   calculatorType,
   calculatorIcon,
   onRecommendationPress,
+  onSuccessfulResult,
 }: CalculationCardProps) => {
   const { t, i18n } = useTranslation();
   const [values, setValues] = useState<number[]>(Array(fields.length).fill(0));
@@ -118,8 +127,56 @@ const CalculationCard = ({
   const guide = getCalculatorGuide(calculatorType);
   const isKorean = i18n.language.startsWith("ko");
   const [guideOpen, setGuideOpen] = useState(false);
+  const inputTracked = useRef(false);
+  const inputRefs = useRef<(TextInput | null)[]>([]);
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+
+  // Android 키보드 회피(실기기 이슈 3): 실기기(Galaxy S20+, Android 13)에서 모달 창은 키보드만큼 리사이즈된다.
+  // 그래서 여백을 더하면 이중으로 밀려 버튼이 화면 밖으로 사라졌다 → 여백 없이, 리사이즈로 줄어든
+  // 뷰포트 안에 [계산하기]가 들어오도록 스크롤만 맞춘다. iOS는 기존 KeyboardAvoidingView(padding)만 쓴다.
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollOffsetRef = useRef(0);
+  const viewportHeightRef = useRef(0);
+  const calculateButtonLayoutRef = useRef<{ y: number; height: number } | null>(null);
+  const pendingRevealRef = useRef(false);
+
+  const revealCalculateButton = useCallback(() => {
+    const button = calculateButtonLayoutRef.current;
+    if (!button) return;
+    const offset = computeRevealScrollOffset({
+      targetY: button.y,
+      targetHeight: button.height,
+      viewportHeight: viewportHeightRef.current,
+      currentOffset: scrollOffsetRef.current,
+    });
+    if (offset !== null) scrollRef.current?.scrollTo({ y: offset, animated: true });
+  }, []);
+
+  useEffect(() => {
+    if (Platform.OS !== "android") return undefined;
+    const showSub = Keyboard.addListener("keyboardDidShow", () => {
+      // 리사이즈 후 onLayout에서 맞추고, 레이아웃이 안 바뀐 경우(다른 입력칸 이동 등)를 위해 한 번 더 시도한다.
+      pendingRevealRef.current = true;
+      setTimeout(revealCalculateButton, 150);
+    });
+    const hideSub = Keyboard.addListener("keyboardDidHide", () => {
+      pendingRevealRef.current = false;
+    });
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, [revealCalculateButton]);
+
+  const trackFirstInput = (index: number) => {
+    if (calculatorType && !inputTracked.current) {
+      inputTracked.current = true;
+      logCalculatorFirstInput(calculatorType, index);
+    }
+  };
 
   const handleInputChange = (text: string, index: number) => {
+    trackFirstInput(index);
     const newValues = [...values];
     newValues[index] = Number(text) || 0;
     setValues(newValues);
@@ -130,6 +187,7 @@ const CalculationCard = ({
   };
 
   const handleOptionSelect = (index: number, optionValue: number) => {
+    trackFirstInput(index);
     const newValues = [...values];
     newValues[index] = optionValue;
     setValues(newValues);
@@ -137,6 +195,8 @@ const CalculationCard = ({
 
   const handlePresetSelect = (preset: DrinkPreset) => {
     if (!presetFieldMapping) return;
+    if (calculatorType) logCalculatorPreset(calculatorType, preset.id);
+    trackFirstInput(presetFieldMapping.volumeIndex);
 
     const newValues = [...values];
     const newTexts = [...inputTexts];
@@ -152,14 +212,15 @@ const CalculationCard = ({
   };
 
   const handleCalculate = () => {
+    if (calculatorType) logCalculatorAttempt(calculatorType);
     const calculatedResults = calculateResult(values);
     setResults(calculatedResults);
+    const successful = isSuccessfulCalculation(calculatedResults, t("common.error"));
 
-    if (calculatorType && calculatedResults.length > 0) {
-      logCalculatorUsed(calculatorType);
-    }
+    if (calculatorType) logCalculatorOutcome(calculatorType, successful);
+    if (successful) onSuccessfulResult?.();
 
-    if (calculatorType && calculatorIcon && calculatedResults.length > 0) {
+    if (calculatorType && calculatorIcon && successful) {
       saveCalculation({
         calculatorType,
         calculatorIcon,
@@ -172,24 +233,27 @@ const CalculationCard = ({
     }
   };
 
-  const handleShare = () => {
-    shareResults(title, results, t);
+  const handleShare = async () => {
+    if (calculatorType) logCalculatorShare(calculatorType, "attempted");
+    const outcome = await shareResults(title, results, t);
+    if (calculatorType) logCalculatorShare(calculatorType, outcome);
   };
 
+  // 세그먼트 컨트롤(BAC 성별 등): 다크 surface 트랙 + 선택 시 accentButton
   const renderRadioField = (field: CalculationField, index: number) => {
     const options = field.options || [];
     return (
       <View key={index} className="mb-4">
-        <Text className="text-base text-gray-800 mb-2">{field.label}</Text>
-        <View className="flex-row">
-          {options.map((option) => {
+        <Text className="text-sm text-textSecondary mb-2">{field.label}</Text>
+        <View className="flex-row bg-surface rounded-xl p-1" accessibilityRole="radiogroup">
+          {options.map((option, optionIndex) => {
             const isSelected = values[index] === option.value;
             return (
               <TouchableOpacity
                 key={option.value}
-                className={`flex-1 p-3 rounded-lg mr-2 last:mr-0 ${
-                  isSelected ? "bg-green-500" : "bg-gray-200"
-                }`}
+                className={`flex-1 min-h-[44px] items-center justify-center rounded-lg ${
+                  optionIndex > 0 ? "ml-1" : ""
+                } ${isSelected ? "bg-accentButton" : ""}`}
                 onPress={() => handleOptionSelect(index, option.value)}
                 accessibilityRole="radio"
                 accessibilityLabel={option.label}
@@ -197,7 +261,7 @@ const CalculationCard = ({
               >
                 <Text
                   className={`text-center font-semibold ${
-                    isSelected ? "text-white" : "text-gray-800"
+                    isSelected ? "text-textPrimary" : "text-textSecondary"
                   }`}
                 >
                   {option.label}
@@ -210,19 +274,26 @@ const CalculationCard = ({
     );
   };
 
+  // 선택 칩(단위 변환 모드 등): 가로 스크롤 칩, 선택 시 accentButton
   const renderSelectField = (field: CalculationField, index: number) => {
     const options = field.options || [];
     return (
       <View key={index} className="mb-4">
-        <Text className="text-base text-gray-800 mb-2">{field.label}</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <Text className="text-sm text-textSecondary mb-2">{field.label}</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
           {options.map((option) => {
             const isSelected = values[index] === option.value;
             return (
               <TouchableOpacity
                 key={option.value}
-                className={`rounded-full px-4 py-2 mr-2 ${
-                  isSelected ? "bg-green-500" : "bg-gray-200"
+                className={`min-h-[44px] justify-center rounded-full px-4 mr-2 border ${
+                  isSelected
+                    ? "bg-accentButton border-accentButton"
+                    : "bg-surface border-surfaceDeep"
                 }`}
                 onPress={() => handleOptionSelect(index, option.value)}
                 accessibilityRole="radio"
@@ -231,7 +302,7 @@ const CalculationCard = ({
               >
                 <Text
                   className={`text-sm font-medium ${
-                    isSelected ? "text-white" : "text-gray-800"
+                    isSelected ? "text-textPrimary" : "text-textSecondary"
                   }`}
                 >
                   {option.label}
@@ -244,85 +315,227 @@ const CalculationCard = ({
     );
   };
 
-  const renderNumericField = (field: CalculationField, index: number) => {
+  // 숫자 입력 행(Revolut식): 라벨 좌 / 우측 정렬 값 + 단위. 행 전체 탭 시 입력 포커스.
+  const renderNumericRow = (field: CalculationField, index: number, isFirst: boolean) => {
+    const isFocused = focusedIndex === index;
     return (
-      <View
-        key={index}
-        className="flex-row items-center justify-between mb-4"
-      >
-        <Text className="text-base text-gray-800 flex-1 mr-2">
-          {field.label}
-        </Text>
-        <View className="flex-row items-center w-[130px]">
+      <React.Fragment key={index}>
+        {!isFirst && <View className="h-px bg-surfaceDeep mx-4" />}
+        <Pressable
+          accessible={false}
+          onPress={() => inputRefs.current[index]?.focus()}
+          className={`flex-row items-center min-h-[56px] px-4 py-2 rounded-2xl border ${
+            isFocused ? "border-accent bg-surfaceDeep/40" : "border-transparent"
+          }`}
+        >
+          <Text className="text-base text-textSecondary flex-1 mr-3">
+            {field.label}
+          </Text>
           <TextInput
-            className="bg-gray-200 p-2 rounded-lg flex-1 text-right"
+            ref={(ref) => {
+              inputRefs.current[index] = ref;
+            }}
+            className="text-xl font-semibold text-textPrimary text-right min-w-[96px] max-w-[160px] py-1"
             placeholder={field.placeholder}
+            placeholderTextColor="#8b93a1"
+            selectionColor="#22c55e"
             keyboardType="numeric"
             value={inputTexts[index]}
             onChangeText={(text) => handleInputChange(text, index)}
+            onFocus={() => setFocusedIndex(index)}
+            onBlur={() => setFocusedIndex((prev) => (prev === index ? null : prev))}
+            accessibilityLabel={field.unit ? `${field.label} (${field.unit})` : field.label}
           />
-          <Text className="ml-2 text-gray-800">{field.unit}</Text>
+          {field.unit ? (
+            <Text className="ml-2 text-base text-textSecondary">{field.unit}</Text>
+          ) : null}
+        </Pressable>
+      </React.Fragment>
+    );
+  };
+
+  // 연속된 숫자 필드는 하나의 surface 그룹 카드로 묶고, 라디오/선택 필드는 단독 렌더.
+  const renderFields = () => {
+    const nodes: React.ReactNode[] = [];
+    let group: { field: CalculationField; index: number }[] = [];
+
+    const flushGroup = () => {
+      if (group.length === 0) return;
+      const groupKey = `numeric-group-${group[0].index}`;
+      nodes.push(
+        <View key={groupKey} className="bg-surface rounded-2xl mb-4">
+          {group.map(({ field, index }, i) => renderNumericRow(field, index, i === 0))}
         </View>
+      );
+      group = [];
+    };
+
+    fields.forEach((field, index) => {
+      if (field.fieldType === "radio") {
+        flushGroup();
+        nodes.push(renderRadioField(field, index));
+      } else if (field.fieldType === "select") {
+        flushGroup();
+        nodes.push(renderSelectField(field, index));
+      } else {
+        group.push({ field, index });
+      }
+    });
+    flushGroup();
+    return nodes;
+  };
+
+  const errorLabel = t("common.error");
+  const errorResults = results.filter((result) => result.label === errorLabel);
+  const [heroResult, ...secondaryResults] = results;
+
+  // 결과 블록(PayPal식 위계): 첫 결과 = 주인공 숫자, 나머지는 보조 행. 값 문자열은 그대로 표시.
+  const renderResults = () => {
+    if (results.length === 0) return null;
+
+    if (errorResults.length > 0) {
+      return (
+        <View
+          className="mt-5 bg-surface border border-danger rounded-2xl p-4"
+          accessibilityLiveRegion="polite"
+          accessibilityRole="alert"
+        >
+          {errorResults.map((result, index) => (
+            <View
+              key={index}
+              className={`flex-row items-start ${index > 0 ? "mt-3" : ""}`}
+            >
+              <Ionicons
+                name="alert-circle"
+                size={22}
+                color="#ef4444"
+                style={{ marginRight: 8, marginTop: 1 }}
+                accessibilityElementsHidden
+                importantForAccessibility="no"
+              />
+              <View className="flex-1">
+                <Text className="text-sm font-semibold text-danger mb-1">
+                  {result.label}
+                </Text>
+                <Text className="text-base text-danger leading-6">
+                  {result.value}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      );
+    }
+
+    return (
+      <View className="mt-5 bg-surface rounded-2xl p-4">
+        <View
+          accessibilityLiveRegion="polite"
+          accessibilityRole="summary"
+          accessible
+          accessibilityLabel={`${heroResult.label} ${heroResult.value}`}
+        >
+          <Text className="text-sm text-textSecondary mb-1">{heroResult.label}</Text>
+          <Text className="text-4xl font-bold text-accentSoft flex-wrap">
+            {heroResult.value}
+          </Text>
+        </View>
+        {secondaryResults.map((result, index) => {
+          // 참고 문구처럼 긴 값은 라벨 아래로 쌓고, 짧은 수치는 라벨 좌·값 우 행으로.
+          const stacked = result.value.length > 24;
+          return (
+            <View key={index} className="border-t border-surfaceDeep mt-3 pt-3">
+              {stacked ? (
+                <>
+                  <Text className="text-sm text-textSecondary mb-1">{result.label}</Text>
+                  <Text className="text-sm text-textPrimary leading-5">{result.value}</Text>
+                </>
+              ) : (
+                <View className="flex-row items-center justify-between">
+                  <Text className="text-sm text-textSecondary flex-1 mr-3">
+                    {result.label}
+                  </Text>
+                  <Text className="text-base font-semibold text-textPrimary text-right flex-shrink">
+                    {result.value}
+                  </Text>
+                </View>
+              )}
+            </View>
+          );
+        })}
       </View>
     );
   };
 
-  const renderField = (field: CalculationField, index: number) => {
-    switch (field.fieldType) {
-      case "radio":
-        return renderRadioField(field, index);
-      case "select":
-        return renderSelectField(field, index);
-      default:
-        return renderNumericField(field, index);
-    }
-  };
-
   return (
-    <View className="bg-white">
-      {/* 바텀시트 드래그 핸들 */}
-      <View className="items-center pt-2 pb-4">
-        <View className="w-10 h-1 bg-gray-300 rounded-full" />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      className="bg-background flex-shrink"
+    >
+      {/* 바텀시트 그랩 핸들 */}
+      <View className="items-center pt-3 pb-4">
+        <View className="w-10 h-1 bg-surfaceDeep rounded-full" />
       </View>
 
       {/* 헤더 */}
       <View className="px-4 pb-4">
-        <Text className="text-2xl font-bold text-gray-800">{title}</Text>
-        <Text className="text-sm text-gray-600 mt-1">{description}</Text>
+        <Text className="text-2xl font-bold text-textPrimary">{title}</Text>
+        <Text className="text-sm text-textSecondary mt-1">{description}</Text>
       </View>
 
       {/* 계산 영역 */}
-      <ScrollView className="px-4" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollRef}
+        className="px-4"
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        scrollEventThrottle={32}
+        onScroll={(event) => {
+          scrollOffsetRef.current = event.nativeEvent.contentOffset.y;
+        }}
+        onLayout={(event) => {
+          viewportHeightRef.current = event.nativeEvent.layout.height;
+          if (pendingRevealRef.current) {
+            pendingRevealRef.current = false;
+            revealCalculateButton();
+          }
+        }}
+      >
         {guide && (
-          <View className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-3">
+          <View className="bg-surface rounded-2xl p-4 mb-4">
             <TouchableOpacity
-              className="flex-row items-center justify-between"
-              onPress={() => setGuideOpen((prev) => !prev)}
+              className="flex-row items-center justify-between min-h-[44px]"
+              onPress={() => { if (!guideOpen && calculatorType) logCalculatorGuideOpened(calculatorType); setGuideOpen((prev) => !prev); }}
               activeOpacity={0.7}
               accessibilityRole="button"
               accessibilityLabel={isKorean ? "이 계산기는 무엇인가요?" : "What is this calculator?"}
               accessibilityState={{ expanded: guideOpen }}
             >
-              <Text className="text-blue-900 font-semibold text-sm">
+              <Text className="text-accentSoft font-semibold text-sm flex-1 mr-2">
                 {isKorean ? "ℹ️ 이 계산기는 무엇인가요?" : "ℹ️ What is this calculator?"}
               </Text>
-              <Text className="text-blue-400 text-base">{guideOpen ? "▾" : "▸"}</Text>
+              <Ionicons
+                name={guideOpen ? "chevron-down" : "chevron-forward"}
+                size={18}
+                color="#9ca3af"
+              />
             </TouchableOpacity>
-            <Text className="text-gray-700 text-sm leading-5 mt-2">
+            <Text className="text-textSecondary text-sm leading-5">
               {pickLocalizedText(guide.what, i18n.language)}
             </Text>
             {guideOpen && (
-              <View className="mt-3">
-                <Text className="text-blue-900 font-semibold text-xs mb-1">
+              <View className="mt-3 pt-3 border-t border-surfaceDeep">
+                <Text className="text-accentSoft font-semibold text-xs mb-1">
                   {isKorean ? "언제 쓰나요" : "When to use"}
                 </Text>
-                <Text className="text-gray-700 text-sm leading-5 mb-3">
+                <Text className="text-textSecondary text-sm leading-5 mb-3">
                   {pickLocalizedText(guide.when, i18n.language)}
                 </Text>
-                <Text className="text-blue-900 font-semibold text-xs mb-1">
+                <Text className="text-accentSoft font-semibold text-xs mb-1">
                   {isKorean ? "어떻게 계산하나요" : "How it works"}
                 </Text>
-                <Text className="text-gray-700 text-sm leading-5">
+                <Text className="text-textSecondary text-sm leading-5">
                   {pickLocalizedText(guide.formula, i18n.language)}
                 </Text>
               </View>
@@ -333,42 +546,35 @@ const CalculationCard = ({
           <PresetPicker presets={presets} onSelect={handlePresetSelect} />
         )}
 
-        {fields.map((field, index) => renderField(field, index))}
+        {renderFields()}
 
         <TouchableOpacity
-          className="bg-green-500 p-3 rounded-lg mt-2"
+          className="bg-accentButton min-h-[52px] rounded-2xl items-center justify-center mt-1"
           onPress={handleCalculate}
+          onLayout={(event) => {
+            const { y, height } = event.nativeEvent.layout;
+            calculateButtonLayoutRef.current = { y, height };
+          }}
+          activeOpacity={0.8}
           accessibilityRole="button"
           accessibilityLabel={t("common.calculate")}
         >
-          <Text className="text-white text-center font-bold text-base">
+          <Text className="text-textPrimary text-center font-bold text-base">
             {t("common.calculate")}
           </Text>
         </TouchableOpacity>
 
-        {results.length > 0 && (
-          <View className="mt-4 bg-gray-200 p-4 rounded-lg">
-            {results.map((result, index) => (
-              <View key={index} className="mb-2 last:mb-0">
-                <Text className="text-base text-gray-800 font-semibold mb-1">
-                  {result.label}
-                </Text>
-                <Text className="text-base text-gray-800 font-bold flex-wrap">
-                  {result.value}
-                </Text>
-              </View>
-            ))}
-          </View>
-        )}
+        {renderResults()}
 
         {results.length > 0 && (
           <TouchableOpacity
-            className="border border-green-500 p-3 rounded-lg mt-3 flex-row items-center justify-center"
+            className="border border-surfaceDeep min-h-[48px] rounded-2xl mt-3 flex-row items-center justify-center"
             onPress={handleShare}
+            activeOpacity={0.7}
             accessibilityRole="button"
             accessibilityLabel={t("common.share")}
           >
-            <Text className="text-green-600 text-center font-semibold">
+            <Text className="text-accentSoft text-center font-semibold">
               📤 {t("common.share")}
             </Text>
           </TouchableOpacity>
@@ -376,8 +582,8 @@ const CalculationCard = ({
 
         {results.length > 0 && onRecommendationPress && (
           <TouchableOpacity
-            className="bg-green-50 border border-green-200 p-4 rounded-xl mt-3"
-            onPress={() => onRecommendationPress(recommendation.target)}
+            className="bg-surface border border-surfaceDeep p-4 rounded-2xl mt-3"
+            onPress={() => { if (calculatorType) logCalculatorRecommendation(calculatorType, recommendation.target); onRecommendationPress(recommendation.target); }}
             activeOpacity={0.75}
             accessibilityRole="button"
             accessibilityLabel={`${recommendation.title} - ${recommendation.action}`}
@@ -385,13 +591,13 @@ const CalculationCard = ({
             <View className="flex-row items-center">
               <Text className="text-3xl mr-3">{recommendation.emoji}</Text>
               <View className="flex-1">
-                <Text className="text-gray-900 font-bold text-base">
+                <Text className="text-textPrimary font-bold text-base">
                   {recommendation.title}
                 </Text>
-                <Text className="text-gray-600 text-sm mt-1 leading-5">
+                <Text className="text-textSecondary text-sm mt-1 leading-5">
                   {recommendation.description}
                 </Text>
-                <Text className="text-green-700 font-semibold text-sm mt-2">
+                <Text className="text-accentSoft font-semibold text-sm mt-2">
                   {recommendation.action} ›
                 </Text>
               </View>
@@ -399,18 +605,18 @@ const CalculationCard = ({
           </TouchableOpacity>
         )}
 
-
         {/* 닫기 버튼 */}
         <TouchableOpacity
-          className="border border-gray-300 p-3 rounded-lg mt-4 mb-4"
+          className="border border-surfaceDeep min-h-[48px] rounded-2xl items-center justify-center mt-4 mb-8"
           onPress={onBack}
+          activeOpacity={0.7}
           accessibilityRole="button"
           accessibilityLabel={t("common.reset")}
         >
-          <Text className="text-gray-800 text-center">{t("common.reset")}</Text>
+          <Text className="text-textPrimary text-center font-medium">{t("common.reset")}</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

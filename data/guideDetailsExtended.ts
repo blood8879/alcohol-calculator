@@ -661,7 +661,7 @@ export const extendedGuideDetails: readonly GuideDetail[] = [
         es: "Mezclar con soda o tónica lo hace aún más ligero.",
       },
     ],
-    relatedRecipeIds: ["green-grape-soju", "soju-tonic-lime", "fuzzy-navel"],
+    relatedRecipeIds: ["green-grape-soju-ade", "soju-tonic-lime", "fuzzy-navel"],
     relatedQuizCategory: "korean",
     nextStep: {
       label: {

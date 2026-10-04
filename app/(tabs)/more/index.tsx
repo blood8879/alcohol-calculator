@@ -24,7 +24,7 @@ function MenuCard({ emoji, title, description, onPress }: MenuCardProps) {
         <Text className="text-white font-semibold text-base">{title}</Text>
         <Text className="text-gray-400 text-sm mt-1">{description}</Text>
       </View>
-      <Text className="text-gray-500 text-xl ml-2">›</Text>
+      <Text className="text-textMuted text-xl ml-2">›</Text>
     </Card>
   );
 }

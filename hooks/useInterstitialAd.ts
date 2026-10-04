@@ -1,76 +1,153 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-
 import { AdEventType, InterstitialAd } from "../utils/mobileAds";
+import { logAdEvent, logAdFailure, logAdSuppressed } from "../utils/adAnalytics";
+import type { AdPlacement } from "../utils/adAnalytics";
+import { useConsentState } from "./useConsentState";
+import { getConsentSnapshot } from "../utils/consentState";
 
-type InterstitialHandle = {
-  addAdEventListener: (
-    eventName: string,
-    listener: (...args: unknown[]) => void
-  ) => () => void;
-  load: () => void;
-  show: () => void;
+type Options = {
+  readonly onClosed?: () => void;
+  readonly placement?: "quiz" | "session_end";
 };
 
-type UseInterstitialAdOptions = {
-  /** Fires when the ad is dismissed (CLOSED). Use it to resume the flow. */
-  onClosed?: () => void;
-};
-
-/**
- * Loads and shows a full-screen interstitial for a given placement/unit.
- *
- * Preloads on mount and reloads the next ad after each dismissal so the slot
- * stays warm. `show()` only presents when an ad is actually loaded and returns
- * whether it did — callers decide the fallback (and any frequency capping)
- * before calling it. This does not enforce frequency caps itself.
- */
-export function useInterstitialAd(
-  unitId: string,
-  options?: UseInterstitialAdOptions
-) {
+export function useInterstitialAd(unitId: string, options?: Options) {
+  const { canRequestAds } = useConsentState();
   const [loaded, setLoaded] = useState(false);
-  const adRef = useRef<InterstitialHandle | null>(null);
-  const onClosedRef = useRef(options?.onClosed);
-  onClosedRef.current = options?.onClosed;
+  const adRef = useRef<ReturnType<typeof InterstitialAd.createForAdRequest> | null>(null);
+  const ready = useRef(false);
+  const showing = useRef(false);
+  const opened = useRef(false);
+  const attempt = useRef(0);
+  const onClosed = useRef(options?.onClosed);
+  onClosed.current = options?.onClosed;
+  const placement: AdPlacement = options?.placement ?? "session_end";
 
   useEffect(() => {
-    const ad = InterstitialAd.createForAdRequest(unitId) as InterstitialHandle;
-    adRef.current = ad;
-
-    const loadedListener = ad.addAdEventListener(AdEventType.LOADED, () => {
-      setLoaded(true);
-    });
-    const closedListener = ad.addAdEventListener(AdEventType.CLOSED, () => {
+    if (!canRequestAds) {
+      ready.current = false;
       setLoaded(false);
-      onClosedRef.current?.();
-      // 다음 표시를 위해 슬롯을 다시 데운다.
-      ad.load();
-    });
-
-    ad.load();
-
-    return () => {
-      loadedListener();
-      closedListener();
-      adRef.current = null;
+      return;
+    }
+    const ad = InterstitialAd.createForAdRequest(unitId);
+    adRef.current = ad;
+    const request = () => {
+      ready.current = false;
+      setLoaded(false);
+      if (!getConsentSnapshot().canRequestAds) return;
+      logAdEvent("ad_request", "interstitial", placement);
+      try {
+        ad.load();
+      } catch (error) {
+        logAdFailure("interstitial", placement, error, "load");
+      }
     };
-  }, [unitId]);
+    const listeners = [
+      ad.addAdEventListener(AdEventType.LOADED, () => {
+        if (adRef.current !== ad || !getConsentSnapshot().canRequestAds) return;
+        ready.current = true;
+        setLoaded(true);
+        logAdEvent("ad_loaded", "interstitial", placement);
+      }),
+      ad.addAdEventListener(AdEventType.ERROR, (error) => {
+        if (adRef.current !== ad || !getConsentSnapshot().canRequestAds) return;
+        const stage = showing.current ? "show" : "load";
+        ready.current = false;
+        setLoaded(false);
+        logAdFailure("interstitial", placement, error, stage);
+        if (showing.current) {
+          logAdSuppressed("interstitial", placement, "show_failed");
+          attempt.current += 1;
+          showing.current = false;
+          onClosed.current?.();
+          request();
+        }
+      }),
+      ad.addAdEventListener(AdEventType.OPENED, () => {
+        if (adRef.current !== ad || !getConsentSnapshot().canRequestAds) return;
+        if (showing.current && !opened.current) {
+          opened.current = true;
+          logAdEvent("ad_shown", "interstitial", placement);
+        }
+      }),
+      ad.addAdEventListener(AdEventType.CLICKED, () => {
+        if (adRef.current !== ad || !getConsentSnapshot().canRequestAds) return;
+        if (opened.current) logAdEvent("ad_clicked", "interstitial", placement);
+      }),
+      ad.addAdEventListener(AdEventType.CLOSED, () => {
+        if (adRef.current !== ad || !getConsentSnapshot().canRequestAds) return;
+        if (!showing.current) return;
+        if (opened.current) logAdEvent("ad_dismissed", "interstitial", placement);
+        attempt.current += 1;
+        showing.current = false;
+        opened.current = false;
+        onClosed.current?.();
+        request();
+      }),
+    ];
+    request();
+    return () => {
+      listeners.forEach((unsubscribe) => unsubscribe());
+      if (showing.current && !getConsentSnapshot().canRequestAds) onClosed.current?.();
+      adRef.current = null;
+      attempt.current += 1;
+      showing.current = false;
+      ready.current = false;
+    };
+  }, [unitId, placement, canRequestAds]);
 
-  /** Presents the ad if loaded. Returns true when it was actually shown. */
   const show = useCallback(() => {
+    if (!getConsentSnapshot().canRequestAds) return false;
     const ad = adRef.current;
-    if (!ad || !loaded) return false;
-    ad.show();
+    if (!ad || !ready.current || showing.current) {
+      logAdSuppressed("interstitial", placement, "not_ready");
+      return false;
+    }
+    ready.current = false;
+    setLoaded(false);
+    showing.current = true;
+    opened.current = false;
+    const showAttempt = ++attempt.current;
+    void Promise.resolve().then(() => {
+      if (!getConsentSnapshot().canRequestAds || adRef.current !== ad || attempt.current !== showAttempt) {
+        if (showing.current && attempt.current === showAttempt) {
+          showing.current = false;
+          attempt.current += 1;
+          onClosed.current?.();
+        }
+        return;
+      }
+      return ad.show();
+    }).catch((error: unknown) => {
+      if (adRef.current !== ad || !showing.current || attempt.current !== showAttempt) return;
+      logAdFailure("interstitial", placement, error, "show");
+      logAdSuppressed("interstitial", placement, "show_failed");
+      attempt.current += 1;
+      showing.current = false;
+      onClosed.current?.();
+      if (getConsentSnapshot().canRequestAds) {
+        logAdEvent("ad_request", "interstitial", placement);
+        try {
+          ad.load();
+        } catch (loadError) {
+          logAdFailure("interstitial", placement, loadError, "load");
+        }
+      }
+    });
     return true;
-  }, [loaded]);
+  }, [placement]);
 
-  /** Discards the current (possibly stale) ad and warms up a fresh one. */
   const reload = useCallback(() => {
     const ad = adRef.current;
-    if (!ad) return;
+    if (!getConsentSnapshot().canRequestAds || !ad || showing.current) return;
+    ready.current = false;
     setLoaded(false);
-    ad.load();
-  }, []);
+    logAdEvent("ad_request", "interstitial", placement);
+    try {
+      ad.load();
+    } catch (error) {
+      logAdFailure("interstitial", placement, error, "load");
+    }
+  }, [placement]);
 
   return { loaded, show, reload };
 }

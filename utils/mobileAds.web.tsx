@@ -4,13 +4,20 @@ import { View } from "react-native";
 type BannerAdProps = {
   readonly unitId: string;
   readonly size: string;
+  readonly onAdLoaded?: () => void;
+  readonly onAdFailedToLoad?: (error: Error) => void;
+  readonly onAdOpened?: () => void;
+  readonly onAdClosed?: () => void;
 };
 
-type Listener = () => void;
+type Listener = (...args: unknown[]) => void;
 
 export const AdEventType = {
   CLOSED: "closed",
   LOADED: "loaded",
+  ERROR: "error",
+  OPENED: "opened",
+  CLICKED: "clicked",
 } as const;
 
 export const BannerAdSize = {
@@ -51,15 +58,33 @@ export const AdsConsentStatus = {
   OBTAINED: "OBTAINED",
 } as const;
 
-const noConsentNeeded = {
+export const AdsConsentPrivacyOptionsRequirementStatus = {
+  UNKNOWN: "UNKNOWN",
+  REQUIRED: "REQUIRED",
+  NOT_REQUIRED: "NOT_REQUIRED",
+} as const;
+
+export const AdsConsentDebugGeography = { EEA: 1 } as const;
+
+export type ConsentInfo = {
+  readonly status: string;
+  readonly isConsentFormAvailable: boolean;
+  readonly canRequestAds: boolean;
+  readonly privacyOptionsRequirementStatus: string;
+};
+
+const noConsentNeeded: ConsentInfo = {
   status: AdsConsentStatus.NOT_REQUIRED,
   isConsentFormAvailable: false,
   canRequestAds: true,
+  privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.NOT_REQUIRED,
 };
 
 export const AdsConsent = {
-  requestInfoUpdate: async () => noConsentNeeded,
+  requestInfoUpdate: async (_options?: { readonly debugGeography?: number }) => noConsentNeeded,
   showForm: async () => noConsentNeeded,
+  showPrivacyOptionsForm: async () => noConsentNeeded,
+  getConsentInfo: async () => noConsentNeeded,
   getUserChoices: async () => ({ storeAndAccessInformationOnDevice: false }),
 };
 

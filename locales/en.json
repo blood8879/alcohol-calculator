@@ -10,7 +10,10 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "back": "Back",
-    "share": "Share Results"
+    "share": "Share Results",
+    "confirm": "OK",
+    "success": "Success",
+    "info": "Notice"
   },
   "time": {
     "justNow": "Just now",
@@ -43,7 +46,25 @@
     "quizBannerDescription": "10 quick questions on ABV, calories, and drinking basics.",
     "contentRailTitle": "Favorites & Recently Viewed",
     "openRecipe": "Open recipe",
-    "openGuide": "Open guide"
+    "openGuide": "Open guide",
+    "seeAll": "See all",
+    "sessionCard": {
+      "live": "In progress",
+      "elapsedHoursMinutes": "{{hours}}h {{minutes}}m",
+      "elapsedMinutes": "{{minutes}}m",
+      "drinkCount": "{{count}} drinks"
+    },
+    "week": {
+      "title": "This week",
+      "drinksLabel": "Drinks this week",
+      "drinkCount": "{{count}} drinks",
+      "noGoal": "No weekly goal",
+      "challengeCta": "Start challenge",
+      "a11yHint": "Opens the drink tracker"
+    },
+    "continueTitle": "Jump back in",
+    "badgeRecipe": "Recipe",
+    "badgeGuide": "Guide"
   },
   "calculators": {
     "dilution": {
@@ -702,6 +723,12 @@
     "addDrink": "Add Drink",
     "todayLog": "Today's Log",
     "empty": "No logs for today",
+    "emptyDate": "No logs for {{date}}",
+    "emptyHint": "You can log with Quick log above or the button below",
+    "emptyCta": "Add a log",
+    "deleteA11y": "Delete {{name}} log",
+    "deleted": "Deleted {{name}} log",
+    "deleteUndoA11y": "Restore the log you just deleted",
     "weeklyStats": "Weekly Stats",
     "monthlyStats": "Monthly Stats",
     "totalDrinks": "Total Drinks",
@@ -718,7 +745,39 @@
     "kcal": "kcal",
     "emoji": "Emoji",
     "price": "Price (optional)",
-    "spend": "Spent"
+    "spend": "Spent",
+    "today": "Today",
+    "tiles": {
+      "challengeTarget": "Goal {{count}} days",
+      "challengeCta": "Get started",
+      "goalCta": "Set a goal",
+      "a11yHint": "Tap to see details",
+      "expandedA11y": "{{title}} details"
+    },
+    "quickLog": {
+      "title": "Quick log",
+      "addCustom": "Add other",
+      "addCustomA11y": "Log a drink by entering details",
+      "chipA11y": "Log {{name}} {{volume}}ml {{abv}}%",
+      "logged": "Logged {{name}}",
+      "undo": "Undo",
+      "undoA11y": "Undo the last log",
+      "failed": "Couldn't save the log. Please try again."
+    },
+    "daySummary": {
+      "drinks": "{{count}} drinks",
+      "kcal": "{{value}} kcal",
+      "standardDrinks": "{{value}} std drinks",
+      "a11y": "Summary for the selected day"
+    },
+    "stats": {
+      "segmentDrinks": "Drinks",
+      "segmentCalories": "Calories",
+      "segmentA11y": "Show {{label}}",
+      "dailyLimit": "Daily average limit",
+      "totalDrinks": "Total drinks",
+      "dailyAverage": "Daily avg."
+    }
   },
   "session": {
     "title": "Live Drinking Session",
@@ -1228,7 +1287,21 @@
     "pickTopicSubtitle": "Pick a topic and test yourself with a quick 10-question quiz.",
     "dailyTitle": "Daily quick quiz",
     "dailyStreak": "{{count}}-day streak",
-    "dailyStart": "Answer 5 questions"
+    "dailyStart": "Answer 5 questions",
+    "streakDaysLabel": "day streak",
+    "streakEmpty": "Take your first quiz today",
+    "dailyDone": "Done today ✓ · Replay",
+    "weekDotsA11y": "{{count}} days completed this week",
+    "chooseTopic": "Choose a topic",
+    "bestBadge": "Best {{best}}/{{total}}",
+    "watchAdRetry": "Watch ad to try again",
+    "openGuide": "Open related guide",
+    "openTracker": "Open tracker insights",
+    "resultStreak": "{{count}}-day quiz streak",
+    "resultStreakHint": "Pair this with drink logs for better weekly insights.",
+    "reviewTitle": "Review answers",
+    "yourAnswer": "Your answer: {{answer}}",
+    "correctAnswer": "Correct answer: {{answer}}"
   },
   "settings": {
     "language": "Language",
@@ -1239,6 +1312,9 @@
     "weeklyStats": "Weekly Stats Notification",
     "reminderTime": "Reminder Time",
     "about": "About",
+    "privacy": "Privacy",
+    "privacyChoices": "Privacy choices",
+    "privacyChoicesError": "Privacy choices could not be opened. Please try again.",
     "version": "Version",
     "appInfo": "An app providing various alcohol-related calculations and information.",
     "dataSection": "Data",
@@ -1262,8 +1338,10 @@
     "menuDescription": "Review peak BAC and drink timeline from past sessions",
     "empty": "No saved sessions yet. End a live session to record it here.",
     "peakBac": "Peak BAC",
+    "peakBacEstimated": "Peak BAC (est.)",
     "standardDrinks": "Total standard drinks",
     "standardDrinksCount": "{{count}} std drinks",
+    "standardDrinksValue": "{{value}} std drinks",
     "soberAt": "Sober by",
     "timeline": "Drink timeline",
     "share": "Share",
@@ -1287,7 +1365,7 @@
     "edit": "Edit",
     "delete": "Delete",
     "saved": "Saved custom drinks",
-    "standardDrinksShort": "{{count}} std",
+    "standardDrinksShort": "{{value}} std",
     "deleteTitle": "Delete custom drink?",
     "deleteMessage": "'{{name}}' will be removed."
   },
@@ -1319,8 +1397,9 @@
     "male": "Male",
     "female": "Female",
     "standardDrinks": "Standard Drinks",
-    "bacTimeline": "BAC Timeline",
+    "bacTimeline": "BAC Timeline (estimated)",
     "peakBac": "Peak BAC",
+    "peakBacEstimated": "Estimated peak blood alcohol (BAC)",
     "timeToSober": "Time to fully sober",
     "hoursUnit": " hrs",
     "emptyState": "Enter a weight and drink count greater than 0 to see the BAC timeline.",
@@ -1330,7 +1409,9 @@
     "tip3": "Replenishing vitamins and electrolytes can support recovery.",
     "tip4": "Get plenty of sleep so your body has time to recover.",
     "tip5": "Avoid excess caffeine and 'hair of the dog'; rest at least 48 hours before drinking again.",
-    "disclaimer": "Not medical advice; individual results vary."
+    "disclaimer": "Not medical advice; individual results vary.",
+    "chartXAxis": "Hours elapsed",
+    "chartA11y": "Estimated BAC chart: falls from a peak of {{peak}}% to 0 over about {{hours}} hours"
   },
   "challenge": {
     "title": "Sobriety Challenge",
@@ -1388,7 +1469,20 @@
     "maxCalories": "Max kcal",
     "openDetails": "Open details",
     "emptyTitle": "No matching recipes",
-    "emptySubtitle": "Relax ABV or calorie filters to see more picks."
+    "emptySubtitle": "Relax ABV or calorie filters to see more picks.",
+    "resultCount": "Picks for you: {{count}}",
+    "reset": "Reset",
+    "noLimit": "No limit",
+    "done": "Done",
+    "pill": {
+      "style": "Style: {{value}}",
+      "abv": "ABV ≤{{value}}%",
+      "abvAny": "ABV",
+      "kcal": "Calories ≤{{value}}",
+      "kcalAny": "Calories",
+      "ingredients": "Ingredients ({{count}})",
+      "ingredientsAny": "Ingredients"
+    }
   },
   "culture": {
     "cultureTitle": "Drinking Culture by Country",

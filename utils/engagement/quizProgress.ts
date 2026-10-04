@@ -25,12 +25,27 @@ export type QuizCompletionInput = {
   readonly total: number;
 };
 
-const dateKey = (date: Date): string => date.toISOString().slice(0, 10);
+const pad2 = (value: number): string => String(value).padStart(2, "0");
 
-const previousDateKey = (date: Date): string => {
-  const previous = new Date(date);
-  previous.setDate(date.getDate() - 1);
-  return dateKey(previous);
+// 기기 로컬 달력 기준 YYYY-MM-DD. toISOString(UTC)을 쓰면 KST에서는 오전 9시 전이
+// 전날로 집계되어 일일 퀴즈·연속 기록 경계가 09:00에 바뀌는 버그가 있었다.
+// 저장 포맷(YYYY-MM-DD 문자열)은 그대로라 기존 저장값과 호환된다.
+export const toLocalDateKey = (date: Date): string =>
+  `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`;
+
+const shiftLocalDays = (date: Date, days: number): Date => {
+  const shifted = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  shifted.setDate(shifted.getDate() + days);
+  return shifted;
+};
+
+export const previousLocalDateKey = (date: Date): string =>
+  toLocalDateKey(shiftLocalDays(date, -1));
+
+const parseLocalDateKey = (key: string): Date | null => {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key);
+  if (!match) return null;
+  return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
 };
 
 export const createEmptyQuizProgress = (): QuizProgress => ({
@@ -82,8 +97,8 @@ export const recordQuizCompletion = (input: QuizCompletionInput): QuizProgress =
     lastScore: input.score,
     totalQuestions: input.total,
   };
-  const today = dateKey(input.date);
-  const previous = previousDateKey(input.date);
+  const today = toLocalDateKey(input.date);
+  const previous = previousLocalDateKey(input.date);
   const streak = input.isDaily
     ? input.progress.lastDailyQuizDate === today
       ? input.progress.currentStreak
@@ -101,4 +116,56 @@ export const recordQuizCompletion = (input: QuizCompletionInput): QuizProgress =
     lastDailyQuizDate: input.isDaily ? today : input.progress.lastDailyQuizDate,
     lastDailyQuizId: input.isDaily ? input.quizId : input.progress.lastDailyQuizId,
   };
+};
+
+/** 오늘 일일 퀴즈를 이미 완료했는지(로컬 날짜 기준). */
+export const isDailyQuizDoneToday = (progress: QuizProgress, today: Date): boolean =>
+  progress.lastDailyQuizDate === toLocalDateKey(today);
+
+/**
+ * 화면에 보여줄 "살아 있는" 연속 일수. 마지막 일일 퀴즈가 오늘·어제가 아니면 연속이
+ * 끊긴 것이므로 0을 돌려준다(저장값은 다음 완료 시 recordQuizCompletion이 1로 재시작).
+ */
+export const getActiveQuizStreak = (progress: QuizProgress, today: Date): number => {
+  const last = progress.lastDailyQuizDate;
+  if (!last || progress.currentStreak <= 0) return 0;
+  return last === toLocalDateKey(today) || last === previousLocalDateKey(today)
+    ? progress.currentStreak
+    : 0;
+};
+
+export type QuizWeekDot = {
+  readonly dateKey: string;
+  /** 0 = 일요일 … 6 = 토요일 */
+  readonly weekday: number;
+  readonly covered: boolean;
+  readonly isToday: boolean;
+  readonly isFuture: boolean;
+};
+
+/**
+ * 이번 주(일요일 시작) 7일 도트. lastDailyQuizDate에서 끝나는 현재 연속 기록이 덮는 날을
+ * covered로 표시한다. 연속이 끊겼거나 0이면 모두 false.
+ */
+export const buildQuizWeekDots = (progress: QuizProgress, today: Date): QuizWeekDot[] => {
+  const streak = getActiveQuizStreak(progress, today);
+  const lastDate = progress.lastDailyQuizDate
+    ? parseLocalDateKey(progress.lastDailyQuizDate)
+    : null;
+  const lastKey = lastDate ? toLocalDateKey(lastDate) : null;
+  const startKey =
+    lastDate && streak > 0 ? toLocalDateKey(shiftLocalDays(lastDate, -(streak - 1))) : null;
+  const todayKey = toLocalDateKey(today);
+  const weekStart = shiftLocalDays(today, -today.getDay());
+
+  return Array.from({ length: 7 }, (_, weekday) => {
+    const key = toLocalDateKey(shiftLocalDays(weekStart, weekday));
+    return {
+      dateKey: key,
+      weekday,
+      covered: startKey !== null && lastKey !== null && key >= startKey && key <= lastKey,
+      isToday: key === todayKey,
+      isFuture: key > todayKey,
+    };
+  });
 };

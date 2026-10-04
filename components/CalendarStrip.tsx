@@ -61,7 +61,7 @@ const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
             <TouchableOpacity
               key={index}
               className={`w-14 h-20 items-center justify-center rounded-xl mr-2 ${
-                isSelected ? "bg-green-500" : "bg-gray-800"
+                isSelected ? "bg-accentButton" : "bg-gray-800"
               }`}
               onPress={() => onSelectDate(day)}
               activeOpacity={0.7}

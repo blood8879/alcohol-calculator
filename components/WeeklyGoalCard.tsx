@@ -76,7 +76,7 @@ const WeeklyGoalCard = ({
             value={inputValue}
             onChangeText={setInputValue}
             placeholder={t("weeklyGoal.inputPlaceholder")}
-            placeholderTextColor="#6b7280"
+            placeholderTextColor="#8b93a1"
             maxLength={3}
             accessibilityLabel={t("weeklyGoal.inputA11y")}
           />
@@ -93,7 +93,7 @@ const WeeklyGoalCard = ({
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className="flex-1 bg-green-600 rounded-xl py-3 ml-2 items-center"
+              className="flex-1 bg-accentButton rounded-xl py-3 ml-2 items-center"
               onPress={handleConfirm}
               activeOpacity={0.7}
               accessibilityRole="button"
@@ -119,7 +119,7 @@ const WeeklyGoalCard = ({
           {t("weeklyGoal.subtitle")}
         </Text>
         <TouchableOpacity
-          className="bg-green-600 rounded-xl py-3 items-center"
+          className="bg-accentButton rounded-xl py-3 items-center"
           onPress={() => openModal(null)}
           activeOpacity={0.7}
           accessibilityRole="button"
@@ -173,7 +173,7 @@ const WeeklyGoalCard = ({
       <View className="items-center mb-3">
         <Text className={`${valueColor} text-4xl font-bold`}>
           {progress.currentDrinks}
-          <Text className="text-gray-500 text-2xl">
+          <Text className="text-textMuted text-2xl">
             {" "}
             / {progress.limitDrinks}
           </Text>

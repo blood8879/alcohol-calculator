@@ -1,5 +1,6 @@
 import { TFunction } from "i18next";
 import { BacLevel, bacLevelOf } from "./engagement/drinkingSession";
+import { STANDARD_DRINK_GRAMS } from "./alcoholConstants";
 
 // 라이브 세션(drinkingSession.bacLevelOf)과 동일한 4단계 임계(0.02/0.05/0.08)를
 // 단일 소스로 공유한다. 각 레벨을 홈 BAC 계산기의 경고 문구 키에 매핑한다.
@@ -29,7 +30,7 @@ export const calculateBAC = (
 
   const r = gender === 'male' ? 0.68 : 0.55;
   // Standard drink = 14g of pure alcohol
-  const alcoholGrams = drinks * 14;
+  const alcoholGrams = drinks * STANDARD_DRINK_GRAMS;
   const bodyWeightGrams = weight * 1000;
 
   const bac = Math.max(0, (alcoholGrams / (bodyWeightGrams * r)) * 100 - (0.015 * hours));

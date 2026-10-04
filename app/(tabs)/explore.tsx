@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import EncyclopediaSection from "../../components/explore/EncyclopediaSection";
 import RecipesSection from "../../components/explore/RecipesSection";
 import CultureSection from "../../components/explore/CultureSection";
+import { isCatalogContentId, logContentSection } from "../../utils/contentAnalytics";
 
 type ExploreSection = "encyclopedia" | "recipes" | "culture";
 
@@ -29,8 +30,10 @@ export default function ExploreScreen() {
   // 딥링크(?section=, ?guide=)로 도착하면 해당 섹션으로 전환
   useEffect(() => {
     if (isExploreSection(params.section)) {
+      logContentSection(params.section, "deep_link");
       setActiveSection(params.section);
-    } else if (params.guide) {
+    } else if (typeof params.guide === "string" && isCatalogContentId("encyclopedia", params.guide)) {
+      logContentSection("encyclopedia", "deep_link");
       setActiveSection("encyclopedia");
     }
   }, [params.section, params.guide]);
@@ -42,31 +45,33 @@ export default function ExploreScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-background">
       <StatusBar barStyle="light-content" />
 
       <View className="px-4 pt-2 flex-1">
-        <Text className="text-2xl font-bold text-white mb-3">
+        <Text className="text-2xl font-bold text-textPrimary mb-3">
           {t("tabs.explore")}
         </Text>
 
-        <View className="flex-row bg-gray-800 rounded-xl p-1 mb-4">
+        {/* 트래커 주간 통계와 같은 중립 세그먼트: 컨테이너 surface, 선택 surfaceDeep + 흰 굵은 글씨 */}
+        <View className="flex-row bg-surface rounded-xl p-1 mb-3" accessibilityRole="tablist">
           {SECTIONS.map((section) => {
             const isActive = activeSection === section;
             return (
               <TouchableOpacity
                 key={section}
-                className={`flex-1 rounded-lg py-2 items-center ${
-                  isActive ? "bg-green-600" : ""
+                className={`flex-1 rounded-lg min-h-[44px] items-center justify-center ${
+                  isActive ? "bg-surfaceDeep" : ""
                 }`}
-                onPress={() => setActiveSection(section)}
+                onPress={() => { if (!isActive) { logContentSection(section, "tab"); setActiveSection(section); } }}
+                activeOpacity={0.7}
                 accessibilityRole="tab"
                 accessibilityState={{ selected: isActive }}
                 accessibilityLabel={sectionLabel(section)}
               >
                 <Text
-                  className={`text-sm font-semibold ${
-                    isActive ? "text-white" : "text-gray-400"
+                  className={`text-sm ${
+                    isActive ? "text-textPrimary font-bold" : "text-textSecondary font-semibold"
                   }`}
                 >
                   {sectionLabel(section)}

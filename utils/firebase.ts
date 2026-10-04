@@ -1,5 +1,8 @@
 // 웹/테스트 환경 폴백. 네이티브에서는 firebase.native.ts가 대신 로드된다.
-export type AnalyticsParams = Record<string, string | number | boolean>;
+import { setAnalyticsPermission } from "./analyticsCore";
+import type { AnalyticsParams } from "./analyticsCore";
+
+export type { AnalyticsParams } from "./analyticsCore";
 
 export const logFirebaseEvent = (
   _name: string,
@@ -7,5 +10,5 @@ export const logFirebaseEvent = (
 ): void => {};
 
 export const setDataCollectionEnabled = async (
-  _enabled: boolean
-): Promise<void> => {};
+  enabled: boolean
+): Promise<void> => { setAnalyticsPermission(enabled); };

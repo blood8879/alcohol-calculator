@@ -1,4 +1,5 @@
 import type { CocktailRecipe, RecipeIngredient } from "../../data/types";
+import { alcoholCalories } from "../alcoholConstants";
 
 export type RecipeMetrics = {
   readonly estimatedAbv: number;
@@ -35,7 +36,7 @@ export const calculateRecipeMetrics = (recipe: CocktailRecipe): RecipeMetrics =>
     0
   );
   const estimatedAbv = totalVolumeMl > 0 ? (alcoholMl / totalVolumeMl) * 100 : 0;
-  const estimatedCalories = totalVolumeMl * (estimatedAbv / 100) * 0.789 * 7;
+  const estimatedCalories = alcoholCalories(totalVolumeMl, estimatedAbv);
 
   return {
     estimatedAbv: roundOne(estimatedAbv),

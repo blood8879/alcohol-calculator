@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import { BannerAd, BannerAdSize } from "../utils/mobileAds";
+import { BannerAdSize } from "../utils/mobileAds";
 import { adUnits } from "../utils/adUnits";
+import { TrackedBannerAd } from "./TrackedBannerAd";
 
 const bannerAdUnitId = adUnits.inlineBanner;
 
@@ -11,7 +12,7 @@ type InlineBannerAdProps = {
 
 const InlineBannerAd = ({ className = "my-4" }: InlineBannerAdProps) => (
   <View className={`items-center ${className}`}>
-    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.BANNER} />
+    <TrackedBannerAd unitId={bannerAdUnitId} size={BannerAdSize.BANNER} placement="inline" />
   </View>
 );
 

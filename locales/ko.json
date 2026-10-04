@@ -10,7 +10,10 @@
     "cancel": "취소",
     "delete": "삭제",
     "back": "뒤로",
-    "share": "결과 공유"
+    "share": "결과 공유",
+    "confirm": "확인",
+    "success": "완료",
+    "info": "알림"
   },
   "time": {
     "justNow": "방금",
@@ -43,7 +46,25 @@
     "quizBannerDescription": "10문제로 도수·칼로리·음주 상식을 확인해보세요.",
     "contentRailTitle": "즐겨찾기 & 최근 본 콘텐츠",
     "openRecipe": "레시피 다시 보기",
-    "openGuide": "백과 다시 보기"
+    "openGuide": "백과 다시 보기",
+    "seeAll": "모두 보기",
+    "sessionCard": {
+      "live": "진행 중",
+      "elapsedHoursMinutes": "{{hours}}시간 {{minutes}}분",
+      "elapsedMinutes": "{{minutes}}분",
+      "drinkCount": "{{count}}잔"
+    },
+    "week": {
+      "title": "이번 주",
+      "drinksLabel": "이번 주 음주",
+      "drinkCount": "{{count}}잔",
+      "noGoal": "주간 목표 없음",
+      "challengeCta": "챌린지 시작",
+      "a11yHint": "탭하면 음주 기록으로 이동"
+    },
+    "continueTitle": "이어 보기",
+    "badgeRecipe": "레시피",
+    "badgeGuide": "가이드"
   },
   "calculators": {
     "dilution": {
@@ -702,6 +723,12 @@
     "addDrink": "음주 추가",
     "todayLog": "오늘의 기록",
     "empty": "오늘 기록이 없습니다",
+    "emptyDate": "{{date}} 기록이 없습니다",
+    "emptyHint": "위의 빠른 기록이나 아래 버튼으로 기록할 수 있어요",
+    "emptyCta": "기록 추가",
+    "deleteA11y": "{{name}} 기록 삭제",
+    "deleted": "{{name}} 기록을 삭제했어요",
+    "deleteUndoA11y": "방금 삭제한 기록 되돌리기",
     "weeklyStats": "주간 통계",
     "monthlyStats": "월간 통계",
     "totalDrinks": "총 음주 횟수",
@@ -718,7 +745,39 @@
     "kcal": "kcal",
     "emoji": "이모지",
     "price": "금액 (선택)",
-    "spend": "지출"
+    "spend": "지출",
+    "today": "오늘",
+    "tiles": {
+      "challengeTarget": "목표 {{count}}일",
+      "challengeCta": "시작하기",
+      "goalCta": "목표 설정",
+      "a11yHint": "탭하면 자세히 보기",
+      "expandedA11y": "{{title}} 자세히 보기"
+    },
+    "quickLog": {
+      "title": "빠른 기록",
+      "addCustom": "직접 추가",
+      "addCustomA11y": "음료를 직접 입력해 기록",
+      "chipA11y": "{{name}} {{volume}}ml {{abv}}% 기록하기",
+      "logged": "{{name}} 기록했어요",
+      "undo": "되돌리기",
+      "undoA11y": "방금 기록 되돌리기",
+      "failed": "기록하지 못했어요. 다시 시도해 주세요."
+    },
+    "daySummary": {
+      "drinks": "{{count}}잔",
+      "kcal": "{{value}} kcal",
+      "standardDrinks": "{{value}} 표준잔",
+      "a11y": "선택한 날 요약"
+    },
+    "stats": {
+      "segmentDrinks": "잔 수",
+      "segmentCalories": "칼로리",
+      "segmentA11y": "{{label}} 보기",
+      "dailyLimit": "일 평균 한도",
+      "totalDrinks": "총 잔",
+      "dailyAverage": "일평균"
+    }
   },
   "session": {
     "title": "실시간 음주 세션",
@@ -1228,7 +1287,21 @@
     "pickTopicSubtitle": "관심 있는 주제를 골라 10문제 퀴즈로 가볍게 확인해보세요.",
     "dailyTitle": "오늘의 짧은 퀴즈",
     "dailyStreak": "{{count}}일 연속 완료",
-    "dailyStart": "5문제 풀기"
+    "dailyStart": "5문제 풀기",
+    "streakDaysLabel": "일 연속",
+    "streakEmpty": "오늘 첫 퀴즈를 풀어보세요",
+    "dailyDone": "오늘 완료 ✓ · 다시 풀기",
+    "weekDotsA11y": "이번 주 {{count}}일 완료",
+    "chooseTopic": "주제 고르기",
+    "bestBadge": "최고 {{best}}/{{total}}",
+    "watchAdRetry": "광고 보고 다시 도전",
+    "openGuide": "관련 가이드 보기",
+    "openTracker": "트래커 인사이트 보기",
+    "resultStreak": "{{count}}일 연속 퀴즈 완료",
+    "resultStreakHint": "기록을 함께 남기면 주간 인사이트가 더 정확해집니다.",
+    "reviewTitle": "문제 복기",
+    "yourAnswer": "내 답: {{answer}}",
+    "correctAnswer": "정답: {{answer}}"
   },
   "settings": {
     "language": "언어",
@@ -1239,6 +1312,9 @@
     "weeklyStats": "주간 통계 알림",
     "reminderTime": "알림 시간",
     "about": "앱 정보",
+    "privacy": "개인정보",
+    "privacyChoices": "개인정보 선택",
+    "privacyChoicesError": "개인정보 선택 화면을 열 수 없습니다. 다시 시도해 주세요.",
     "version": "버전",
     "appInfo": "음주 관련 다양한 계산과 정보를 제공하는 앱입니다.",
     "dataSection": "데이터",
@@ -1262,8 +1338,10 @@
     "menuDescription": "지난 음주 세션의 피크 BAC와 잔 타임라인 보기",
     "empty": "아직 저장된 세션이 없습니다. 라이브 세션을 종료하면 여기에 기록됩니다.",
     "peakBac": "피크 BAC",
+    "peakBacEstimated": "피크 BAC (추정)",
     "standardDrinks": "총 표준잔",
     "standardDrinksCount": "표준잔 {{count}}잔",
+    "standardDrinksValue": "표준잔 {{value}}잔",
     "soberAt": "해독 예상",
     "timeline": "잔 타임라인",
     "share": "공유하기",
@@ -1287,7 +1365,7 @@
     "edit": "수정",
     "delete": "삭제",
     "saved": "저장된 커스텀 술",
-    "standardDrinksShort": "표준잔 {{count}}",
+    "standardDrinksShort": "표준잔 {{value}}",
     "deleteTitle": "커스텀 술을 삭제할까요?",
     "deleteMessage": "'{{name}}'을(를) 삭제합니다."
   },
@@ -1319,8 +1397,9 @@
     "male": "남",
     "female": "여",
     "standardDrinks": "표준잔 수",
-    "bacTimeline": "BAC 추이",
+    "bacTimeline": "BAC 추이 (추정)",
     "peakBac": "예상 최고 BAC",
+    "peakBacEstimated": "예상 최고 혈중알코올농도 (추정)",
     "timeToSober": "완전히 깨는 데 걸리는 시간",
     "hoursUnit": "시간",
     "emptyState": "체중과 표준잔 수를 0보다 큰 값으로 입력하면 BAC 추이가 표시됩니다.",
@@ -1330,7 +1409,9 @@
     "tip3": "비타민과 전해질을 보충하면 컨디션 회복에 도움이 됩니다.",
     "tip4": "충분한 수면으로 몸이 회복할 시간을 주세요.",
     "tip5": "카페인 과다와 해장술은 피하고, 다음 음주까지 최소 48시간 휴식을 권장합니다.",
-    "disclaimer": "의학적 조언이 아니며 개인차가 있습니다."
+    "disclaimer": "의학적 조언이 아니며 개인차가 있습니다.",
+    "chartXAxis": "경과 시간 (시간)",
+    "chartA11y": "추정 BAC 추이 차트: 최고 {{peak}}%에서 약 {{hours}}시간에 걸쳐 0으로 감소"
   },
   "challenge": {
     "title": "절주 챌린지",
@@ -1388,7 +1469,20 @@
     "maxCalories": "최대 칼로리",
     "openDetails": "상세 보기",
     "emptyTitle": "조건에 맞는 레시피가 없습니다",
-    "emptySubtitle": "도수나 칼로리 조건을 완화해보세요."
+    "emptySubtitle": "도수나 칼로리 조건을 완화해보세요.",
+    "resultCount": "맞춤 추천 {{count}}개",
+    "reset": "초기화",
+    "noLimit": "제한 없음",
+    "done": "완료",
+    "pill": {
+      "style": "스타일: {{value}}",
+      "abv": "도수 ≤{{value}}%",
+      "abvAny": "도수",
+      "kcal": "칼로리 ≤{{value}}",
+      "kcalAny": "칼로리",
+      "ingredients": "재료 ({{count}})",
+      "ingredientsAny": "재료"
+    }
   },
   "culture": {
     "cultureTitle": "나라별 음주 문화",

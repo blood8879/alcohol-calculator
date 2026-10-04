@@ -2,7 +2,7 @@
   "expo": {
     "name": "alcohol-calculator",
     "slug": "alcohol-calculator",
-    "version": "1.2.4",
+    "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "alcoholcalculator",
@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.jiamyun.alcoholcalculator",
-      "versionCode": 24,
+      "versionCode": 26,
       "googleServicesFile": "./google-services.json",
       "enablePageSize16KB": true
     },
@@ -43,7 +43,7 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "ca-app-pub-7612314432840835~5764066171",
+          "androidAppId": "ca-app-pub-7612314432840835~3082062514",
           "iosAppId": "ca-app-pub-3940256099942544~1458002511"
         }
       ],
@@ -91,7 +91,7 @@
       }
     },
     "react-native-google-mobile-ads": {
-      "android_app_id": "ca-app-pub-7612314432840835~5764066171",
+      "android_app_id": "ca-app-pub-7612314432840835~3082062514",
       "ios_app_id": "ca-app-pub-3940256099942544~1458002511"
     }
   }

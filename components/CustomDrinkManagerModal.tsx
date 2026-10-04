@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Alert,
   ScrollView,
   Text,
   TextInput,
@@ -18,6 +17,9 @@ import {
   standardDrinksOf,
   updateCustomDrink,
 } from "../utils/customDrinks";
+import { trackEngagement } from "../utils/engagementAnalytics";
+import { formatStandardDrinks } from "../utils/alcoholConstants";
+import { useDialogController } from "./ui/DialogProvider";
 
 interface CustomDrinkManagerModalProps {
   visible: boolean;
@@ -31,6 +33,9 @@ const CustomDrinkManagerModal = ({
   onChange,
 }: CustomDrinkManagerModalProps) => {
   const { t } = useTranslation();
+  // 이 컴포넌트 자체가 모달이므로 확인 다이얼로그·토스트를 모달 안에 로컬로 렌더한다.
+  const dialog = useDialogController();
+  const { confirm, toast } = dialog;
   const [drinks, setDrinks] = useState<CustomDrink[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState("");
@@ -68,7 +73,8 @@ const CustomDrinkManagerModal = ({
       parsedAbv <= 0 ||
       parsedVolume <= 0
     ) {
-      Alert.alert(t("common.error"), t("errors.positiveValues"));
+      trackEngagement("tracker_add_validation_failed", { reason: "custom_drink_invalid" });
+      toast({ message: t("errors.positiveValues"), variant: "error" });
       return;
     }
     const parsedPrice = parseFloat(price);
@@ -81,10 +87,11 @@ const CustomDrinkManagerModal = ({
     const next = editingId
       ? await updateCustomDrink(editingId, payload)
       : await addCustomDrink(payload);
+    trackEngagement("custom_drink_saved", { operation: editingId ? "edit" : "create" });
     setDrinks(next);
     onChange?.(next);
     resetForm();
-  }, [name, abv, volume, price, editingId, t, onChange, resetForm]);
+  }, [name, abv, volume, price, editingId, t, toast, onChange, resetForm]);
 
   const handleEdit = useCallback((drink: CustomDrink) => {
     setEditingId(drink.id);
@@ -95,28 +102,25 @@ const CustomDrinkManagerModal = ({
   }, []);
 
   const handleDelete = useCallback(
-    (drink: CustomDrink) => {
-      Alert.alert(
-        t("customDrinks.deleteTitle"),
-        t("customDrinks.deleteMessage", { name: drink.name }),
-        [
-          { text: t("common.cancel"), style: "cancel" },
-          {
-            text: t("customDrinks.delete"),
-            style: "destructive",
-            onPress: async () => {
-              const next = await deleteCustomDrink(drink.id);
-              setDrinks(next);
-              onChange?.(next);
-              if (editingId === drink.id) {
-                resetForm();
-              }
-            },
-          },
-        ]
-      );
+    async (drink: CustomDrink) => {
+      trackEngagement("tracker_delete_intent", { surface: "custom_drink" });
+      const confirmed = await confirm({
+        title: t("customDrinks.deleteTitle"),
+        message: t("customDrinks.deleteMessage", { name: drink.name }),
+        cancelLabel: t("common.cancel"),
+        confirmLabel: t("customDrinks.delete"),
+        destructive: true,
+      });
+      if (!confirmed) return;
+      const next = await deleteCustomDrink(drink.id);
+      trackEngagement("custom_drink_deleted");
+      setDrinks(next);
+      onChange?.(next);
+      if (editingId === drink.id) {
+        resetForm();
+      }
     },
-    [t, onChange, editingId, resetForm]
+    [t, confirm, onChange, editingId, resetForm]
   );
 
   const handleClose = useCallback(() => {
@@ -131,6 +135,7 @@ const CustomDrinkManagerModal = ({
     <Modal
       isVisible={visible}
       onBackdropPress={handleClose}
+      onBackButtonPress={handleClose}
       style={{ justifyContent: "flex-end", margin: 0 }}
       avoidKeyboard={true}
     >
@@ -149,7 +154,7 @@ const CustomDrinkManagerModal = ({
             value={name}
             onChangeText={setName}
             placeholder={t("customDrinks.namePlaceholder")}
-            placeholderTextColor="#6b7280"
+            placeholderTextColor="#8b93a1"
             accessibilityLabel={t("customDrinks.name")}
           />
 
@@ -164,7 +169,7 @@ const CustomDrinkManagerModal = ({
                 onChangeText={setAbv}
                 keyboardType="numeric"
                 placeholder="16.5"
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
                 accessibilityLabel={t("customDrinks.abv")}
               />
             </View>
@@ -178,7 +183,7 @@ const CustomDrinkManagerModal = ({
                 onChangeText={setVolume}
                 keyboardType="numeric"
                 placeholder="360"
-                placeholderTextColor="#6b7280"
+                placeholderTextColor="#8b93a1"
                 accessibilityLabel={t("customDrinks.volume")}
               />
             </View>
@@ -193,13 +198,13 @@ const CustomDrinkManagerModal = ({
             onChangeText={setPrice}
             keyboardType="numeric"
             placeholder="0"
-            placeholderTextColor="#6b7280"
+            placeholderTextColor="#8b93a1"
             accessibilityLabel={t("customDrinks.price")}
           />
 
           <TouchableOpacity
             className={`rounded-xl py-3 items-center mb-2 ${
-              canSubmit ? "bg-green-600" : "bg-gray-700"
+              canSubmit ? "bg-accentButton" : "bg-gray-700"
             }`}
             onPress={handleSubmit}
             disabled={!canSubmit}
@@ -245,7 +250,7 @@ const CustomDrinkManagerModal = ({
                     <Text className="text-gray-400 text-xs mt-0.5">
                       {drink.volumeMl}ml · {drink.abv}% ·{" "}
                       {t("customDrinks.standardDrinksShort", {
-                        count: standardDrinksOf(drink.volumeMl, drink.abv),
+                        value: formatStandardDrinks(standardDrinksOf(drink.volumeMl, drink.abv)),
                       })}
                     </Text>
                   </View>
@@ -271,6 +276,7 @@ const CustomDrinkManagerModal = ({
           )}
         </ScrollView>
       </View>
+      {dialog.host}
     </Modal>
   );
 };

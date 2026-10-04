@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { FlatList, Text, TextInput, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { extendedEncyclopediaEntries } from "../../data/extendedContent";
 import EncyclopediaCard from "../EncyclopediaCard";
 import InlineBannerAd from "../InlineBannerAd";
 import { translateWithFallback } from "../../utils/localizedText";
+import { logContentSearch, isCatalogContentId } from "../../utils/contentAnalytics";
 
 type EncyclopediaSectionProps = {
   readonly initialGuide?: string;
@@ -16,6 +17,8 @@ export default function EncyclopediaSection({ initialGuide }: EncyclopediaSectio
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const validatedGuide = typeof initialGuide === "string" && isCatalogContentId("encyclopedia", initialGuide) ? initialGuide : undefined;
 
   const filteredData = useMemo(() => {
     const allEntries = [...encyclopediaData, ...extendedEncyclopediaEntries];
@@ -28,10 +31,16 @@ export default function EncyclopediaSection({ initialGuide }: EncyclopediaSectio
     );
   }, [search, t, i18n.language]);
 
+  useEffect(() => {
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    if (search.trim()) searchTimer.current = setTimeout(() => logContentSearch("encyclopedia", search, filteredData.length), 700);
+    return () => { if (searchTimer.current) clearTimeout(searchTimer.current); };
+  }, [search, filteredData.length]);
+
   return (
     <View className="flex-1">
       <TextInput
-        className="bg-gray-800 text-white rounded-xl px-4 py-3 mb-4"
+        className="bg-surface text-textPrimary rounded-xl px-4 py-3 mb-3"
         placeholder={t("encyclopedia.searchPlaceholder")}
         placeholderTextColor="#9ca3af"
         value={search}
@@ -47,7 +56,7 @@ export default function EncyclopediaSection({ initialGuide }: EncyclopediaSectio
           <>
             <EncyclopediaCard
               entry={item}
-              initialExpanded={initialGuide === item.id}
+              initialExpanded={validatedGuide === item.id}
               onOpenTarget={router.push}
             />
             {(index + 1) % 8 === 0 && <InlineBannerAd className="mb-3" />}

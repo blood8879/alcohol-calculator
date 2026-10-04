@@ -1,3 +1,4 @@
+import { cocktailRecipes } from "../data/cocktailRecipes";
 import { extendedCocktailRecipes } from "../data/extendedContent";
 import type { CocktailRecipe } from "../data/types";
 import { getDailyCard } from "../data/dailyContent";
@@ -68,8 +69,20 @@ describe("engagement selectors", () => {
 
     expect(metrics).toEqual({
       estimatedAbv: 10,
-      estimatedCalories: 99,
+      // 180ml × 10% × 5.6 (명세 B-2) = 100.8 → 101
+      estimatedCalories: 101,
       totalVolumeMl: 180,
+    });
+  });
+
+  it("calculates 소맥 metrics with the spec B-2 coefficient (B-5: 142 kcal)", () => {
+    const somaek = cocktailRecipes.find((recipe) => recipe.id === "somaek");
+    expect(somaek).toBeDefined();
+
+    expect(calculateRecipeMetrics(somaek as CocktailRecipe)).toEqual({
+      totalVolumeMl: 300,
+      estimatedAbv: 8.5,
+      estimatedCalories: 142,
     });
   });
 

@@ -1,5 +1,6 @@
 import { TFunction } from "i18next";
 import alcoholConversionData from "../alcohol_conversion_data.json";
+import { alcoholCalories } from "./alcoholConstants";
 
 // 계산 함수들
 export const calculateDilution = (values: number[], t: TFunction) => {
@@ -186,10 +187,10 @@ export const calculateCalorie = (values: number[], t: TFunction) => {
     return [{ label: t("common.error"), value: t("errors.abvUnder100Alcohol") }];
   }
 
-  const alcoholCalories = volume * (abv / 100) * 5.6;
+  const calories = alcoholCalories(volume, abv);
 
   return [
-    { label: t("calculators.calorie.alcoholCalories"), value: `${alcoholCalories.toFixed(1)} ${t("units.kcal")}` },
+    { label: t("calculators.calorie.alcoholCalories"), value: `${calories.toFixed(1)} ${t("units.kcal")}` },
     { label: t("common.referenceNote"), value: t("calculators.calorie.additionalNote") },
   ];
 };

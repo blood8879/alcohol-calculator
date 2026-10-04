@@ -26,11 +26,13 @@ const readRefs = async (key: string): Promise<ContentRef[]> => {
   }
 };
 
-const writeRefs = async (key: string, refs: ContentRef[]): Promise<void> => {
+const writeRefs = async (key: string, refs: ContentRef[]): Promise<boolean> => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(refs));
+    return true;
   } catch (error) {
     console.warn("Failed to write content refs:", error);
+    return false;
   }
 };
 
@@ -44,21 +46,21 @@ export const isFavorite = async (kind: ContentKind, id: string): Promise<boolean
   return favorites.some((item) => makeKey(item.kind, item.id) === key);
 };
 
-export const toggleFavorite = async (item: ContentRef): Promise<boolean> => {
+export const toggleFavorite = async (item: ContentRef): Promise<boolean | null> => {
   const favorites = await getFavorites();
   const key = makeKey(item.kind, item.id);
   const exists = favorites.some((favorite) => makeKey(favorite.kind, favorite.id) === key);
 
   if (exists) {
-    await writeRefs(
+    const saved = await writeRefs(
       FAVORITES_KEY,
       favorites.filter((favorite) => makeKey(favorite.kind, favorite.id) !== key)
     );
-    return false;
+    return saved ? false : null;
   }
 
-  await writeRefs(FAVORITES_KEY, [{ ...item, viewedAt: Date.now() }, ...favorites]);
-  return true;
+  const saved = await writeRefs(FAVORITES_KEY, [{ ...item, viewedAt: Date.now() }, ...favorites]);
+  return saved ? true : null;
 };
 
 export const addRecentContent = async (item: ContentRef): Promise<void> => {

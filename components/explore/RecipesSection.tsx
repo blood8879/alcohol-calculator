@@ -1,12 +1,5 @@
-import React, { useState, useMemo, useCallback } from "react";
-import {
-  FlatList,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import { FlatList, TextInput, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import Modal from "react-native-modal";
@@ -19,40 +12,39 @@ import RecipeCard from "../RecipeCard";
 import RecipeDetail from "../RecipeDetail";
 import InlineBannerAd from "../InlineBannerAd";
 import RecipeRecommenderPanel from "../RecipeRecommenderPanel";
+import EmptyState from "../ui/EmptyState";
+import { logContentSearch } from "../../utils/contentAnalytics";
+import {
+  DEFAULT_RECIPE_FILTERS,
+  filterRecipeList,
+  RecipeFilterState,
+} from "../../utils/engagement/recipeFilters";
 
-type CategoryFilter = "all" | "korean" | "global";
-
-const FILTER_TABS: CategoryFilter[] = ["all", "korean", "global"];
+const ALL_RECIPES: readonly CocktailRecipe[] = [...cocktailRecipes, ...extendedCocktailRecipes];
 
 export default function RecipesSection() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState<CategoryFilter>("all");
+  // 스타일(전체/한국/글로벌)은 목록과 맞춤 추천이 공유하는 단일 상태.
+  const [filters, setFilters] = useState<RecipeFilterState>(DEFAULT_RECIPE_FILTERS);
   const [selectedRecipe, setSelectedRecipe] = useState<CocktailRecipe | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const filteredRecipes = useMemo(() => {
-    const query = searchQuery.toLowerCase().trim();
-
-    const allRecipes = [...cocktailRecipes, ...extendedCocktailRecipes];
-
-    return allRecipes.filter((recipe) => {
-      if (activeFilter !== "all" && recipe.category !== activeFilter) {
-        return false;
-      }
-      if (query) {
-        const translatedName = translateWithFallback(t, recipe.nameKey, recipe.displayName, i18n.language).toLowerCase();
-        return translatedName.includes(query);
-      }
-      return true;
-    });
-  }, [searchQuery, activeFilter, t, i18n.language]);
-
-  const allRecipes = useMemo(
-    () => [...cocktailRecipes, ...extendedCocktailRecipes],
-    []
+  const filteredRecipes = useMemo(
+    () =>
+      filterRecipeList(ALL_RECIPES, filters.style, searchQuery, (recipe) =>
+        translateWithFallback(t, recipe.nameKey, recipe.displayName, i18n.language)
+      ),
+    [searchQuery, filters.style, t, i18n.language]
   );
+
+  useEffect(() => {
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    if (searchQuery.trim()) searchTimer.current = setTimeout(() => logContentSearch("recipes", searchQuery, filteredRecipes.length), 700);
+    return () => { if (searchTimer.current) clearTimeout(searchTimer.current); };
+  }, [searchQuery, filteredRecipes.length]);
 
   const handleCardPress = useCallback((recipe: CocktailRecipe) => {
     setSelectedRecipe(recipe);
@@ -88,9 +80,9 @@ export default function RecipesSection() {
     <View className="flex-1">
       <View className="mb-3">
         <TextInput
-          className="bg-gray-800 text-white rounded-xl px-4 py-3 text-base"
+          className="bg-surface text-textPrimary rounded-xl px-4 py-3 text-base"
           placeholder={t("recipes.searchPlaceholder")}
-          placeholderTextColor="#6b7280"
+          placeholderTextColor="#8b93a1"
           value={searchQuery}
           onChangeText={setSearchQuery}
           autoCapitalize="none"
@@ -99,58 +91,30 @@ export default function RecipesSection() {
         />
       </View>
 
-      <View className="mb-4">
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 8 }}
-        >
-          {FILTER_TABS.map((tab) => {
-            const isActive = activeFilter === tab;
-            return (
-              <TouchableOpacity
-                key={tab}
-                className={`rounded-full px-4 py-2 ${
-                  isActive ? "bg-green-500" : "bg-gray-800"
-                }`}
-                onPress={() => setActiveFilter(tab)}
-                accessibilityRole="button"
-                accessibilityLabel={t(`recipes.filter.${tab}`)}
-              >
-                <Text
-                  className={`text-sm font-semibold ${
-                    isActive ? "text-white" : "text-gray-400"
-                  }`}
-                >
-                  {t(`recipes.filter.${tab}`)}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      </View>
-
-      <RecipeRecommenderPanel recipes={allRecipes} onSelectRecipe={handleCardPress} />
-
       <FlatList
         data={filteredRecipes}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          <RecipeRecommenderPanel
+            recipes={ALL_RECIPES}
+            filters={filters}
+            onChangeFilters={setFilters}
+            onSelectRecipe={handleCardPress}
+          />
+        }
         ListEmptyComponent={
-          <View className="items-center justify-center py-16">
-            <Text className="text-4xl mb-3">🔍</Text>
-            <Text className="text-gray-500 text-base">
-              {t("recipes.searchPlaceholder")}
-            </Text>
-          </View>
+          <EmptyState emoji="🔍" title={t("recipes.searchPlaceholder")} />
         }
       />
 
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={handleClose}
+        onBackButtonPress={handleClose}
         onSwipeComplete={handleClose}
         swipeDirection={["down"]}
         style={{ justifyContent: "flex-end", margin: 0 }}

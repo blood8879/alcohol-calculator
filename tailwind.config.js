@@ -15,11 +15,12 @@ module.exports = {
         surface: "#1f2937", // gray-800 — 카드/입력 배경
         surfaceDeep: "#374151", // gray-700 — 구분선/보조 표면
         accent: "#22c55e", // green-500 — 주요 강조/CTA
-        accentDeep: "#16a34a", // green-600 — 버튼 배경
+        accentDeep: "#16a34a", // green-600 — 비텍스트 채움(진행바·점·선택 테두리). 흰 글씨 3.30:1이라 텍스트 배경 금지
+        accentButton: "#15803d", // green-700 — 흰 글씨/아이콘이 올라가는 초록 채움(버튼·선택 칩). 흰 글씨 5.02:1 (WCAG AA)
         accentSoft: "#4ade80", // green-400 — 강조 텍스트
         textPrimary: "#ffffff",
         textSecondary: "#9ca3af", // gray-400
-        textMuted: "#6b7280", // gray-500
+        textMuted: "#8b93a1", // 힌트·시각 등 보조 텍스트. surface 4.74:1 · background 5.73:1 (WCAG AA). gray-500(#6b7280)은 3.04:1로 미달
         warning: "#f59e0b", // amber-500
         danger: "#ef4444", // red-500
       },
