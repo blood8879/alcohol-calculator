@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { DrinkingSession, SessionGender } from "./drinkingSession";
+import { isValidBodyWeight } from "../bodyWeight";
 
 const SESSION_KEY = "@active_drinking_session";
 const PROFILE_KEY = "@session_profile";
@@ -41,10 +42,26 @@ export const clearActiveSession = async (): Promise<boolean> => {
   }
 };
 
-export const getSessionProfile = async (): Promise<SessionProfile | null> => {
+// 16회차: 예전 버전이 저장한 오타 체중(예: 7070kg)을 다음 세션에 자동 입력하지 않는다.
+// 체중이 유효 범위 밖이면 성별만 살리고(null 체중) — 화면은 체중 칸을 비워 둔다.
+export type StoredSessionProfile = {
+  readonly weightKg: number | null;
+  readonly gender: SessionGender;
+};
+
+export const sanitizeSessionProfile = (raw: unknown): StoredSessionProfile | null => {
+  if (!raw || typeof raw !== "object") return null;
+  const { weightKg, gender } = raw as { weightKg?: unknown; gender?: unknown };
+  const safeGender: SessionGender = gender === "female" ? "female" : "male";
+  const safeWeight =
+    typeof weightKg === "number" && isValidBodyWeight(weightKg) ? weightKg : null;
+  return { weightKg: safeWeight, gender: safeGender };
+};
+
+export const getSessionProfile = async (): Promise<StoredSessionProfile | null> => {
   try {
     const data = await AsyncStorage.getItem(PROFILE_KEY);
-    return data ? (JSON.parse(data) as SessionProfile) : null;
+    return data ? sanitizeSessionProfile(JSON.parse(data)) : null;
   } catch (error) {
     console.error("Error getting session profile:", error);
     return null;

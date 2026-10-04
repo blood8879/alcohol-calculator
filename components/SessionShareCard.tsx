@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import type { SessionRecord } from "../utils/engagement/sessionHistory";
 import { formatStandardDrinks } from "../utils/alcoholConstants";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../utils/fontScale";
 
 // 세션 요약 공유용 카드. react-native-view-shot으로 캡처하므로 배경을 명시적으로 지정한다.
 // 앱 다크테마(gray-900 배경, green 강조)와 일관되게 구성.
@@ -47,7 +48,7 @@ const SessionShareCard = ({ record }: SessionShareCardProps) => {
         <Text style={{ color: "#9ca3af", fontSize: 12 }}>
           {t("sessionHistory.peakBac")}
         </Text>
-        <Text style={{ color: "#4ade80", fontSize: 44, fontWeight: "800" }}>
+        <Text style={{ color: "#4ade80", fontSize: 44, fontWeight: "800" }} {...DISPLAY_NUMBER_TEXT_PROPS}>
           {record.peakBac.toFixed(3)}%
         </Text>
       </View>

@@ -6,6 +6,7 @@ import * as Haptics from "expo-haptics";
 
 import type { SobrietyChallenge } from "../utils/engagement/sobrietyChallenge";
 import Card from "./ui/Card";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../utils/fontScale";
 
 type SobrietyChallengeCardProps = {
   challenge: SobrietyChallenge | null;
@@ -89,8 +90,8 @@ const SobrietyChallengeCard = ({
 
   return (
     <Card className="mb-4">
-      <View className="flex-row items-center justify-between mb-3">
-        <Text className="text-lg font-bold text-white">
+      <View className="flex-row flex-wrap items-center justify-between mb-3">
+        <Text className="text-lg font-bold text-white flex-shrink mr-2">
           {t("challenge.title")}
         </Text>
         <TouchableOpacity
@@ -106,7 +107,7 @@ const SobrietyChallengeCard = ({
       </View>
 
       <View className="items-center mb-3">
-        <Text className="text-green-400 text-4xl font-bold">
+        <Text className="text-green-400 text-4xl font-bold" {...DISPLAY_NUMBER_TEXT_PROPS}>
           {currentStreakDays}
           <Text className="text-textMuted text-2xl"> / {targetDays}</Text>
         </Text>

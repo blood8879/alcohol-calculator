@@ -2,7 +2,7 @@
   "expo": {
     "name": "alcohol-calculator",
     "slug": "alcohol-calculator",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "alcoholcalculator",
@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.jiamyun.alcoholcalculator",
-      "versionCode": 26,
+      "versionCode": 27,
       "googleServicesFile": "./google-services.json",
       "enablePageSize16KB": true
     },

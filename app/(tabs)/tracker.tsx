@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -27,6 +28,7 @@ import UndoToast from "../../components/ui/UndoToast";
 import { useDialog } from "../../components/ui/DialogProvider";
 import SectionHeader from "../../components/ui/SectionHeader";
 import EmptyState from "../../components/ui/EmptyState";
+import { shouldStackHeader } from "../../utils/fontScale";
 import {
   DrinkLog,
   addDrinkLogReturningLog,
@@ -115,6 +117,8 @@ export default function TrackerScreen() {
   const { t, i18n } = useTranslation();
   const { toast } = useDialog();
   const router = useRouter();
+  const { fontScale } = useWindowDimensions();
+  const stackHeader = shouldStackHeader(fontScale);
   const [selectedDate, setSelectedDate] = useState<Date>(() => {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
@@ -383,19 +387,28 @@ export default function TrackerScreen() {
   const keyExtractor = useCallback((item: DrinkLog) => item.id, []);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-gray-900" edges={["top", "left", "right"]}>
       <StatusBar barStyle="light-content" />
 
-      <View className="flex-row items-center justify-between px-4 pt-2 pb-3">
-        <View className="flex-1 mr-2">
-          <Text className="text-2xl font-bold text-white" numberOfLines={1}>
+      {/* 글꼴 200%에서는 제목이 버튼에 밀려 "Drink T…"로 잘리므로, 큰 배율에선 버튼을 제목 아래 줄로 내린다. */}
+      <View
+        className={`px-4 pt-2 pb-3 ${stackHeader ? "" : "flex-row items-center justify-between"}`}
+      >
+        <View className={stackHeader ? "" : "flex-1 mr-2"}>
+          <Text
+            className="text-2xl font-bold text-white"
+            numberOfLines={stackHeader ? 2 : 1}
+          >
             {t("tracker.title")}
           </Text>
-          <Text className="text-textSecondary text-sm mt-0.5" numberOfLines={1}>
+          <Text
+            className="text-textSecondary text-sm mt-0.5"
+            numberOfLines={stackHeader ? 2 : 1}
+          >
             {headerSubtitle}
           </Text>
         </View>
-        <View className="flex-row items-center">
+        <View className={`flex-row items-center ${stackHeader ? "mt-3" : ""}`}>
           <TouchableOpacity
             className="bg-gray-800 rounded-xl px-3 min-h-[44px] min-w-[44px] items-center justify-center mr-2"
             onPress={() => router.push("/session")}
@@ -406,14 +419,14 @@ export default function TrackerScreen() {
             <Text className="text-base">🍻</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="bg-accentButton rounded-xl px-4 min-h-[44px] flex-row items-center"
+            className={`bg-accentButton rounded-xl px-4 min-h-[44px] flex-row items-center ${stackHeader ? "flex-1 justify-center" : ""}`}
             onPress={() => setModalVisible(true)}
             activeOpacity={0.7}
             accessibilityRole="button"
             accessibilityLabel={t("tracker.addDrink")}
           >
             <Ionicons name="add" size={18} color="#fff" />
-            <Text className="text-white font-semibold ml-1">
+            <Text className="text-white font-semibold ml-1 flex-shrink">
               {t("tracker.addDrink")}
             </Text>
           </TouchableOpacity>

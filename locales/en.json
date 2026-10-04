@@ -1498,7 +1498,8 @@
     "abvPositive": "ABV must be greater than 0",
     "abvUnder100Alcohol": "Alcohol content must be below 100%",
     "abvPositiveAlcohol": "Alcohol content must be greater than 0",
-    "calculationError": "An error occurred during calculation"
+    "calculationError": "An error occurred during calculation",
+    "weightRange": "Please enter a body weight between 30 and 250 kg"
   },
   "units": {
     "ml": "ml",

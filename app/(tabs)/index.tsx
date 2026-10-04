@@ -33,6 +33,7 @@ import { pickLocalizedText } from "../../utils/localizedText";
 import { logCalculatorOpened, logCalculatorClosed } from "../../utils/calculatorAnalytics";
 import type { CalculatorCloseReason } from "../../utils/calculatorAnalytics";
 import { logHomeContentClick, logHomeCtaClick } from "../../utils/contentAnalytics";
+import { FONT_SCALE_CAP } from "../../utils/fontScale";
 
 type CalculatorKey =
   | "dilution"
@@ -389,7 +390,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 bg-background" edges={["top", "left", "right"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1e1e1e" />
 
       <ScrollView
@@ -416,7 +417,7 @@ export default function HomeScreen() {
             return (
               <TouchableOpacity
                 key={key}
-                className="bg-surface rounded-card px-2 py-3 mb-3 items-center justify-center w-[31%] h-24 min-h-[44px]"
+                className="bg-surface rounded-card px-2 py-3 mb-3 items-center justify-center w-[31%] min-h-[96px]"
                 onPress={() => openCalculator(key)}
                 activeOpacity={0.7}
                 accessibilityRole="button"
@@ -428,9 +429,12 @@ export default function HomeScreen() {
                 >
                   <Text className="text-xl">{config.icon}</Text>
                 </View>
+                {/* 200% 시스템 글꼴에서도 잘리지 않도록 2줄까지 허용 + 확대 상한(§4.7).
+                    타일은 고정 높이 대신 min-h라서 같은 줄 타일이 함께 늘어난다(flex-wrap stretch). */}
                 <Text
                   className="text-textPrimary text-xs font-semibold text-center"
-                  numberOfLines={1}
+                  numberOfLines={2}
+                  maxFontSizeMultiplier={FONT_SCALE_CAP.compactLabel}
                 >
                   {config.navLabel}
                 </Text>

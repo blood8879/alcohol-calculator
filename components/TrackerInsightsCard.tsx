@@ -26,11 +26,12 @@ export default function TrackerInsightsCard({
 
   return (
     <Card className="mb-4">
-      <View className="flex-row items-center justify-between mb-3">
-        <Text className="text-white text-lg font-bold">
+      {/* 큰 글꼴에선 비교 문구가 제목 아래 줄로 내려가도록 wrap — 카드 밖으로 넘치지 않게 한다. */}
+      <View className="flex-row flex-wrap items-center justify-between mb-3">
+        <Text className="text-white text-lg font-bold flex-shrink mr-2">
           {t("insights.title")}
         </Text>
-        <Text className="text-green-400 text-xs font-bold">
+        <Text className="text-green-400 text-xs font-bold flex-shrink">
           {comparisonText}
         </Text>
       </View>

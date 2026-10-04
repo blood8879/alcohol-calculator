@@ -1,6 +1,7 @@
 import { TFunction } from "i18next";
 import { BacLevel, bacLevelOf } from "./engagement/drinkingSession";
 import { STANDARD_DRINK_GRAMS } from "./alcoholConstants";
+import { validateBodyWeight } from "./bodyWeight";
 
 // 라이브 세션(drinkingSession.bacLevelOf)과 동일한 4단계 임계(0.02/0.05/0.08)를
 // 단일 소스로 공유한다. 각 레벨을 홈 BAC 계산기의 경고 문구 키에 매핑한다.
@@ -21,8 +22,11 @@ export const calculateBAC = (
   hours: number,
   t: TFunction
 ): { label: string; value: string }[] => {
-  if (weight <= 0) {
-    return [{ label: t("common.error"), value: t("calculators.bac.errorWeight") }];
+  const weightCheck = validateBodyWeight(weight);
+  if (!weightCheck.ok) {
+    // 0·음수는 기존 문구 유지, 30~250kg 밖(오타 추정)은 범위 안내 — 결과 대신 오류 행만 반환한다.
+    const key = weightCheck.reason === "out_of_range" ? "errors.weightRange" : "calculators.bac.errorWeight";
+    return [{ label: t("common.error"), value: t(key) }];
   }
   if (drinks <= 0) {
     return [{ label: t("common.error"), value: t("calculators.bac.errorDrinks") }];

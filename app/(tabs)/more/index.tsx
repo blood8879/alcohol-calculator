@@ -34,7 +34,7 @@ export default function MoreScreen() {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-gray-900" edges={["top", "left", "right"]}>
       <ScrollView
         className="p-4"
         contentContainerStyle={{ paddingBottom: 100 }}

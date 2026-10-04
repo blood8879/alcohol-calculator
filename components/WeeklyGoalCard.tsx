@@ -5,6 +5,7 @@ import * as Haptics from "expo-haptics";
 
 import type { WeeklyProgress } from "../utils/engagement/weeklyGoal";
 import Card from "./ui/Card";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../utils/fontScale";
 
 type WeeklyGoalCardProps = {
   progress: WeeklyProgress | null;
@@ -141,11 +142,11 @@ const WeeklyGoalCard = ({
 
   return (
     <Card className="mb-4">
-      <View className="flex-row items-center justify-between mb-3">
-        <Text className="text-lg font-bold text-white">
+      <View className="flex-row flex-wrap items-center justify-between mb-3">
+        <Text className="text-lg font-bold text-white flex-shrink mr-2">
           {t("weeklyGoal.title")}
         </Text>
-        <View className="flex-row items-center">
+        <View className="flex-row items-center flex-shrink">
           <TouchableOpacity
             onPress={() => openModal(progress.limitDrinks)}
             activeOpacity={0.7}
@@ -171,7 +172,7 @@ const WeeklyGoalCard = ({
       </View>
 
       <View className="items-center mb-3">
-        <Text className={`${valueColor} text-4xl font-bold`}>
+        <Text className={`${valueColor} text-4xl font-bold`} {...DISPLAY_NUMBER_TEXT_PROPS}>
           {progress.currentDrinks}
           <Text className="text-textMuted text-2xl">
             {" "}

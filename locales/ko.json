@@ -1498,7 +1498,8 @@
     "abvPositive": "도수는 0보다 커야 합니다",
     "abvUnder100Alcohol": "알코올 도수는 100% 이하여야 합니다",
     "abvPositiveAlcohol": "알코올 도수는 0보다 커야 합니다",
-    "calculationError": "계산 중 오류가 발생했습니다"
+    "calculationError": "계산 중 오류가 발생했습니다",
+    "weightRange": "체중은 30~250kg 사이로 입력해 주세요"
   },
   "units": {
     "ml": "ml",

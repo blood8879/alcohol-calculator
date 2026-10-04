@@ -1495,7 +1495,8 @@
     "abvPositive": "度数必须大于0",
     "abvUnder100Alcohol": "酒精度数必须为100%以下",
     "abvPositiveAlcohol": "酒精度数必须大于0",
-    "calculationError": "计算过程中发生错误"
+    "calculationError": "计算过程中发生错误",
+    "weightRange": "请输入30~250kg之间的体重"
   },
   "units": {
     "ml": "ml",

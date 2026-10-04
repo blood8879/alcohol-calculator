@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View, ScrollView } from "react-native";
 import { useTranslation } from "react-i18next";
+import { FONT_SCALE_CAP } from "../utils/fontScale";
 import { Ionicons } from "@expo/vector-icons";
 import { QuizQuestion as QuizQuestionType } from "../data/types";
 import Card from "./ui/Card";
@@ -75,7 +76,7 @@ const QuizQuestionCard = ({
       >
         <View className="mb-2">
           <View className="flex-row items-center justify-between mb-3">
-            <Text className="text-gray-400 text-sm font-semibold">
+            <Text className="text-gray-400 text-sm font-semibold flex-1 mr-2">
               {t("quiz.questionOf")} {questionNumber}/{totalQuestions}
             </Text>
             <Text className="text-green-400 text-sm font-bold">
@@ -110,14 +111,17 @@ const QuizQuestionCard = ({
             }}
           >
             <View
-              className={`${getLabelColor(index)} w-8 h-8 rounded-lg items-center justify-center mr-3`}
+              className={`${getLabelColor(index)} min-w-[32px] min-h-[32px] rounded-lg items-center justify-center mr-3`}
             >
               {showFeedback && index === question.correctIndex ? (
                 <Ionicons name="checkmark" size={18} color="#fff" />
               ) : showFeedback && index === selectedIndex && !isCorrect ? (
                 <Ionicons name="close" size={18} color="#fff" />
               ) : (
-                <Text className="text-white text-sm font-bold">
+                <Text
+                  className="text-white text-sm font-bold"
+                  maxFontSizeMultiplier={FONT_SCALE_CAP.compactLabel}
+                >
                   {optionLabels[index]}
                 </Text>
               )}

@@ -191,13 +191,13 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
 
         <Card className="mt-6">
           <View className="flex-row justify-between mb-2">
-            <Text className="text-gray-400 text-sm">{t("recipes.totalVolume")}</Text>
+            <Text className="text-gray-400 text-sm flex-1 mr-3">{t("recipes.totalVolume")}</Text>
             <Text className="text-white text-sm font-semibold">
               {totalVolumeMl} ml
             </Text>
           </View>
           <View className="flex-row justify-between mb-2">
-            <Text className="text-gray-400 text-sm">
+            <Text className="text-gray-400 text-sm flex-1 mr-3">
               {t("recipes.totalAbv")}
             </Text>
             <Text className="text-emerald-400 text-sm font-semibold">
@@ -205,7 +205,7 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
             </Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-gray-400 text-sm">
+            <Text className="text-gray-400 text-sm flex-1 mr-3">
               {t("recipes.totalCalories")}
             </Text>
             <Text className="text-amber-400 text-sm font-semibold">

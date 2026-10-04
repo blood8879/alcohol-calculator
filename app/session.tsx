@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -67,6 +67,7 @@ import {
 } from "../utils/adFrequency";
 import { useInterstitialAd } from "../hooks/useInterstitialAd";
 import { trackEngagement } from "../utils/engagementAnalytics";
+import { validateBodyWeight } from "../utils/bodyWeight";
 
 // 빠른 잔 칩 그리드 항목(프리셋·커스텀·[+ 추가] 점선 칩).
 type ChipItem =
@@ -78,7 +79,6 @@ export default function SessionScreen() {
   const { t, i18n } = useTranslation();
   const { confirm, toast } = useDialog();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
 
   const [loaded, setLoaded] = useState(false);
   const [session, setSession] = useState<DrinkingSession | null>(null);
@@ -109,7 +109,7 @@ export default function SessionScreen() {
         trackEngagement("session_resumed", { has_drinks: storedSession.drinks.length > 0 });
       }
       if (profile) {
-        setWeight(String(profile.weightKg));
+        if (profile.weightKg !== null) setWeight(String(profile.weightKg));
         setGender(profile.gender);
       }
       setCustomDrinks(drinks);
@@ -146,12 +146,16 @@ export default function SessionScreen() {
   }, [isDangerLevel, level]);
 
   const handleStart = useCallback(async () => {
-    const parsedWeight = parseFloat(weight);
-    if (isNaN(parsedWeight) || parsedWeight <= 0) {
-      trackEngagement("session_start_validation_failed", { reason: "invalid_weight" });
-      toast({ message: t("errors.positiveValues"), variant: "error" });
+    // 16회차: 30~250kg 밖 값(예: 70 뒤에 70을 덧붙인 7070)은 BAC를 "안전"으로 왜곡하므로 시작을 막는다.
+    const weightCheck = validateBodyWeight(weight);
+    if (!weightCheck.ok) {
+      trackEngagement("session_start_validation_failed", {
+        reason: weightCheck.reason === "out_of_range" ? "weight_out_of_range" : "invalid_weight",
+      });
+      toast({ message: t("errors.weightRange"), variant: "error" });
       return;
     }
+    const parsedWeight = weightCheck.weightKg;
     const nextSession: DrinkingSession = {
       startedAt: Date.now(),
       weightKg: parsedWeight,
@@ -437,7 +441,7 @@ export default function SessionScreen() {
       {!loaded ? null : !session ? (
         <ScrollView
           className="flex-1 px-4"
-          contentContainerStyle={{ paddingBottom: 40 + insets.bottom }}
+          contentContainerStyle={{ paddingBottom: 40 }}
           showsVerticalScrollIndicator={false}
         >
           <View className="items-center pt-6 pb-8">
@@ -456,6 +460,7 @@ export default function SessionScreen() {
             value={weight}
             onChangeText={setWeight}
             keyboardType="numeric"
+            selectTextOnFocus
             placeholder="65"
             placeholderTextColor="#8b93a1"
             accessibilityLabel={t("session.weight")}
@@ -597,8 +602,8 @@ export default function SessionScreen() {
               ))}
             </View>
 
-            <View className="flex-row items-center justify-between mb-3">
-              <Text className="text-textPrimary text-base font-bold">
+            <View className="flex-row flex-wrap items-center justify-between mb-3">
+              <Text className="text-textPrimary text-base font-bold flex-shrink mr-2">
                 {t("session.logTitle", { count: session.drinks.length })}
               </Text>
               {session.drinks.length > 0 && (
@@ -664,7 +669,7 @@ export default function SessionScreen() {
           {/* 하단 고정 액션 바: 엄지 도달 범위의 주 버튼(safe-area 포함). */}
           <View
             className="bg-background border-t border-surfaceDeep px-4 pt-3"
-            style={{ paddingBottom: Math.max(insets.bottom, 12) }}
+            style={{ paddingBottom: 12 }}
           >
             <TouchableOpacity
               className="bg-accentButton rounded-xl min-h-[56px] justify-center items-center px-4"

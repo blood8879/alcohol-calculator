@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import Card from "../ui/Card";
 import SectionHeader from "../ui/SectionHeader";
 import { computeIntegerAxisScale, formatIntegerAxisLabel } from "../../utils/chartScale";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../../utils/fontScale";
 
 type Metric = "drinks" | "calories";
 
@@ -165,8 +166,7 @@ export default function WeeklyStatsCard({ stats, weeklyLimit }: WeeklyStatsCardP
           >
             <Text
               className={`${tile.color} text-xl font-bold`}
-              numberOfLines={1}
-              adjustsFontSizeToFit
+              {...DISPLAY_NUMBER_TEXT_PROPS}
             >
               {tile.value}
             </Text>

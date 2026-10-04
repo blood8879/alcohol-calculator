@@ -1,5 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, useWindowDimensions } from "react-native";
+
+import { FONT_SCALE_CAP } from "../../utils/fontScale";
 
 import type { BacLevel } from "../../utils/engagement/drinkingSession";
 import {
@@ -19,12 +21,18 @@ type BacScaleProps = {
 const BAR_HEIGHT = 10;
 const POINTER_WIDTH = 14;
 const TICK_LABEL_WIDTH = 40;
+const TICK_ROW_BASE_HEIGHT = 16;
 const DIMMED_OPACITY = 0.3;
 
 // BAC 스케일(0~0.12%): 4구간 색 띠 + 임계 눈금(0.02·0.05·0.08) + 현재값 ▲ 포인터.
 // 색만으로 상태를 구분하지 않도록 현재 구간만 불투명, 나머지는 흐리게 하고 위치·눈금을 함께 보여준다(§4.7).
 export default function BacScale({ bac, level, accessibilityLabel }: BacScaleProps) {
   const position = bacToScalePosition(bac);
+  // 눈금 라벨은 절대 위치라 행 높이가 자동으로 늘지 않는다 → 확대 상한까지의 글꼴 배율만큼 행을 키운다(§4.7).
+  const { fontScale } = useWindowDimensions();
+  const tickRowHeight = Math.ceil(
+    TICK_ROW_BASE_HEIGHT * Math.max(1, Math.min(fontScale, FONT_SCALE_CAP.compactLabel))
+  );
 
   return (
     <View
@@ -52,7 +60,9 @@ export default function BacScale({ bac, level, accessibilityLabel }: BacScalePro
       </View>
 
       <View className="w-full" style={{ height: 14 }}>
+        {/* 포인터 글리프는 14px 행에 맞춘 도형이라 글꼴 확대에서 제외한다. */}
         <Text
+          allowFontScaling={false}
           style={{
             position: "absolute",
             left: `${position * 100}%`,
@@ -68,11 +78,13 @@ export default function BacScale({ bac, level, accessibilityLabel }: BacScalePro
         </Text>
       </View>
 
-      <View className="w-full" style={{ height: 16 }}>
+      <View className="w-full" style={{ height: tickRowHeight }}>
         {BAC_SCALE_TICKS.map((tick) => (
           <Text
             key={tick}
             className="text-textSecondary text-xs"
+            numberOfLines={1}
+            maxFontSizeMultiplier={FONT_SCALE_CAP.compactLabel}
             style={{
               position: "absolute",
               left: `${tickToScalePosition(tick) * 100}%`,

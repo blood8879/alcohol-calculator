@@ -21,6 +21,7 @@ import PresetPicker from "./PresetPicker";
 import { getCalculatorGuide } from "../data/calculatorGuides";
 import { pickLocalizedText } from "../utils/localizedText";
 import { computeRevealScrollOffset } from "../utils/keyboardReveal";
+import { FONT_SCALE_CAP } from "../utils/fontScale";
 
 export type FieldOption = {
   label: string;
@@ -340,6 +341,7 @@ const CalculationCard = ({
             placeholderTextColor="#8b93a1"
             selectionColor="#22c55e"
             keyboardType="numeric"
+            selectTextOnFocus
             value={inputTexts[index]}
             onChangeText={(text) => handleInputChange(text, index)}
             onFocus={() => setFocusedIndex(index)}
@@ -436,7 +438,11 @@ const CalculationCard = ({
           accessibilityLabel={`${heroResult.label} ${heroResult.value}`}
         >
           <Text className="text-sm text-textSecondary mb-1">{heroResult.label}</Text>
-          <Text className="text-4xl font-bold text-accentSoft flex-wrap">
+          {/* 값이 문장형일 수 있어 줄바꿈은 허용하고 확대 상한만 둔다(§4.7). */}
+          <Text
+            className="text-4xl font-bold text-accentSoft flex-wrap"
+            maxFontSizeMultiplier={FONT_SCALE_CAP.display}
+          >
             {heroResult.value}
           </Text>
         </View>

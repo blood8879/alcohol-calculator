@@ -159,7 +159,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-gray-900" edges={["top", "left", "right"]}>
       <View className="flex-row items-center p-4">
         <TouchableOpacity onPress={() => router.back()} className="mr-3">
           <Ionicons name="arrow-back" size={24} color="#fff" />
@@ -186,7 +186,7 @@ export default function SettingsScreen() {
           </Card>
           <Card>
             <View className="flex-row items-center justify-between py-3 border-b border-gray-700">
-              <Text className="text-white text-base">
+              <Text className="text-white text-base flex-1 mr-3">
                 {t("settings.dailyReminder")}
               </Text>
               <Switch
@@ -197,7 +197,7 @@ export default function SettingsScreen() {
               />
             </View>
             <View className="flex-row items-center justify-between py-3 border-b border-gray-700">
-              <Text className="text-white text-base">
+              <Text className="text-white text-base flex-1 mr-3">
                 {t("settings.weeklyStats")}
               </Text>
               <Switch

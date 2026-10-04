@@ -22,9 +22,10 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <View className={`flex-row items-center justify-between ${className}`}>
+      {/* 제목은 남는 폭을 차지하되 우측 액션/액세서리를 카드 밖으로 밀어내지 않는다(min-w-0 = 축소 허용). */}
       <Text
-        className="flex-1 text-textPrimary text-lg font-bold"
-        numberOfLines={1}
+        className="flex-1 min-w-0 text-textPrimary text-lg font-bold"
+        numberOfLines={2}
         accessibilityRole="header"
       >
         {title}
@@ -32,14 +33,14 @@ export default function SectionHeader({
       {accessory}
       {actionLabel && onActionPress ? (
         <TouchableOpacity
-          className="min-h-[44px] justify-center pl-3"
+          className="min-h-[44px] justify-center pl-3 flex-shrink max-w-[50%]"
           onPress={onActionPress}
           activeOpacity={0.7}
           accessibilityRole="button"
           accessibilityLabel={actionAccessibilityLabel ?? actionLabel}
           hitSlop={{ top: 4, bottom: 4, left: 4, right: 4 }}
         >
-          <Text className="text-accentSoft text-sm font-semibold">
+          <Text className="text-accentSoft text-sm font-semibold text-right">
             {actionLabel} ›
           </Text>
         </TouchableOpacity>

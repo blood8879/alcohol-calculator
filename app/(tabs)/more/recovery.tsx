@@ -23,6 +23,8 @@ import {
 } from "../../../components/recovery/recoveryChart";
 import { bacLevelOf } from "../../../utils/engagement/drinkingSession";
 import { STANDARD_DRINK_GRAMS } from "../../../utils/alcoholConstants";
+import { validateBodyWeight } from "../../../utils/bodyWeight";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../../../utils/fontScale";
 
 type Gender = "male" | "female";
 
@@ -42,10 +44,10 @@ function computeBac(
   gender: Gender,
   drinks: number
 ): BacResult | null {
+  // 체중은 공용 검증(30~250kg)을 통과해야 계산한다 — 7070kg 같은 오타가 "안전"으로 보이지 않게.
   if (
-    !Number.isFinite(weight) ||
+    !validateBodyWeight(weight).ok ||
     !Number.isFinite(drinks) ||
-    weight <= 0 ||
     drinks <= 0
   ) {
     return null;
@@ -88,11 +90,14 @@ export default function RecoveryScreen() {
   const [drinksInput, setDrinksInput] = useState("3");
   const [chartInnerWidth, setChartInnerWidth] = useState(0);
 
+  const weightCheck = useMemo(() => validateBodyWeight(weightInput), [weightInput]);
+  const weightOutOfRange = !weightCheck.ok && weightCheck.reason === "out_of_range";
+
   const result = useMemo<BacResult | null>(() => {
-    const weight = Number(weightInput);
+    if (!weightCheck.ok) return null;
     const drinks = Number(drinksInput);
-    return computeBac(weight, gender, drinks);
-  }, [weightInput, gender, drinksInput]);
+    return computeBac(weightCheck.weightKg, gender, drinks);
+  }, [weightCheck, gender, drinksInput]);
 
   const onChartLayout = useCallback((event: LayoutChangeEvent) => {
     const nextWidth = Math.floor(event.nativeEvent.layout.width);
@@ -166,7 +171,7 @@ export default function RecoveryScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 bg-background" edges={["top", "left", "right"]}>
       <View className="flex-row items-center p-4">
         <TouchableOpacity
           onPress={() => router.back()}
@@ -199,6 +204,7 @@ export default function RecoveryScreen() {
             keyboardType="numeric"
             value={weightInput}
             onChangeText={setWeightInput}
+            selectTextOnFocus
             placeholder="70"
             placeholderTextColor="#8b93a1"
             accessibilityLabel={t("recovery.weight")}
@@ -244,6 +250,7 @@ export default function RecoveryScreen() {
             keyboardType="numeric"
             value={drinksInput}
             onChangeText={setDrinksInput}
+            selectTextOnFocus
             placeholder="3"
             placeholderTextColor="#8b93a1"
             accessibilityLabel={t("recovery.standardDrinks")}
@@ -269,8 +276,7 @@ export default function RecoveryScreen() {
                 </Text>
                 <Text
                   className={`${peakStyle.text} text-5xl font-bold`}
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
+                  {...DISPLAY_NUMBER_TEXT_PROPS}
                 >
                   {result.peakBac.toFixed(4)}%
                 </Text>
@@ -355,8 +361,11 @@ export default function RecoveryScreen() {
               </View>
             </>
           ) : (
-            <Text className="text-textSecondary text-sm">
-              {t("recovery.emptyState")}
+            <Text
+              className="text-textSecondary text-sm"
+              accessibilityLiveRegion="polite"
+            >
+              {weightOutOfRange ? t("errors.weightRange") : t("recovery.emptyState")}
             </Text>
           )}
 

@@ -6,6 +6,7 @@ import * as Haptics from "expo-haptics";
 import SobrietyChallengeCard from "../SobrietyChallengeCard";
 import WeeklyGoalCard from "../WeeklyGoalCard";
 import ProgressBar from "../ui/ProgressBar";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../../utils/fontScale";
 import type {
   ChallengeProgress,
   SobrietyChallenge,
@@ -89,7 +90,7 @@ export default function StatusTiles({
           </Text>
           {challenge ? (
             <>
-              <Text className="text-accentSoft text-3xl font-bold mt-1">
+              <Text className="text-accentSoft text-3xl font-bold mt-1" {...DISPLAY_NUMBER_TEXT_PROPS}>
                 D+{streak}
               </Text>
               <Text className="text-textMuted text-xs mt-0.5" numberOfLines={1}>
@@ -122,6 +123,7 @@ export default function StatusTiles({
             <>
               <Text
                 className={`${exceeded ? "text-red-400" : "text-accentSoft"} text-3xl font-bold mt-1`}
+                {...DISPLAY_NUMBER_TEXT_PROPS}
               >
                 {weeklyProgress.currentDrinks}
                 <Text className="text-textMuted text-lg">

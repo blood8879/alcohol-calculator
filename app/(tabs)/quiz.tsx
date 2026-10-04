@@ -219,7 +219,7 @@ export default function QuizScreen() {
   const weekDots = buildQuizWeekDots(progress, now);
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 bg-background" edges={["top", "left", "right"]}>
       <View className="flex-row items-center p-4">
         {quizState !== "idle" && (
           <TouchableOpacity

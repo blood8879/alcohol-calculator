@@ -3,6 +3,7 @@ import { AccessibilityInfo, Animated, Easing } from "react-native";
 
 import type { BacLevel } from "../../utils/engagement/drinkingSession";
 import { LEVEL_STYLES } from "./sessionUi";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../../utils/fontScale";
 
 type BacHeroNumberProps = {
   readonly bac: number;
@@ -114,6 +115,7 @@ export default function BacHeroNumber({ bac, level }: BacHeroNumberProps) {
       <Animated.Text
         style={{ color, fontSize: 48, lineHeight: 56, fontWeight: "700" }}
         accessibilityRole="text"
+        {...DISPLAY_NUMBER_TEXT_PROPS}
       >
         {bac.toFixed(3)}%
       </Animated.Text>

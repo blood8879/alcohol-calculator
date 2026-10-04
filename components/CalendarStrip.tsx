@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useMemo } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { FONT_SCALE_CAP } from "../utils/fontScale";
 
 interface CalendarStripProps {
   selectedDate: Date;
@@ -60,7 +61,7 @@ const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
           return (
             <TouchableOpacity
               key={index}
-              className={`w-14 h-20 items-center justify-center rounded-xl mr-2 ${
+              className={`w-14 min-h-[80px] py-2 items-center justify-center rounded-xl mr-2 ${
                 isSelected ? "bg-accentButton" : "bg-gray-800"
               }`}
               onPress={() => onSelectDate(day)}
@@ -70,6 +71,7 @@ const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
               accessibilityState={{ selected: isSelected }}
             >
               <Text
+                maxFontSizeMultiplier={FONT_SCALE_CAP.compactLabel}
                 className={`text-xs ${
                   isSelected ? "text-white" : "text-gray-400"
                 }`}
@@ -77,6 +79,7 @@ const CalendarStrip = ({ selectedDate, onSelectDate }: CalendarStripProps) => {
                 {dayName}
               </Text>
               <Text
+                maxFontSizeMultiplier={FONT_SCALE_CAP.compactLabel}
                 className={`text-lg font-bold ${
                   isSelected ? "text-white" : "text-gray-400"
                 }`}

@@ -1495,7 +1495,8 @@
     "abvPositive": "La graduación debe ser mayor que 0",
     "abvUnder100Alcohol": "El contenido de alcohol debe ser inferior al 100%",
     "abvPositiveAlcohol": "El contenido de alcohol debe ser mayor que 0",
-    "calculationError": "Ocurrió un error durante el cálculo"
+    "calculationError": "Ocurrió un error durante el cálculo",
+    "weightRange": "Introduce un peso corporal entre 30 y 250 kg"
   },
   "units": {
     "ml": "ml",

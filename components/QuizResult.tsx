@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { QuizQuestion } from "../data/types";
 import Card from "./ui/Card";
 import SectionHeader from "./ui/SectionHeader";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../utils/fontScale";
 
 type QuizResultProps = {
   score: number;
@@ -72,11 +73,12 @@ const QuizResult = ({
         <Text
           className="text-6xl font-bold text-textPrimary mb-1"
           accessibilityLabel={`${score}/${total}`}
+          {...DISPLAY_NUMBER_TEXT_PROPS}
         >
           {score}/{total}
         </Text>
 
-        <Text className={`text-3xl font-bold mb-3 ${getScoreColor(percentage)}`}>
+        <Text className={`text-3xl font-bold mb-3 ${getScoreColor(percentage)}`} {...DISPLAY_NUMBER_TEXT_PROPS}>
           {percentage}%
         </Text>
 

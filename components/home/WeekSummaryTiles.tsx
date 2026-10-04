@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import ProgressBar from "../ui/ProgressBar";
+import { DISPLAY_NUMBER_TEXT_PROPS } from "../../utils/fontScale";
 import type { WeekSummary } from "../../utils/engagement/weekSummary";
 
 type WeekSummaryTilesProps = {
@@ -61,6 +62,7 @@ export default function WeekSummaryTiles({
           <>
             <Text
               className={`${exceeded ? "text-red-400" : "text-accentSoft"} text-3xl font-bold mt-1`}
+              {...DISPLAY_NUMBER_TEXT_PROPS}
             >
               {weeklyProgress.currentDrinks}
               <Text className="text-textMuted text-lg">
@@ -81,7 +83,7 @@ export default function WeekSummaryTiles({
           </>
         ) : (
           <>
-            <Text className="text-textPrimary text-3xl font-bold mt-1" numberOfLines={1}>
+            <Text className="text-textPrimary text-3xl font-bold mt-1" {...DISPLAY_NUMBER_TEXT_PROPS}>
               {drinksValueText}
             </Text>
             <Text className="text-textMuted text-xs mt-0.5" numberOfLines={1}>
@@ -104,7 +106,7 @@ export default function WeekSummaryTiles({
         </Text>
         {showChallenge ? (
           <>
-            <Text className="text-accentSoft text-3xl font-bold mt-1">
+            <Text className="text-accentSoft text-3xl font-bold mt-1" {...DISPLAY_NUMBER_TEXT_PROPS}>
               D+{streak}
             </Text>
             <Text className="text-textMuted text-xs mt-0.5" numberOfLines={1}>

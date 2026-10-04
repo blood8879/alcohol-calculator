@@ -147,7 +147,7 @@ export default function SessionsScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 bg-background" edges={["top", "left", "right"]}>
       <View className="flex-row items-center p-4">
         <TouchableOpacity
           onPress={() => router.back()}

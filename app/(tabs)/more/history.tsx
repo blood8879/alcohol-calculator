@@ -80,7 +80,7 @@ export default function HistoryScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-gray-900" edges={["top", "left", "right"]}>
       <View className="flex-row items-center justify-between px-4 py-3">
         <View className="flex-row items-center">
           <TouchableOpacity
