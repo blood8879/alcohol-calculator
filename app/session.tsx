@@ -456,7 +456,7 @@ export default function SessionScreen() {
 
           <Text className="text-textSecondary text-sm mb-2">{t("session.weight")} (kg)</Text>
           <TextInput
-            className="bg-surface text-textPrimary rounded-xl px-4 py-3 mb-4 text-base"
+            className="bg-surface text-textPrimary rounded-xl px-4 py-3 mb-4 text-base min-h-[48px]"
             value={weight}
             onChangeText={setWeight}
             keyboardType="numeric"

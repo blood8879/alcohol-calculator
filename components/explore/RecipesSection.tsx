@@ -80,7 +80,7 @@ export default function RecipesSection() {
     <View className="flex-1">
       <View className="mb-3">
         <TextInput
-          className="bg-surface text-textPrimary rounded-xl px-4 py-3 text-base"
+          className="bg-surface text-textPrimary rounded-xl px-4 py-3 text-base min-h-[48px]"
           placeholder={t("recipes.searchPlaceholder")}
           placeholderTextColor="#8b93a1"
           value={searchQuery}

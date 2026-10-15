@@ -61,7 +61,7 @@ export default function TrackerInsightsCard({
       </Text>
 
       <TouchableOpacity
-        className="border border-green-600 rounded-xl py-3 px-4"
+        className="border border-green-600 rounded-xl py-3 px-4 min-h-[48px] justify-center"
         onPress={onOpenGuide}
         activeOpacity={0.75}
         accessibilityRole="button"

@@ -40,7 +40,7 @@ export default function EncyclopediaSection({ initialGuide }: EncyclopediaSectio
   return (
     <View className="flex-1">
       <TextInput
-        className="bg-surface text-textPrimary rounded-xl px-4 py-3 mb-3"
+        className="bg-surface text-textPrimary rounded-xl px-4 py-3 mb-3 min-h-[48px]"
         placeholder={t("encyclopedia.searchPlaceholder")}
         placeholderTextColor="#9ca3af"
         value={search}

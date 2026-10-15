@@ -192,6 +192,32 @@
       "doe": "斗（1800ml）",
       "sojuBottle": "烧酒瓶（360ml）",
       "result": "换算结果"
+    },
+    "guide": {
+      "whatIs": "这个计算器是做什么的？",
+      "whenToUse": "适用场景",
+      "howItWorks": "计算方法"
+    },
+    "recommend": {
+      "calorie": {
+        "title": "选择低热量的酒",
+        "description": "根据计算结果，了解更轻盈的选择和实用小知识。"
+      },
+      "bac": {
+        "title": "查看本周饮酒记录",
+        "description": "BAC 仅供参考。记录饮酒即可查看每周杯数和热量。"
+      },
+      "mix": {
+        "title": "适合这个度数的配方",
+        "description": "把计算结果变成可以动手调制的饮品灵感。"
+      },
+      "default": {
+        "title": "更好地理解计算结果",
+        "description": "继续了解酒精度、标准杯、温度和搭配等相关信息。"
+      },
+      "openEncyclopedia": "查看百科",
+      "openTracker": "查看记录",
+      "openRecipes": "查看配方"
     }
   },
   "presets": {
@@ -422,7 +448,9 @@
         "pairing": "生蚝、牛排、巧克力",
         "description": "以烘烤大麦酿造的浓郁绵密黑啤酒。"
       }
-    }
+    },
+    "relatedTitle": "相关内容",
+    "relatedSummary": "{{count}} 个配方 - {{category}}测验"
   },
   "recipes": {
     "title": "鸡尾酒配方",
@@ -716,7 +744,12 @@
         "name": "热托蒂",
         "instructions": "在热水中混合蜂蜜、柠檬和威士忌，撒上肉桂温热饮用。"
       }
-    }
+    },
+    "favorite": "收藏",
+    "originTitle": "起源与背景",
+    "tipsTitle": "调制技巧",
+    "garnish": "装饰",
+    "openStandardGuide": "查看标准杯指南"
   },
   "tracker": {
     "title": "饮酒记录",
@@ -1327,7 +1360,10 @@
     "trackingHabitTitle": "坚持记录，随时回顾",
     "trackingHabitDescription": "通过每日记录提醒和每周报告，你可以不遗漏地查看饮酒量、热量和平均杯数。",
     "driveSafe": "可驾驶时刻提醒",
-    "driveSafeDescription": "会话结束时，将在酒精预计代谢完毕的时刻收到通知。即便如此，开车前请务必确认自身状态。"
+    "driveSafeDescription": "会话结束时，将在酒精预计代谢完毕的时刻收到通知。即便如此，开车前请务必确认自身状态。",
+    "privacy": "隐私",
+    "privacyChoices": "隐私选项",
+    "privacyChoicesError": "无法打开隐私选项，请重试。"
   },
   "sessionHistory": {
     "title": "会话记录",

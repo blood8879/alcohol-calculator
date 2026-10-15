@@ -29,7 +29,6 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
   const instructions = translateWithFallback(t, recipe.instructionsKey, recipe.instructions, i18n.language);
   const difficultyLabel = t(`recipes.${recipe.difficulty}`);
   const extra = getRecipeExtra(recipe.id);
-  const isKorean = i18n.language.startsWith("ko");
   const [favorite, setFavorite] = useState(false);
   const viewedRecipeId = useRef<string | null>(null);
 
@@ -92,7 +91,7 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
               accessibilityLabel={favorite ? t("history.unfavorite") : t("history.favorite")}
             >
               <Text className={favorite ? "text-gray-900 font-bold" : "text-gray-300 font-semibold"}>
-                {favorite ? "★" : "☆"} {i18n.language.startsWith("ko") ? "즐겨찾기" : "Favorite"}
+                {favorite ? "★" : "☆"} {t("recipes.favorite")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -154,7 +153,7 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
         {extra?.origin && (
           <View className="border-t border-gray-700 pt-4 mt-4">
             <Text className="text-white text-lg font-bold mb-2">
-              {isKorean ? "유래 & 배경" : "Origin & background"}
+              {t("recipes.originTitle")}
             </Text>
             <Text className="text-gray-300 text-base leading-6">
               {pickLocalizedText(extra.origin, i18n.language)}
@@ -165,7 +164,7 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
         {extra?.tips && extra.tips.length > 0 && (
           <View className="border-t border-gray-700 pt-4 mt-4">
             <Text className="text-white text-lg font-bold mb-3">
-              {isKorean ? "만들기 팁" : "Tips"}
+              {t("recipes.tipsTitle")}
             </Text>
             {extra.tips.map((tip, index) => (
               <View key={index} className="flex-row items-start mb-2">
@@ -181,7 +180,7 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
         {extra?.garnish && (
           <View className="flex-row items-center mt-4">
             <Text className="text-gray-400 text-sm mr-2">
-              {isKorean ? "🍃 가니시" : "🍃 Garnish"}
+              🍃 {t("recipes.garnish")}
             </Text>
             <Text className="text-gray-200 text-sm font-medium flex-1">
               {pickLocalizedText(extra.garnish, i18n.language)}
@@ -220,12 +219,10 @@ const RecipeDetail = ({ recipe, onClose, onOpenGuide }: RecipeDetailProps) => {
             onPress={onOpenGuide}
             activeOpacity={0.75}
             accessibilityRole="button"
-            accessibilityLabel={
-              i18n.language.startsWith("ko") ? "표준잔 가이드 보기" : "Open standard drink guide"
-            }
+            accessibilityLabel={t("recipes.openStandardGuide")}
           >
             <Text className="text-green-400 text-center font-semibold text-base">
-              {i18n.language.startsWith("ko") ? "표준잔 가이드 보기" : "Open standard drink guide"}
+              {t("recipes.openStandardGuide")}
             </Text>
           </TouchableOpacity>
         )}

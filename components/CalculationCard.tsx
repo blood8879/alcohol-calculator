@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import { DrinkPreset } from "../data/types";
 import { shareResults } from "../utils/shareUtils";
 import { saveCalculation } from "../utils/historyStorage";
@@ -22,6 +23,7 @@ import { getCalculatorGuide } from "../data/calculatorGuides";
 import { pickLocalizedText } from "../utils/localizedText";
 import { computeRevealScrollOffset } from "../utils/keyboardReveal";
 import { FONT_SCALE_CAP } from "../utils/fontScale";
+import type { CalculatorInitialValues } from "../utils/calculatorPrefill";
 
 export type FieldOption = {
   label: string;
@@ -58,18 +60,20 @@ export type CalculationCardProps = {
   calculatorIcon?: string;
   onRecommendationPress?: (target: RecommendationTarget) => void;
   onSuccessfulResult?: () => void;
+  // 저장된 값으로 미리 채울 필드 값(인덱스 = fields 순서). 사용자 입력이 아니므로 first_input으로 집계하지 않는다.
+  initialValues?: CalculatorInitialValues;
 };
 
 const getRecommendation = (
   calculatorType: string | undefined,
-  isKorean: boolean
+  t: TFunction
 ): ContentRecommendation => {
   if (calculatorType === "calorie") {
     return {
       emoji: "🔥",
-      title: isKorean ? "칼로리가 낮은 술 고르기" : "Choose lower-calorie drinks",
-      description: isKorean ? "계산한 칼로리를 바탕으로 가벼운 조합과 관련 상식을 확인해보세요." : "Use your result to explore lighter drink choices and practical tips.",
-      action: isKorean ? "백과 보기" : "Open encyclopedia",
+      title: t("calculators.recommend.calorie.title"),
+      description: t("calculators.recommend.calorie.description"),
+      action: t("calculators.recommend.openEncyclopedia"),
       target: "encyclopedia",
     };
   }
@@ -77,9 +81,9 @@ const getRecommendation = (
   if (calculatorType === "bac") {
     return {
       emoji: "📊",
-      title: isKorean ? "이번 주 음주 기록 확인" : "Review your weekly drinking pattern",
-      description: isKorean ? "BAC는 참고용입니다. 기록을 남기면 주간 잔 수와 칼로리를 함께 볼 수 있습니다." : "BAC is an estimate. Logging drinks helps track weekly drinks and calories.",
-      action: isKorean ? "기록 보기" : "View tracker",
+      title: t("calculators.recommend.bac.title"),
+      description: t("calculators.recommend.bac.description"),
+      action: t("calculators.recommend.openTracker"),
       target: "tracker",
     };
   }
@@ -87,18 +91,18 @@ const getRecommendation = (
   if (calculatorType === "blending" || calculatorType === "dilution") {
     return {
       emoji: "🍹",
-      title: isKorean ? "이 도수로 만들 수 있는 레시피" : "Recipes for this style",
-      description: isKorean ? "도수 조정 결과를 레시피와 연결해 실제로 만들어볼 조합을 찾아보세요." : "Turn your calculation into a practical drink idea.",
-      action: isKorean ? "레시피 보기" : "View recipes",
+      title: t("calculators.recommend.mix.title"),
+      description: t("calculators.recommend.mix.description"),
+      action: t("calculators.recommend.openRecipes"),
       target: "recipes",
     };
   }
 
   return {
     emoji: "📚",
-    title: isKorean ? "계산 결과를 더 잘 이해하기" : "Understand your result better",
-    description: isKorean ? "도수, 표준잔, 온도, 페어링 같은 관련 정보를 이어서 확인해보세요." : "Continue with ABV, standard drink, temperature, and pairing guides.",
-    action: isKorean ? "백과 보기" : "Open encyclopedia",
+    title: t("calculators.recommend.default.title"),
+    description: t("calculators.recommend.default.description"),
+    action: t("calculators.recommend.openEncyclopedia"),
     target: "encyclopedia",
   };
 };
@@ -115,18 +119,24 @@ const CalculationCard = ({
   calculatorIcon,
   onRecommendationPress,
   onSuccessfulResult,
+  initialValues,
 }: CalculationCardProps) => {
   const { t, i18n } = useTranslation();
-  const [values, setValues] = useState<number[]>(Array(fields.length).fill(0));
-  const [inputTexts, setInputTexts] = useState<string[]>(
-    Array(fields.length).fill("")
+  const [values, setValues] = useState<number[]>(() =>
+    fields.map((_, index) => initialValues?.[index] ?? 0)
+  );
+  const [inputTexts, setInputTexts] = useState<string[]>(() =>
+    fields.map((field, index) => {
+      const initial = initialValues?.[index];
+      const isChoice = field.fieldType === "radio" || field.fieldType === "select";
+      return initial === undefined || isChoice ? "" : String(initial);
+    })
   );
   const [results, setResults] = useState<{ label: string; value: string }[]>(
     []
   );
-  const recommendation = getRecommendation(calculatorType, i18n.language.startsWith("ko"));
+  const recommendation = getRecommendation(calculatorType, t);
   const guide = getCalculatorGuide(calculatorType);
-  const isKorean = i18n.language.startsWith("ko");
   const [guideOpen, setGuideOpen] = useState(false);
   const inputTracked = useRef(false);
   const inputRefs = useRef<(TextInput | null)[]>([]);
@@ -515,11 +525,11 @@ const CalculationCard = ({
               onPress={() => { if (!guideOpen && calculatorType) logCalculatorGuideOpened(calculatorType); setGuideOpen((prev) => !prev); }}
               activeOpacity={0.7}
               accessibilityRole="button"
-              accessibilityLabel={isKorean ? "이 계산기는 무엇인가요?" : "What is this calculator?"}
+              accessibilityLabel={t("calculators.guide.whatIs")}
               accessibilityState={{ expanded: guideOpen }}
             >
               <Text className="text-accentSoft font-semibold text-sm flex-1 mr-2">
-                {isKorean ? "ℹ️ 이 계산기는 무엇인가요?" : "ℹ️ What is this calculator?"}
+                ℹ️ {t("calculators.guide.whatIs")}
               </Text>
               <Ionicons
                 name={guideOpen ? "chevron-down" : "chevron-forward"}
@@ -533,13 +543,13 @@ const CalculationCard = ({
             {guideOpen && (
               <View className="mt-3 pt-3 border-t border-surfaceDeep">
                 <Text className="text-accentSoft font-semibold text-xs mb-1">
-                  {isKorean ? "언제 쓰나요" : "When to use"}
+                  {t("calculators.guide.whenToUse")}
                 </Text>
                 <Text className="text-textSecondary text-sm leading-5 mb-3">
                   {pickLocalizedText(guide.when, i18n.language)}
                 </Text>
                 <Text className="text-accentSoft font-semibold text-xs mb-1">
-                  {isKorean ? "어떻게 계산하나요" : "How it works"}
+                  {t("calculators.guide.howItWorks")}
                 </Text>
                 <Text className="text-textSecondary text-sm leading-5">
                   {pickLocalizedText(guide.formula, i18n.language)}

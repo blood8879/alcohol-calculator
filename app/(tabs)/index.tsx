@@ -26,7 +26,9 @@ import { getDailyCard, DailyContentCard } from "../../data/dailyContent";
 import { getDailyTip } from "../../data/dailyTips";
 import { DrinkPreset } from "../../data/types";
 import { ContentRef, getFavorites, getRecentContent } from "../../utils/contentStorage";
-import { getActiveSession } from "../../utils/engagement/drinkingSessionStorage";
+import { getActiveSession, getSessionProfile } from "../../utils/engagement/drinkingSessionStorage";
+import { bacInitialValuesFromProfile } from "../../utils/calculatorPrefill";
+import type { CalculatorInitialValues } from "../../utils/calculatorPrefill";
 import type { DrinkingSession } from "../../utils/engagement/drinkingSession";
 import { WeekSummary, loadWeekSummary } from "../../utils/engagement/weekSummary";
 import { pickLocalizedText } from "../../utils/localizedText";
@@ -106,6 +108,7 @@ export default function HomeScreen() {
     challengeProgress: null,
   });
   const [today, setToday] = useState(() => new Date());
+  const [bacInitialValues, setBacInitialValues] = useState<CalculatorInitialValues | undefined>(undefined);
 
   // 계산기 설정을 useMemo로 메모이제이션하여 언어 변경 시 자동으로 업데이트
   const calculatorConfigs: Record<CalculatorKey, CalculatorConfig> = useMemo(
@@ -323,11 +326,13 @@ export default function HomeScreen() {
         getRecentContent(),
         getActiveSession(),
         loadWeekSummary(now),
-      ]).then(([favorites, recent, session, summary]) => {
+        getSessionProfile(),
+      ]).then(([favorites, recent, session, summary, profile]) => {
         setFavoriteContent(favorites);
         setRecentContent(recent);
         setActiveSession(session);
         setWeekSummary(summary);
+        setBacInitialValues(bacInitialValuesFromProfile(profile));
       });
     }, [])
   );
@@ -553,6 +558,7 @@ export default function HomeScreen() {
               calculatorType={selectedCalculatorKey || undefined}
               calculatorIcon={selectedCalculator.icon}
               onRecommendationPress={handleRecommendationPress}
+              initialValues={selectedCalculatorKey === "bac" ? bacInitialValues : undefined}
             />
           </View>
         )}

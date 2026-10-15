@@ -14,6 +14,9 @@ import { DialogProvider, useDialog } from "../components/ui/DialogProvider";
 
 jest.mock("@expo/vector-icons", () => ({ Ionicons: "Ionicons" }));
 
+// 첫 렌더 테스트가 렌더러·Modal 모듈 로딩(콜드 스타트)을 떠안아 전체 병렬 실행·부하 시 기본 5초를 넘긴다(단독 실행은 통과).
+jest.setTimeout(20000);
+
 describe("dialogReducer", () => {
   it("opens and closes a confirm by id", () => {
     const opened = dialogReducer(initialDialogState, {

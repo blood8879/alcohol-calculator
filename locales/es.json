@@ -192,6 +192,32 @@
       "doe": "Doe (1800ml)",
       "sojuBottle": "Botella de Soju (360ml)",
       "result": "Resultado de Conversión"
+    },
+    "guide": {
+      "whatIs": "¿Qué hace esta calculadora?",
+      "whenToUse": "Cuándo usarla",
+      "howItWorks": "Cómo se calcula"
+    },
+    "recommend": {
+      "calorie": {
+        "title": "Elige bebidas con menos calorías",
+        "description": "Usa tu resultado para descubrir opciones más ligeras y consejos prácticos."
+      },
+      "bac": {
+        "title": "Revisa tu consumo de la semana",
+        "description": "La TAS es una estimación. Registrar tus bebidas te ayuda a seguir copas y calorías de la semana."
+      },
+      "mix": {
+        "title": "Recetas para este estilo",
+        "description": "Convierte tu cálculo en una idea de bebida para preparar."
+      },
+      "default": {
+        "title": "Entiende mejor tu resultado",
+        "description": "Sigue con guías de graduación, bebida estándar, temperatura y maridaje."
+      },
+      "openEncyclopedia": "Abrir enciclopedia",
+      "openTracker": "Ver registro",
+      "openRecipes": "Ver recetas"
     }
   },
   "presets": {
@@ -422,7 +448,9 @@
         "pairing": "Ostras, filete, chocolate",
         "description": "Cerveza oscura y cremosa de cebada tostada."
       }
-    }
+    },
+    "relatedTitle": "Relacionado",
+    "relatedSummary": "{{count}} recetas - cuestionario de {{category}}"
   },
   "recipes": {
     "title": "Recetas de Cócteles",
@@ -716,7 +744,12 @@
         "name": "Hot Toddy",
         "instructions": "Mezcla miel, limón y whisky en agua caliente, decora con canela."
       }
-    }
+    },
+    "favorite": "Favorito",
+    "originTitle": "Origen e historia",
+    "tipsTitle": "Consejos",
+    "garnish": "Decoración",
+    "openStandardGuide": "Ver guía de bebida estándar"
   },
   "tracker": {
     "title": "Registro de Bebidas",
@@ -1327,7 +1360,10 @@
     "trackingHabitTitle": "Mantén tu hábito de registro",
     "trackingHabitDescription": "Los recordatorios diarios y semanales te ayudan a revisar bebidas, calorías y promedios semanales.",
     "driveSafe": "Aviso de cuándo puedes conducir",
-    "driveSafeDescription": "Recibe una notificación a la hora estimada en que tu alcohol debería haberse metabolizado tras una sesión. Aun así, revisa cómo te sientes antes de conducir."
+    "driveSafeDescription": "Recibe una notificación a la hora estimada en que tu alcohol debería haberse metabolizado tras una sesión. Aun así, revisa cómo te sientes antes de conducir.",
+    "privacy": "Privacidad",
+    "privacyChoices": "Opciones de privacidad",
+    "privacyChoicesError": "No se pudieron abrir las opciones de privacidad. Inténtalo de nuevo."
   },
   "sessionHistory": {
     "title": "Historial de sesiones",

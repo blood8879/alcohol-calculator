@@ -87,20 +87,23 @@ const EncyclopediaCard = ({ entry, initialExpanded = false, onOpenTarget }: Ency
           </Text>
         </View>
         <View className="flex-row items-center">
+          {/* 터치·스크린리더 포커스 영역은 44pt, 보이는 원은 32pt(hitSlop은 접근성 포커스 영역을 넓히지 않음) */}
           <TouchableOpacity
-            className={`w-8 h-8 rounded-full items-center justify-center mr-2 ${favorite ? "bg-yellow-500" : "bg-surfaceDeep"}`}
+            className="items-center justify-center mr-1"
+            style={{ width: 44, height: 44, flexShrink: 0 }}
             onPress={handleToggleFavorite}
             activeOpacity={0.75}
-            hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             accessibilityRole="button"
             accessibilityLabel={favorite ? t("history.unfavorite") : t("history.favorite")}
             accessibilityState={{ selected: favorite }}
           >
-            <Text className={favorite ? "text-gray-900 text-sm font-bold" : "text-gray-300 text-sm font-bold"}>
-              {favorite ? "★" : "☆"}
-            </Text>
+            <View className={`w-8 h-8 rounded-full items-center justify-center ${favorite ? "bg-yellow-500" : "bg-surfaceDeep"}`}>
+              <Text className={favorite ? "text-gray-900 text-sm font-bold" : "text-gray-300 text-sm font-bold"}>
+                {favorite ? "★" : "☆"}
+              </Text>
+            </View>
           </TouchableOpacity>
-          <View className="bg-green-600/20 rounded-full px-2 py-1">
+          <View className="bg-green-600/20 rounded-full px-2 py-1 min-w-[64px] items-center">
             <Text className="text-accentSoft text-xs font-semibold">
               {entry.abvMin}–{entry.abvMax}%
             </Text>

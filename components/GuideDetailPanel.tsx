@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { GuideDetail } from "../data/guideDetails";
 import { pickLocalizedText } from "../utils/localizedText";
 import { logGuideNextStep } from "../utils/contentAnalytics";
+import { quizCategories } from "../data/quizCategories";
 
 type GuideDetailPanelProps = {
   readonly guide: GuideDetail;
@@ -14,8 +15,12 @@ export default function GuideDetailPanel({
   guide,
   onPressTarget,
 }: GuideDetailPanelProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const language = i18n.language;
+  const quizCategory = quizCategories.find((category) => category.key === guide.relatedQuizCategory);
+  const quizCategoryName = quizCategory
+    ? pickLocalizedText(quizCategory.title, language)
+    : guide.relatedQuizCategory;
 
   return (
     <View className="bg-gray-900 rounded-xl p-4 mt-4 border border-gray-700">
@@ -37,12 +42,13 @@ export default function GuideDetailPanel({
 
       <View className="bg-gray-800 rounded-xl p-3 mt-2">
         <Text className="text-gray-400 text-xs font-bold mb-2">
-          {language.startsWith("ko") ? "연결 콘텐츠" : "Related"}
+          {t("encyclopedia.relatedTitle")}
         </Text>
         <Text className="text-gray-300 text-sm">
-          {language.startsWith("ko")
-            ? `레시피 ${guide.relatedRecipeIds.length}개 - ${guide.relatedQuizCategory} 퀴즈`
-            : `${guide.relatedRecipeIds.length} recipes - ${guide.relatedQuizCategory} quiz`}
+          {t("encyclopedia.relatedSummary", {
+            count: guide.relatedRecipeIds.length,
+            category: quizCategoryName,
+          })}
         </Text>
       </View>
 

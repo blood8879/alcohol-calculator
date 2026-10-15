@@ -192,6 +192,32 @@
       "doe": "되 (1800ml)",
       "sojuBottle": "소주병 (360ml)",
       "result": "변환 결과"
+    },
+    "guide": {
+      "whatIs": "이 계산기는 무엇인가요?",
+      "whenToUse": "언제 쓰나요",
+      "howItWorks": "어떻게 계산하나요"
+    },
+    "recommend": {
+      "calorie": {
+        "title": "칼로리가 낮은 술 고르기",
+        "description": "계산한 칼로리를 바탕으로 가벼운 조합과 관련 상식을 확인해보세요."
+      },
+      "bac": {
+        "title": "이번 주 음주 기록 확인",
+        "description": "BAC는 참고용입니다. 기록을 남기면 주간 잔 수와 칼로리를 함께 볼 수 있습니다."
+      },
+      "mix": {
+        "title": "이 도수로 만들 수 있는 레시피",
+        "description": "도수 조정 결과를 레시피와 연결해 실제로 만들어볼 조합을 찾아보세요."
+      },
+      "default": {
+        "title": "계산 결과를 더 잘 이해하기",
+        "description": "도수, 표준잔, 온도, 페어링 같은 관련 정보를 이어서 확인해보세요."
+      },
+      "openEncyclopedia": "백과 보기",
+      "openTracker": "기록 보기",
+      "openRecipes": "레시피 보기"
     }
   },
   "presets": {
@@ -422,7 +448,9 @@
         "pairing": "굴, 스테이크, 초콜릿",
         "description": "구운 보리로 만든 진하고 크리미한 흑맥주입니다."
       }
-    }
+    },
+    "relatedTitle": "연결 콘텐츠",
+    "relatedSummary": "레시피 {{count}}개 - {{category}} 퀴즈"
   },
   "recipes": {
     "title": "칵테일 레시피",
@@ -716,7 +744,12 @@
         "name": "핫 토디",
         "instructions": "따뜻한 물에 꿀·레몬·위스키를 섞고 계피를 올려 따뜻하게 마십니다."
       }
-    }
+    },
+    "favorite": "즐겨찾기",
+    "originTitle": "유래 & 배경",
+    "tipsTitle": "만들기 팁",
+    "garnish": "가니시",
+    "openStandardGuide": "표준잔 가이드 보기"
   },
   "tracker": {
     "title": "음주 기록",

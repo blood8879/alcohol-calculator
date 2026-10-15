@@ -192,6 +192,32 @@
       "doe": "トェ／升 (1800ml)",
       "sojuBottle": "焼酎ボトル (360ml)",
       "result": "変換結果"
+    },
+    "guide": {
+      "whatIs": "この計算機について",
+      "whenToUse": "使う場面",
+      "howItWorks": "計算方法"
+    },
+    "recommend": {
+      "calorie": {
+        "title": "カロリーの低いお酒を選ぶ",
+        "description": "計算したカロリーをもとに、軽めの組み合わせや豆知識をチェックしましょう。"
+      },
+      "bac": {
+        "title": "今週の飲酒記録を確認",
+        "description": "BACは目安です。記録すると週の杯数とカロリーをまとめて確認できます。"
+      },
+      "mix": {
+        "title": "この度数で作れるレシピ",
+        "description": "計算結果をレシピにつなげて、実際に作れる組み合わせを探しましょう。"
+      },
+      "default": {
+        "title": "計算結果をもっと理解する",
+        "description": "度数・標準ドリンク・温度・ペアリングなどの関連情報をチェックしましょう。"
+      },
+      "openEncyclopedia": "百科を見る",
+      "openTracker": "記録を見る",
+      "openRecipes": "レシピを見る"
     }
   },
   "presets": {
@@ -422,7 +448,9 @@
         "pairing": "牡蠣、ステーキ、チョコレート",
         "description": "焙煎した大麦から造る濃厚でクリーミーな黒ビールです。"
       }
-    }
+    },
+    "relatedTitle": "関連コンテンツ",
+    "relatedSummary": "レシピ{{count}}件 - {{category}}クイズ"
   },
   "recipes": {
     "title": "カクテルレシピ",
@@ -716,7 +744,12 @@
         "name": "ホットtoddy",
         "instructions": "温かい湯にはちみつ・レモン・ウイスキーを混ぜ、シナモンをのせて温かくして飲みます。"
       }
-    }
+    },
+    "favorite": "お気に入り",
+    "originTitle": "由来と背景",
+    "tipsTitle": "作り方のコツ",
+    "garnish": "ガーニッシュ",
+    "openStandardGuide": "標準ドリンクガイドを見る"
   },
   "tracker": {
     "title": "飲酒記録",
@@ -1327,7 +1360,10 @@
     "trackingHabitTitle": "こつこつ記録して見返す",
     "trackingHabitDescription": "毎日の記録通知と週間レポートで、飲酒量、カロリー、平均杯数を見逃さずに確認できます。",
     "driveSafe": "運転可能時刻の通知",
-    "driveSafeDescription": "セッション終了時、アルコールが分解されたと予想される時刻に通知を受け取ります。それでも運転前には体調を確認してください。"
+    "driveSafeDescription": "セッション終了時、アルコールが分解されたと予想される時刻に通知を受け取ります。それでも運転前には体調を確認してください。",
+    "privacy": "プライバシー",
+    "privacyChoices": "プライバシーの選択",
+    "privacyChoicesError": "プライバシーの選択画面を開けませんでした。もう一度お試しください。"
   },
   "sessionHistory": {
     "title": "セッション記録",

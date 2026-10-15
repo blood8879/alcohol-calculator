@@ -8,6 +8,13 @@ import type { AnalyticsParams } from "./analyticsCore";
 
 export type { AnalyticsParams } from "./analyticsCore";
 
+// 개발(디버그) 빌드의 이벤트·크래시가 실사용 데이터에 섞이지 않도록 수집은 릴리스 빌드에서만 켠다.
+// (실기기 QA 중 테스트 사용이 GA 지표에 그대로 집계된 것을 확인함) jest는 __DEV__가 true라 테스트는 예외.
+export const isCollectionAllowedForBuild = (
+  isDev: boolean = __DEV__,
+  nodeEnv: string | undefined = process.env.NODE_ENV
+): boolean => !isDev || nodeEnv === "test";
+
 export const logFirebaseEvent = (
   name: string,
   params?: AnalyticsParams
@@ -28,7 +35,7 @@ export const setDataCollectionEnabled = async (
 ): Promise<void> => {
   setAnalyticsPermission(false);
   try {
-    if (enabled) {
+    if (enabled && isCollectionAllowedForBuild()) {
       await setCrashlyticsCollectionEnabled(getCrashlytics(), true);
       await setAnalyticsCollectionEnabled(getAnalytics(), true);
       setAnalyticsPermission(true);

@@ -192,6 +192,32 @@
       "doe": "Doe (1800ml)",
       "sojuBottle": "Soju Bottle (360ml)",
       "result": "Conversion Result"
+    },
+    "guide": {
+      "whatIs": "What is this calculator?",
+      "whenToUse": "When to use",
+      "howItWorks": "How it works"
+    },
+    "recommend": {
+      "calorie": {
+        "title": "Choose lower-calorie drinks",
+        "description": "Use your result to explore lighter drink choices and practical tips."
+      },
+      "bac": {
+        "title": "Review your weekly drinking pattern",
+        "description": "BAC is an estimate. Logging drinks helps track weekly drinks and calories."
+      },
+      "mix": {
+        "title": "Recipes for this style",
+        "description": "Turn your calculation into a practical drink idea."
+      },
+      "default": {
+        "title": "Understand your result better",
+        "description": "Continue with ABV, standard drink, temperature, and pairing guides."
+      },
+      "openEncyclopedia": "Open encyclopedia",
+      "openTracker": "View tracker",
+      "openRecipes": "View recipes"
     }
   },
   "presets": {
@@ -422,7 +448,9 @@
         "pairing": "Oysters, steak, chocolate",
         "description": "A dark, creamy beer made with roasted barley."
       }
-    }
+    },
+    "relatedTitle": "Related",
+    "relatedSummary": "{{count}} recipes - {{category}} quiz"
   },
   "recipes": {
     "title": "Cocktail Recipes",
@@ -716,7 +744,12 @@
         "name": "Hot Toddy",
         "instructions": "Stir honey, lemon and whiskey into hot water, garnish with cinnamon."
       }
-    }
+    },
+    "favorite": "Favorite",
+    "originTitle": "Origin & background",
+    "tipsTitle": "Tips",
+    "garnish": "Garnish",
+    "openStandardGuide": "Open standard drink guide"
   },
   "tracker": {
     "title": "Drink Tracker",

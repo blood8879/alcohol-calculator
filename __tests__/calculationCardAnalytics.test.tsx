@@ -4,11 +4,15 @@ import { View } from "react-native";
 import CalculationCard from "../components/CalculationCard";
 import { logFirebaseEvent } from "../utils/firebase";
 import { shareResults } from "../utils/shareUtils";
+import { bacInitialValuesFromProfile } from "../utils/calculatorPrefill";
 
 jest.mock("../utils/firebase", () => ({ logFirebaseEvent: jest.fn() }));
 jest.mock("../utils/historyStorage", () => ({ saveCalculation: jest.fn() }));
 jest.mock("../utils/shareUtils", () => ({ shareResults: jest.fn() }));
 jest.mock("react-i18next", () => ({ useTranslation: () => ({ t: (key: string) => key, i18n: { language: "en" } }) }));
+
+// 첫 렌더가 모듈 로딩(콜드 스타트)을 떠안아 부하 시 기본 5초를 넘길 수 있다.
+jest.setTimeout(20000);
 
 const baseProps = {
   title: "Proof",
@@ -59,4 +63,29 @@ test("a new modal opening resets first-input tracking and prior result", () => {
   expect(view.queryByText("20")).toBeNull();
   fireEvent.changeText(view.getByPlaceholderText("0"), "15");
   expect(jest.mocked(logFirebaseEvent).mock.calls.filter(([event]) => event === "calculator_first_input")).toHaveLength(2);
+});
+
+test("BAC prefill from saved profile fills weight and gender without counting as first input", () => {
+  const view = render(
+    <CalculationCard
+      {...baseProps}
+      calculatorType="bac"
+      fields={[
+        { label: "weight", unit: "kg", placeholder: "0" },
+        { label: "gender", unit: "", placeholder: "", fieldType: "radio", options: [{ label: "male", value: 0 }, { label: "female", value: 1 }] },
+        { label: "drinks", unit: "", placeholder: "drinks-0" },
+      ]}
+      initialValues={bacInitialValuesFromProfile({ weightKg: 62, gender: "female" })}
+      calculateResult={(values) => [{ label: "echo", value: values.join(",") }]}
+    />
+  );
+  expect(view.getByDisplayValue("62")).toBeTruthy();
+  expect(jest.mocked(logFirebaseEvent).mock.calls.some(([event]) => event === "calculator_first_input")).toBe(false);
+  fireEvent.press(view.getByLabelText("common.calculate"));
+  expect(view.getByText("62,1,0")).toBeTruthy();
+});
+
+test("profile without a valid weight keeps the weight empty", () => {
+  expect(bacInitialValuesFromProfile({ weightKg: null, gender: "male" })).toEqual([undefined, 0, undefined, undefined]);
+  expect(bacInitialValuesFromProfile(null)).toBeUndefined();
 });
